@@ -1,9 +1,10 @@
 <?php
 namespace MetroPublisher;
 
-use MetroPublisher\Http\GuzzleClient;
+use MetroPublisher\Http\Client;
 use MetroPublisher\Http\ConnectionException;
 use MetroPublisher\Http\HttpClientInterface;
+use MetroPublisher\Http\Steps\HttpResponseExceptionThrower;
 
 /**
  * Class MetroPublisher
@@ -26,17 +27,22 @@ class MetroPublisher
     /** @var HttpClientInterface */
     public $client;
 
-    /** @var  string */
     const API_BASE = "https://api.metropublisher.com";
 
-    /** @var string */
     const O_AUTH_BASE = "https://go.metropublisher.com";
 
-    public function __construct($key, $secret, HttpClientInterface $client = null)
+    public function __construct($key, $secret, array $clientOptions = [])
     {
         $this->apiKey = $key;
         $this->secretKey = $secret;
-        $this->client = ($client) ? $client : new GuzzleClient();
+
+        $clientOptions["verify"]       = false;
+        $clientOptions["content-type"] = "application/json; charset=UTF-8";
+        $clientOptions['base_uri']     = MetroPublisher::API_BASE;
+
+        $this->client = new Client($clientOptions, [
+            new HttpResponseExceptionThrower()
+        ]);
 
         $this->connect();
     }
@@ -69,38 +75,34 @@ class MetroPublisher
      * @throws ConnectionException
      */
     private function connect() {
-        $response = $this->client->get(self::O_AUTH_BASE, [
-            "grant_type" => "client_credentials",
-            "api_key"    => $this->apiKey,
-            "api_secret" => $this->secretKey
-        ]);
+        try {
+            $response = $this->client->post('oauth/token', [
+                    "grant_type" => "client_credentials",
+                    "api_key"    => $this->apiKey,
+                    "api_secret" => $this->secretKey
+                ],
+                ['base_uri' => MetroPublisher::O_AUTH_BASE]
+            );
 
-        if($response->getStatusCode() != 200) {
-            throw new ConnectionException("Failed to fetch bearer. Please check API credentials.");
+            $this->accountId = $response['items'][0]['id'];
+            $this->bearer    = $response['access_token'];
+            $this->client->setDefaultOptions([
+                "headers" => ["Authorization" => "Bearer {$this->bearer}"]
+            ]);
+        } catch(\Exception $e) {
+            throw new ConnectionException("Failed to fetch bearer. Please check API credentials.", $e->getCode(), $e);
         }
-
-        $body = $response->getBody();
-        $this->accountId = $body['items'][0]['id'];
-        $this->bearer = $body['access_token'];
     }
 
-    public function get($resource, array $args = []) {
-        return $this->client->get($this->buildApiBaseEndpoint() . $resource, $args);
+    public function getClient() {
+        return $this->client;
     }
 
-    public function post($resource, array $args = []) {
-        return $this->client->post($this->buildApiBaseEndpoint() . $resource, $args);
-    }
-
-    public function put($resource, array $args = []) {
-        return $this->client->put($this->buildApiBaseEndpoint() . $resource, $args);
-    }
-
-    public function delete($resource, array $args = []) {
-        return $this->client->delete($this->buildApiBaseEndpoint() . $resource, $args);
-    }
-
-    private function buildApiBaseEndpoint() {
-        return sprintf('%s/%s/', MetroPublisher::API_BASE, $this->accountId);
+    /**
+     * @return int
+     */
+    public function getAccountId()
+    {
+        return $this->accountId;
     }
 }
