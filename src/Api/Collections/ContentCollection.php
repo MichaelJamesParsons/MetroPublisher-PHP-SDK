@@ -12,7 +12,7 @@ class ContentCollection extends AbstractResourceCollection
 {
     public function all($model, $page = 1, array $options = [])
     {
-        return parent::all('/content', $model, $page, $options);
+        return parent::all('/content', $page, $options);
     }
 
     public function find($model, $uuid) {

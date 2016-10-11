@@ -378,13 +378,13 @@ class Content extends AbstractResourceModel
 
     public function getFieldNames()
     {
-        return [
+        return array_merge([
             'content_type',
             'title',
             'description',
             'state',
             'issued',
             'urlname',
-        ];
+        ], parent::getFieldNames());
     }
 }
