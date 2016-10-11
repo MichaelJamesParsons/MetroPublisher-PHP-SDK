@@ -39,8 +39,9 @@ class Content extends AbstractResourceModel
     const CONTENT_TYPE_REVIEW_LOCATION  = 'review_location';
     const CONTENT_TYPE_ROUNDUP_LOCATION = 'roundup_location';
 
+    const STATE_LIVE      = 'live';
+    const STATE_DRAFT     = 'draft';
     const STATE_PUBLISHED = 'published';
-    const STATE_DRAFT = 'draft';
 
     public function save() {
         return parent::save("content/{$this->uuid}");
@@ -51,15 +52,331 @@ class Content extends AbstractResourceModel
     }
 
     public function getInfo() {}
-    public function getRelatedLinks() {}
-    public function getTags() {}
-    public function getTagsWithPredicate() {}
+
+    /**
+     * Get the links related to a content object.
+     *
+     * The related links may be filtered by specifying a state, whether
+     * it be live, draft, or published. The state 'live' is used by default
+     * if the user is public. Otherwise, no state filter will be applied.
+     *
+     * @param string $state The state of which the related links must have to
+     *                      be included in the results.
+     *
+     * @return array
+     */
+    public function getRelatedLinks($state = 'live') {
+        return $this->client->get(
+            sprintf('%s/content/%s/related_links', $this->getBaseUri(), $this->uuid),
+            ['state' => $state]
+        );
+    }
+
+    /**
+     * Get the tags associated with the content object.
+     *
+     * The tags may be filtered by specifying a state. The 'approved' state is
+     * used by default if the user is public. Otherwise, not filter will be
+     * applied.
+     *
+     * @param string $state The state of which the tags must have to be
+     *                      included in the the results.
+     *
+     * @return array
+     */
+    public function getTags($state = 'approved') {
+        return $this->client->get(
+            sprintf('%s/content/%s/tags', $this->getBaseUri(), $this->uuid),
+            ['state' => $state]
+        );
+    }
+
+    /**
+     * Get the tags for a content object that represent a specific tag/content
+     * relationship, defined by 'predicate'.
+     *
+     * The tags may be filtered by specifying a state. The 'approved' state is
+     * used by default if the user is public. Otherwise, not filter will be
+     * applied.
+     *
+     * @param string $predicate The targeted predicate.
+     * @param string $state     The state of which the tags must have to be
+     *                          included in the the results.
+     *
+     * @return array
+     */
+    public function getTagsWithPredicate($predicate, $state = 'approved') {
+        return $this->client->get(
+            sprintf('%s/content/%s/tags/%s', $this->getBaseUri(), $this->uuid, $predicate),
+            ['state' => $state]
+        );
+    }
+
     public function getSlots() {}
     public function getSlot($uuid) {}
     public function getPathHistory() {}
 
+    /**
+     * @return string
+     */
+    public function getContentType()
+    {
+        return $this->content_type;
+    }
 
-    public static function getFieldNames()
+    /**
+     * @param string $content_type
+     *
+     * @return $this
+     */
+    public function setContentType($content_type)
+    {
+        $this->content_type = $content_type;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param string $title
+     *
+     * @return $this
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     *
+     * @return $this
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    /**
+     * @param string $content
+     *
+     * @return $this
+     */
+    public function setContent($content)
+    {
+        $this->content = $content;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    /**
+     * @param string $state
+     *
+     * @return $this
+     */
+    public function setState($state)
+    {
+        $this->state = $state;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMetaTitle()
+    {
+        return $this->meta_title;
+    }
+
+    /**
+     * @param string $meta_title
+     *
+     * @return $this
+     */
+    public function setMetaTitle($meta_title)
+    {
+        $this->meta_title = $meta_title;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMetaDescription()
+    {
+        return $this->meta_description;
+    }
+
+    /**
+     * @param string $meta_description
+     *
+     * @return $this
+     */
+    public function setMetaDescription($meta_description)
+    {
+        $this->meta_description = $meta_description;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPrintDescription()
+    {
+        return $this->print_description;
+    }
+
+    /**
+     * @param string $print_description
+     *
+     * @return $this
+     */
+    public function setPrintDescription($print_description)
+    {
+        $this->print_description = $print_description;
+
+        return $this;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getIssued()
+    {
+        return $this->issued;
+    }
+
+    /**
+     * @param DateTime $issued
+     *
+     * @return $this
+     */
+    public function setIssued($issued)
+    {
+        $this->issued = $issued;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrlname()
+    {
+        return $this->urlname;
+    }
+
+    /**
+     * @param string $urlname
+     *
+     * @return $this
+     */
+    public function setUrlname($urlname)
+    {
+        $this->urlname = $urlname;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isEvergreen()
+    {
+        return $this->evergreen;
+    }
+
+    /**
+     * @param boolean $evergreen
+     *
+     * @return $this
+     */
+    public function setEvergreen($evergreen)
+    {
+        $this->evergreen = $evergreen;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTeaserImageUuid()
+    {
+        return $this->teaser_image_uuid;
+    }
+
+    /**
+     * @param string $teaser_image_uuid
+     *
+     * @return $this
+     */
+    public function setTeaserImageUuid($teaser_image_uuid)
+    {
+        $this->teaser_image_uuid = $teaser_image_uuid;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFeatureImageUuid()
+    {
+        return $this->feature_image_uuid;
+    }
+
+    /**
+     * @param string $feature_image_uuid
+     *
+     * @return $this
+     */
+    public function setFeatureImageUuid($feature_image_uuid)
+    {
+        $this->feature_image_uuid = $feature_image_uuid;
+
+        return $this;
+    }
+
+    public function getFieldNames()
     {
         return [
             'content_type',
