@@ -87,7 +87,7 @@ class Client implements HttpClientInterface
         } else {
             $options['form_params'] = $fields;
         }
-        
+
         $options = array_merge($options, $this->getDefaultOptions());
 
         $response = call_user_func_array([$this->client, $method], [$endpoint, $options]);
