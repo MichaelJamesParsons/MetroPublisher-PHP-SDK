@@ -2,6 +2,7 @@
 namespace MetroPublisher\Api;
 
 use DateTime;
+use MetroPublisher\Api\Models\PathHistory;
 
 /**
  * Class Content
@@ -21,12 +22,8 @@ use DateTime;
  * @property string teaser_image_uuid
  * @property string feature_image_uuid
  *
- * - tags
  * - files
  * - slots
- * - redirect
- * - pathHistory
- * - comments
  */
 class Content extends AbstractResourceModel
 {
@@ -114,7 +111,57 @@ class Content extends AbstractResourceModel
 
     public function getSlots() {}
     public function getSlot($uuid) {}
-    public function getPathHistory() {}
+
+    /**
+     * Gets the path history for this content.
+     *
+     * @return array
+     */
+    public function getPathHistory() {
+        return $this->client->get(
+            sprintf('%s/content/%s/path_history', $this->getBaseUri(), $this->uuid)
+        );
+    }
+
+    /**
+     * Sets the path history for this content.
+     *
+     * This method will replace all path_history entries for this
+     * content item with the list of path history items. To remove
+     * all path history items, call this method with an empty array
+     * as the first parameter.
+     *
+     * To add many entries at once, fetch this content's path history
+     * entries, then merge your own entries with the results and pass
+     * the collection into this method.
+     *
+     * @see Content::addPathHistory()   To add a single path_history entry.
+     *
+     * @param array $pathHistories A list of PathHistory objects.
+     *
+     * @return array
+     */
+    public function setPathHistory(array $pathHistories) {
+        return $this->client->put(
+            sprintf('%s/content/%s/path_history', $this->getBaseUri(), $this->uuid),
+            [ 'items' => $pathHistories ]
+        );
+    }
+
+    /**
+     * Adds a path history entry for this content.
+     *
+     * @see Content::setPathHistory()   To add many entries at once.
+     * @param PathHistory $pathHistory
+     *
+     * @return array
+     */
+    public function addPathHistory(PathHistory $pathHistory) {
+        return $this->client->put(
+            sprintf('%s/content/%s/path_history', $this->getBaseUri(), $this->uuid),
+            [ 'path' => $pathHistory ]
+        );
+    }
 
     /**
      * @return string
@@ -376,6 +423,9 @@ class Content extends AbstractResourceModel
         return $this;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getFieldNames()
     {
         return array_merge([
