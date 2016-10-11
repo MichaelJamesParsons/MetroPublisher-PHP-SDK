@@ -1,7 +1,7 @@
 <?php
 namespace MetroPublisher\Api\Models\Serializers;
 
-use MetroPublisher\Api\AbstractResourceModel;
+use MetroPublisher\Api\Models\AbstractModel;
 use MetroPublisher\MetroPublisher;
 
 /**
@@ -44,10 +44,10 @@ class ResourceModelSerializer
      * @param array $properties
      * @param array $values
      *
-     * @return AbstractResourceModel
+     * @return AbstractModel
      */
     public function serializeArrayToObject($model, array $properties, array $values) {
-        /** @var AbstractResourceModel $instance */
+        /** @var AbstractModel $instance */
         $instance = $this->getInstance($model);
 
         foreach($properties as $key => $property) {
