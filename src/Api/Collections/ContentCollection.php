@@ -1,14 +1,14 @@
 <?php
 namespace MetroPublisher\Api\Collections;
 
-use MetroPublisher\Api\AbstractResourceCollection;
+use MetroPublisher\Api\AbstractQueryableCollection;
 use MetroPublisher\Api\Content;
 
 /**
  * Class ContentCollection
  * @package MetroPublisher\Api
  */
-class ContentCollection extends AbstractResourceCollection
+class ContentCollection extends AbstractQueryableCollection
 {
     public function all($model, $page = 1, array $options = [])
     {
