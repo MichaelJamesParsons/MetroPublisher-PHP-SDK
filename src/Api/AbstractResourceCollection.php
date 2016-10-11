@@ -1,18 +1,30 @@
 <?php
 namespace MetroPublisher\Api;
 
+use MetroPublisher\Api\Models\Serializers\ResourceModelSerializer;
+use MetroPublisher\MetroPublisher;
+
 /**
  * Class AbstractResourceCollection
  * @package MetroPublisher\Api
  */
 abstract class AbstractResourceCollection extends AbstractApiResource
 {
+    /** @var ResourceModelSerializer */
+    private $serializer;
+
+    public function __construct(MetroPublisher $metroPublisher)
+    {
+        parent::__construct($metroPublisher);
+        $this->serializer = new ResourceModelSerializer($metroPublisher);
+    }
+
     /**
      * @param       $endpoint
      * @param int   $page
      * @param array $options
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return array
      */
     public function all($endpoint, $page = 1, array $options = []) {
         $fields = $this->getAssociatedModelFields();
@@ -22,10 +34,14 @@ abstract class AbstractResourceCollection extends AbstractApiResource
     /**
      * @param $endpoint
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return AbstractResourceModel
      */
     public function find($endpoint) {
-        return $this->client->get($this->getBaseUri() . $endpoint);
+        return $this->serializer->serializeArrayToObject(
+            $this->getModelClass(),
+            $this->client->get($this->getBaseUri() . $endpoint),
+            $this->getAssociatedModelFields()
+        );
     }
 
     /**
@@ -34,14 +50,19 @@ abstract class AbstractResourceCollection extends AbstractApiResource
      * @param int   $page
      * @param array $options
      *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return array
      */
     public function findBy($endpoint, array $fields, $page = 1, array $options = [])
     {
         $options['fields'] = implode('-', $fields);
         $options['page']   = $page;
+        $response = $this->client->get($this->getBaseUri() . $endpoint, $options, $this->client->getDefaultOptions());
 
-        return $this->client->get($this->getBaseUri() . $endpoint, $options, $this->client->getDefaultOptions());
+        return $this->serializer->serializeArrayCollectionToObjects(
+            $this->getModelClass(),
+            $fields,
+            $response['items']
+        );
     }
 
     private function getAssociatedModelFields() {

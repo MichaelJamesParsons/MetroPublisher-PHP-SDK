@@ -11,11 +11,11 @@ use Psr\Http\Message\ResponseInterface;
  * Class Client
  * @package MetroPublisher\Http
  *
- * @method ResponseInterface get($endpoint, array $fields = [], array $options = [])
- * @method ResponseInterface put($endpoint, array $fields = [], array $options = [])
- * @method ResponseInterface post($endpoint, array $fields = [], array $options = [])
- * @method ResponseInterface patch($endpoint, array $fields = [], array $options = [])
- * @method ResponseInterface delete($endpoint, array $fields = [], array $options = [])
+ * @method array get($endpoint, array $fields = [], array $options = [])
+ * @method array put($endpoint, array $fields = [], array $options = [])
+ * @method array post($endpoint, array $fields = [], array $options = [])
+ * @method array patch($endpoint, array $fields = [], array $options = [])
+ * @method array delete($endpoint, array $fields = [], array $options = [])
  */
 class Client implements HttpClientInterface
 {
@@ -47,7 +47,7 @@ class Client implements HttpClientInterface
      * @param $method
      * @param $arguments
      *
-     * @return ResponseInterface
+     * @return array
      */
     public function __call($method, $arguments)
     {
@@ -77,7 +77,7 @@ class Client implements HttpClientInterface
      * @param array $fields
      * @param array $options
      *
-     * @return ResponseInterface
+     * @return array
      */
     public function execute($method, $endpoint, array $fields = [], array $options = []) {
         unset($options['json'], $options['query']);
@@ -95,7 +95,7 @@ class Client implements HttpClientInterface
     /**
      * @param ResponseInterface $response
      *
-     * @return string
+     * @return array
      */
     public function handleResponse(ResponseInterface $response) {
         /** @var HttpStepInterface $step */
