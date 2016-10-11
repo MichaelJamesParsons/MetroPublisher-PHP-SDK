@@ -1,6 +1,7 @@
 <?php
 namespace MetroPublisher\Api;
 
+use MetroPublisher\Api\Models\AbstractModel;
 use MetroPublisher\Http\HttpClientInterface;
 use MetroPublisher\MetroPublisher;
 
@@ -8,7 +9,7 @@ use MetroPublisher\MetroPublisher;
  * Class AbstractApiResource
  * @package MetroPublisher\Api
  */
-abstract class AbstractApiResource
+abstract class AbstractApiResource extends AbstractModel
 {
     /** @var  HttpClientInterface */
     protected $client;
