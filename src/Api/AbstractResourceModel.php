@@ -2,6 +2,7 @@
 namespace MetroPublisher\Api;
 
 use DateTime;
+use MetroPublisher\Api\Models\AbstractModel;
 use MetroPublisher\MetroPublisher;
 
 /**
@@ -13,7 +14,7 @@ use MetroPublisher\MetroPublisher;
  * @property DateTime $modified
  * @property DateTime $created
  */
-abstract class AbstractResourceModel extends AbstractApiResource
+abstract class AbstractResourceModel extends AbstractModel
 {
     /** @var  boolean */
     protected $isSaved;
