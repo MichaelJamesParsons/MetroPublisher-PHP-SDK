@@ -10,16 +10,16 @@ use MetroPublisher\Api\Content;
  */
 class ContentCollection extends AbstractResourceCollection
 {
-    public function all($page = 1, array $options = [])
+    public function all($model, $page = 1, array $options = [])
     {
-        return parent::all('/content', $page, $options);
+        return parent::all('/content', $model, $page, $options);
     }
 
-    public function find($uuid) {
+    public function find($model, $uuid) {
         return parent::find("/content/{$uuid}");
     }
 
-    public function findBy(array $fields, $page = 1, array $options = [])
+    public function findBy($model, array $fields, $page = 1, array $options = [])
     {
         $response = parent::findBy("/content", $fields, $page, $options);
 
