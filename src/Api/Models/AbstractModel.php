@@ -1,11 +1,13 @@
 <?php
 namespace MetroPublisher\Api\Models;
 
+use MetroPublisher\Api\AbstractApiResource;
+
 /**
  * Class AbstractModel
  * @package MetroPublisher\Api\Models
  */
-abstract class AbstractModel
+abstract class AbstractModel extends AbstractApiResource
 {
     /**
      * Lists all of the fields that are allowed to be
