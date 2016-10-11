@@ -2,6 +2,7 @@
 namespace MetroPublisher\Api\Models;
 
 use MetroPublisher\Api\AbstractApiResource;
+use MetroPublisher\MetroPublisher;
 
 /**
  * Class AbstractModel
@@ -21,6 +22,13 @@ abstract class AbstractModel extends AbstractApiResource
 
     /** @var  array */
     protected $properties;
+
+    public function __construct(MetroPublisher $metroPublisher)
+    {
+        parent::__construct($metroPublisher);
+
+        $this->properties = [];
+    }
 
     /**
      * @param $property
@@ -63,7 +71,7 @@ abstract class AbstractModel extends AbstractApiResource
     public function __set($property, $value)
     {
         if(!in_array($property, $this->getFieldNames())) {
-            throw new \Exception(sprintf("%s has no property %s.", get_class($this), $value));
+            throw new \Exception(sprintf("%s has no property %s.", get_class($this), $property));
         }
 
         if(is_null($value)) {

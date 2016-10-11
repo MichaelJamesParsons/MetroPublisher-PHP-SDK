@@ -18,9 +18,9 @@ class PathHistory extends AbstractModel
     }
 
     /**
-     * @return array
+     * @inheritdoc
      */
-    protected function getFieldNames()
+    public function getFieldNames()
     {
         return [
             'path'

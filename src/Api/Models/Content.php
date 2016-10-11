@@ -2,7 +2,11 @@
 namespace MetroPublisher\Api;
 
 use DateTime;
+use MetroPublisher\Api\Collections\SlotCollection;
+use MetroPublisher\Api\Models\AbstractModel;
 use MetroPublisher\Api\Models\PathHistory;
+use MetroPublisher\Api\Models\Slot;
+use MetroPublisher\MetroPublisher;
 
 /**
  * Class Content
@@ -21,12 +25,12 @@ use MetroPublisher\Api\Models\PathHistory;
  * @property boolean $evergreen
  * @property string teaser_image_uuid
  * @property string feature_image_uuid
- *
- * - files
- * - slots
  */
 class Content extends AbstractResourceModel
 {
+    /** @var  SlotCollection */
+    protected $slotCollection;
+
     const CONTENT_TYPE_ARTICLE = 'article';
     const CONTENT_TYPE_EVENT   = 'event';
     const CONTENT_TYPE_REVIEW  = 'review'; //Same as review_location
@@ -40,6 +44,13 @@ class Content extends AbstractResourceModel
     const STATE_DRAFT     = 'draft';
     const STATE_PUBLISHED = 'published';
 
+    public function __construct(MetroPublisher $metroPublisher)
+    {
+        parent::__construct($metroPublisher);
+
+        $this->slotCollection = new SlotCollection($metroPublisher, $this);
+    }
+
     public function save() {
         return parent::save("content/{$this->uuid}");
     }
@@ -48,7 +59,19 @@ class Content extends AbstractResourceModel
         return parent::delete("content/{$this->uuid}");
     }
 
-    public function getInfo() {}
+    /**
+     * Get additional information about a content object.
+     *
+     * This information will include meta fields, such as the
+     * public URL of this content.
+     *
+     * @link https://api.metropublisher.com/resources/content.html#content_info
+     */
+    public function getInfo() {
+        return $this->client->get(
+            sprintf('%s/content/%s/info', $this->getBaseUri(), $this->uuid)
+        );
+    }
 
     /**
      * Get the links related to a content object.
@@ -56,6 +79,8 @@ class Content extends AbstractResourceModel
      * The related links may be filtered by specifying a state, whether
      * it be live, draft, or published. The state 'live' is used by default
      * if the user is public. Otherwise, no state filter will be applied.
+     *
+     * @link https://api.metropublisher.com/resources/content.html#content_related_links
      *
      * @param string $state The state of which the related links must have to
      *                      be included in the results.
@@ -75,6 +100,8 @@ class Content extends AbstractResourceModel
      * The tags may be filtered by specifying a state. The 'approved' state is
      * used by default if the user is public. Otherwise, not filter will be
      * applied.
+     *
+     * @link https://api.metropublisher.com/resources/content.html#content_tags_all
      *
      * @param string $state The state of which the tags must have to be
      *                      included in the the results.
@@ -96,6 +123,8 @@ class Content extends AbstractResourceModel
      * used by default if the user is public. Otherwise, not filter will be
      * applied.
      *
+     * @link https://api.metropublisher.com/resources/content.html#content_tags
+     *
      * @param string $predicate The targeted predicate.
      * @param string $state     The state of which the tags must have to be
      *                          included in the the results.
@@ -109,11 +138,45 @@ class Content extends AbstractResourceModel
         );
     }
 
-    public function getSlots() {}
-    public function getSlot($uuid) {}
+    /**
+     * Get the settings of a content object's slots.
+     *
+     * @link https://api.metropublisher.com/resources/content.html#content_slots
+     */
+    public function getSlots() {
+        return $this->slotCollection->all();
+    }
+
+    /**
+     * Get the details of a single slot.
+     *
+     * @link https://api.metropublisher.com/resources/content.html#content_slot_delete
+     *
+     * @param Slot $slot
+     *
+     * @return AbstractModel
+     */
+    public function getSlotInfo(Slot $slot) {
+        return $this->slotCollection->find($slot);
+    }
+
+    /**
+     * @todo Complete
+     *
+     * @param Slot $slot
+     *
+     * @return array
+     */
+    public function deleteSlot(Slot $slot) {
+        return $this->client->get(
+            sprintf('%s/content/%s/slots/%s', $this->getBaseUri(), $this->uuid)
+        );
+    }
 
     /**
      * Gets the path history for this content.
+     *
+     * @link https://api.metropublisher.com/resources/content.html#content_path_history
      *
      * @return array
      */
@@ -136,6 +199,7 @@ class Content extends AbstractResourceModel
      * the collection into this method.
      *
      * @see Content::addPathHistory()   To add a single path_history entry.
+     * @link https://api.metropublisher.com/resources/content.html#content_path_history_put
      *
      * @param array $pathHistories A list of PathHistory objects.
      *
@@ -152,12 +216,14 @@ class Content extends AbstractResourceModel
      * Adds a path history entry for this content.
      *
      * @see Content::setPathHistory()   To add many entries at once.
+     * @link https://api.metropublisher.com/resources/content.html#content_path_history_post
+     *
      * @param PathHistory $pathHistory
      *
      * @return array
      */
     public function addPathHistory(PathHistory $pathHistory) {
-        return $this->client->put(
+        return $this->client->post(
             sprintf('%s/content/%s/path_history', $this->getBaseUri(), $this->uuid),
             [ 'path' => $pathHistory ]
         );

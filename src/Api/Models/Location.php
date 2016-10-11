@@ -410,7 +410,10 @@ class Location extends AbstractResourceModel
         return $this;
     }
 
-    protected function getFieldNames()
+    /**
+     * @inheritdoc
+     */
+    public function getFieldNames()
     {
         return array_merge([
             'title',

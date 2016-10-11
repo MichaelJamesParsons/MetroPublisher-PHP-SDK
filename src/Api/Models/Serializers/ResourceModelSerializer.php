@@ -49,9 +49,39 @@ class ResourceModelSerializer
     public function serializeArrayToObject($model, array $properties, array $values) {
         /** @var AbstractModel $instance */
         $instance = $this->getInstance($model);
+        $keys = array_keys($values);
 
+        if(is_numeric($keys[0])) {
+            return $this->serializeByIndex($instance, $properties, $values);
+        }
+
+        return $this->serializeByAssoc($instance, $values);
+    }
+
+    /**
+     * @param AbstractModel $instance
+     * @param array         $properties
+     * @param array         $values
+     *
+     * @return AbstractModel
+     */
+    private function serializeByIndex(AbstractModel $instance, array $properties, array $values) {
         foreach($properties as $key => $property) {
             $instance->{$property} = $values[$key];
+        }
+
+        return $instance;
+    }
+
+    /**
+     * @param AbstractModel $instance
+     * @param array         $values
+     *
+     * @return AbstractModel
+     */
+    private function serializeByAssoc(AbstractModel $instance, array $values) {
+        foreach($values as $property => $value) {
+            $instance->{$property} = $value;
         }
 
         return $instance;
