@@ -84,6 +84,8 @@ class Client implements HttpClientInterface
 
         if($method == 'get') {
             $options['query'] = $fields;
+        } elseif($method == 'put' || $method == 'patch') {
+            $options['json'] = $fields;
         } else {
             $options['form_params'] = $fields;
         }

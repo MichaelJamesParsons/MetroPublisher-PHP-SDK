@@ -36,7 +36,7 @@ class SlotCollection extends AbstractResourceCollection
 
         return $this->serializer->serializeArrayCollectionToObjects(
             $this->getModelClass(),
-            $this->getAssociatedModelFields(),
+            $this->getModelDefaultFields(),
             $response['items']
         );
     }
@@ -48,7 +48,7 @@ class SlotCollection extends AbstractResourceCollection
 
         $slot = $this->serializer->serializeArrayToObject(
             $this->getModelClass(),
-            $this->getAssociatedModelFields(),
+            $this->getModelDefaultFields(),
             $result
         );
 

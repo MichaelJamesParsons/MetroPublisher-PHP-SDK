@@ -10,24 +10,18 @@ use MetroPublisher\Api\Content;
  */
 class ContentCollection extends AbstractQueryableCollection
 {
-    public function all($model, $page = 1, array $options = [])
+    public function all($page = 1, array $options = [])
     {
         return parent::all('/content', $page, $options);
     }
 
-    public function find($model, $uuid) {
+    public function find($uuid) {
         return parent::find("/content/{$uuid}");
     }
 
-    public function findBy($model, array $fields, $page = 1, array $options = [])
+    public function findBy(array $fields, $page = 1, array $options = [])
     {
-        $response = parent::findBy("/content", $fields, $page, $options);
-
-        if(!empty($response['items'])) {
-
-        }
-
-        return [];
+        return parent::findBy("/content", $fields, $page, $options);
     }
 
     protected function getModelClass()
