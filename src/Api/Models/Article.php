@@ -19,10 +19,10 @@ class Article extends Content
         $this->properties['contentType'] = Content::CONTENT_TYPE_ARTICLE;
     }
 
-    public function getFieldNames()
+    /*public function getFieldNames()
     {
         return array_merge(['blog_uuid', 'section_uuid'], parent::getFieldNames());
-    }
+    }*/
 
     /**
      * @return string

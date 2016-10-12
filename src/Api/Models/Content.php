@@ -2,6 +2,7 @@
 namespace MetroPublisher\Api;
 
 use DateTime;
+use MetroPublisher\Api\Collections\ContentCollection;
 use MetroPublisher\Api\Collections\SlotCollection;
 use MetroPublisher\Api\Models\AbstractModel;
 use MetroPublisher\Api\Models\PathHistory;
@@ -46,31 +47,17 @@ class Content extends AbstractResourceModel
 
     public function __construct(MetroPublisher $metroPublisher)
     {
-        parent::__construct($metroPublisher);
+        parent::__construct($metroPublisher, new ContentCollection($metroPublisher));
 
         $this->slotCollection = new SlotCollection($metroPublisher, $this);
     }
 
     public function save() {
-        return parent::save("content/{$this->uuid}");
+        return parent::save("/content/{$this->uuid}");
     }
 
     public function delete() {
-        return parent::delete("content/{$this->uuid}");
-    }
-
-    /**
-     * Get additional information about a content object.
-     *
-     * This information will include meta fields, such as the
-     * public URL of this content.
-     *
-     * @link https://api.metropublisher.com/resources/content.html#content_info
-     */
-    public function getInfo() {
-        return $this->client->get(
-            sprintf('%s/content/%s/info', $this->getBaseUri(), $this->uuid)
-        );
+        return parent::delete("/content/{$this->uuid}");
     }
 
     /**
@@ -492,15 +479,37 @@ class Content extends AbstractResourceModel
     /**
      * @inheritdoc
      */
-    public function getFieldNames()
-    {
+    public static function getMetaFields() {
+        return [
+            'content',
+            'meta_title',
+            'meta_description',
+            'print_description',
+            'evergreen',
+            'teaser_image_uuid',
+            'feature_image_uuid',
+            'feature_image_url',
+            'feature_image_caption',
+            'feature_image_alttext',
+            'feature_thumb_url',
+            'teaser_image_url',
+            'section_uuid',
+            'blog_uuid',
+            'perma_url_path',
+            'video_uuid'
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public static function getDefaultFields() {
         return array_merge([
             'content_type',
             'title',
             'description',
             'state',
             'issued',
-            'urlname',
-        ], parent::getFieldNames());
+        ], parent::getDefaultFields());
     }
 }
