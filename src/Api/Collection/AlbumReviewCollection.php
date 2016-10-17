@@ -8,14 +8,14 @@ use MetroPublisher\Api\Models\AlbumReview;
  * Class AlbumReviewCollection
  * @package MetroPublisher\Api\Collections
  */
-class AlbumReviewCollection extends AbstractResourceCollection
+class AlbumReviewCollection extends ContentCollection
 {
     /**
      * @inheritdoc
      */
     public function all($page = 1, array $options = [])
     {
-        $options['ctypes'] = 'albums';
+        $options['ctypes'] = ContentCollection::TYPE_REVIEWS_ALBUM;
         return parent::all($page, $options);
     }
 

@@ -9,8 +9,6 @@ use MetroPublisher\MetroPublisher;
 /**
  * Class SlotCollection
  * @package MetroPublisher\Api\Collections
- *
- * @todo Consider converting this into an AbstractQueryableCollection
  */
 class SlotCollection extends AbstractResourceCollection
 {
@@ -30,29 +28,16 @@ class SlotCollection extends AbstractResourceCollection
     }
 
     public function all() {
-        $response = $this->client->get(
-            sprintf('%s/content/%s/slots', $this->getBaseUri(), $this->content->getUuid())
-        );
-
-        return $this->serializer->serializeArrayCollectionToObjects(
-            $this->getModelClass(),
-            $this->getModelDefaultFields(),
-            $response['items']
-        );
+        return parent::all(sprintf('%s/content/%s/slots', $this->getBaseUri(), $this->content->getUuid()));
     }
 
     public function find(Slot $slot) {
-        $result = $this->client->get(
-            sprintf('%s/content/%s/slots/%s', $this->getBaseUri(), $this->content->getUuid(), $slot->getUuid())
+        return parent::find(
+            sprintf('%s/content/%s/slots/%s',
+                $this->getBaseUri(),
+                $this->content->getUuid(),
+                $slot->getUuid())
         );
-
-        $slot = $this->serializer->serializeArrayToObject(
-            $this->getModelClass(),
-            $this->getModelDefaultFields(),
-            $result
-        );
-
-        return $slot;
     }
 
     /**

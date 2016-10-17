@@ -7,7 +7,7 @@ namespace MetroPublisher\Api\Models;
  *
  * @property string $rating
  */
-class AbstractReview extends Content
+abstract class AbstractReview extends Content
 {
     /** @var  string */
     protected $rating;

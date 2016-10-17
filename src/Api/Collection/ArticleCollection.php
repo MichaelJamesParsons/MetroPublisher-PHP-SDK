@@ -9,12 +9,18 @@ use MetroPublisher\Api\Models\Article;
  */
 class ArticleCollection extends ContentCollection
 {
+    /**
+     * @inheritdoc
+     */
     public function all($page = 1, array $options = [])
     {
         $options['ctypes'] = ContentCollection::TYPE_ARTICLES;
         return parent::all($page, $options);
     }
 
+    /**
+     * @inheritdoc
+     */
     protected function getModelClass()
     {
         return Article::class;

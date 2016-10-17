@@ -391,4 +391,14 @@ class Tag extends AbstractResourceModel
 
         return $this;
     }
+
+    /**
+     * @inheritdoc
+     */
+    protected function loadMetaData()
+    {
+        return $this->client->get(
+            sprintf('%s/tags/%s', $this->getBaseUri(), $this->uuid)
+        );
+    }
 }

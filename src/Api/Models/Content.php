@@ -127,7 +127,7 @@ abstract class Content extends AbstractResourceModel implements TaggableInterfac
             ['state' => $state]
         );
 
-        return ModelDeserializer::convertCollection(new ModelResolver(Tag::class), $tags['items'], $this->context);
+        return ModelDeserializer::convertCollection(new ModelResolver(Tag::class), $tags['items'], [$this->context]);
     }
 
     /**
@@ -141,16 +141,22 @@ abstract class Content extends AbstractResourceModel implements TaggableInterfac
             ['state' => $state]
         );
 
-        return ModelDeserializer::convertCollection(new ModelResolver(Tag::class), $tags['items'], $this->context);
+        return ModelDeserializer::convertCollection(new ModelResolver(Tag::class), $tags['items'], [$this->context]);
     }
 
     /**
      * Get the settings of a content object's slots.
      *
      * @link https://api.metropublisher.com/resources/content.html#content_slots
+     *
+     * @return Slot[]
      */
     public function getSlots() {
-        return $this->slotCollection->all();
+        $response = $this->client->get(sprintf('%s/content/%s/slots', $this->getBaseUri(), $this->uuid));
+
+        /** @var Slot[] $slots */
+        $slots = ModelDeserializer::convertCollection(new ModelResolver(Slot::class), $response['items'], [$this->context]);
+        return $slots;
     }
 
     /**
@@ -165,7 +171,7 @@ abstract class Content extends AbstractResourceModel implements TaggableInterfac
             sprintf('%s/content/%s/path_history', $this->getBaseUri(), $this->uuid)
         );
 
-        return ModelDeserializer::convertCollection(new ModelResolver($response), $response, $this->context);
+        return ModelDeserializer::convertCollection(new ModelResolver($response), $response, [$this->context]);
     }
 
     /**
@@ -193,7 +199,7 @@ abstract class Content extends AbstractResourceModel implements TaggableInterfac
             [ 'items' => $pathHistories ]
         );
 
-        return ModelDeserializer::convertCollection(new ModelResolver(PathHistory::class), $response, $this->context);
+        return ModelDeserializer::convertCollection(new ModelResolver(PathHistory::class), $response, [$this->context]);
     }
 
     /**
@@ -210,6 +216,16 @@ abstract class Content extends AbstractResourceModel implements TaggableInterfac
         return $this->client->post(
             sprintf('%s/content/%s/path_history', $this->getBaseUri(), $this->uuid),
             [ 'path' => $pathHistory->getPath() ]
+        );
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function loadMetaData()
+    {
+        return $this->client->get(
+            sprintf('%s/content/%s', $this->getBaseUri(), $this->uuid)
         );
     }
 

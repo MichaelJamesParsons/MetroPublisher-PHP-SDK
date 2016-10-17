@@ -492,4 +492,14 @@ class Location extends AbstractResourceModel
             'is_listing'
         ], parent::getMetaFields());
     }
+
+    /**
+     * @inheritdoc
+     */
+    protected function loadMetaData()
+    {
+        return $this->client->get(
+            sprintf('%s/locations/%s', $this->getBaseUri(), $this->uuid)
+        );
+    }
 }

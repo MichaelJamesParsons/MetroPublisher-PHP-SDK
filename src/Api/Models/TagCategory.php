@@ -35,4 +35,14 @@ class TagCategory extends AbstractResourceModel
     {
         return array_merge(['title'], parent::getDefaultFields());
     }
+
+    /**
+     * @inheritdoc
+     */
+    protected function loadMetaData()
+    {
+        return $this->client->get(
+            sprintf('%s/tags/categories/%s', $this->getBaseUri(), $this->uuid)
+        );
+    }
 }

@@ -5,6 +5,7 @@ use DateTime;
 use Exception;
 use MetroPublisher\Api\Models\AbstractModel;
 use MetroPublisher\Api\Models\Exception\ModelValidationException;
+use MetroPublisher\Common\Serializers\ModelDeserializer;
 use MetroPublisher\MetroPublisher;
 
 /**
@@ -168,31 +169,20 @@ abstract class AbstractResourceModel extends AbstractModel
      * public URL of this content.
      */
     public function syncMetaData() {
-        /** @var AbstractResourceModel $model */
-        $model = $this->collection->find($this->uuid);
-        $model->setMetaDataLoaded(true);
-
-        $this->syncFields($model);
+        /** @var array $values */
+        $values = $this->loadMetaData();
+        $this->syncFields($values);
         $this->setMetaDataLoaded(true);
     }
 
     /**
-     * @param AbstractModel $model
+     *
+     * @param array $values
      *
      * @throws Exception
      */
-    protected function syncFields(AbstractModel $model) {
-        if(!($model instanceof $this)) {
-            throw new Exception(sprintf(
-                "Cannot sync fields of %s with %s object.",
-                get_class($model),
-                get_class($this)
-            ));
-        }
-
-        foreach($model::getFieldNames() as $field) {
-            $this->{$field} = $model->{$field};
-        }
+    protected function syncFields(array $values) {
+        ModelDeserializer::mergeValuesWithInstance($this, $values);
     }
 
     /**
@@ -220,4 +210,9 @@ abstract class AbstractResourceModel extends AbstractModel
     protected function serialize() {
         return $this->serializer->serialize($this);
     }
+
+    /**
+     * @return array
+     */
+    protected abstract function loadMetaData();
 }

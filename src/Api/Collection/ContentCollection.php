@@ -17,11 +17,17 @@ class ContentCollection extends AbstractResourceCollection
     const TYPE_ROUNDUPS_LOCATION = 'roundups_location';
     const TYPE_ARTICLES = 'articles';
 
+    /**
+     * @inheritdoc
+     */
     public function all($page = 1, array $options = [])
     {
         return parent::all('/content', $page, $options);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function find($uuid) {
         return parent::find("/content/{$uuid}");
     }

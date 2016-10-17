@@ -25,7 +25,7 @@ class ModelDeserializer extends AbstractSerializer
         $modelType = $resolver->resolve($values);
         $keys = array_keys($values);
 
-        if(is_numeric($keys)) {
+        if(is_numeric($keys[0])) {
             $fieldsMap = $modelType::getDefaultFields();
             $tmp = $values;
             $values = [];
@@ -34,7 +34,17 @@ class ModelDeserializer extends AbstractSerializer
             }
         }
 
-        $instance = ReflectionUtils::getInstance($resolver->resolve($values), $instanceArgs);
+        $instance = ReflectionUtils::getInstance($modelType, $instanceArgs);
+        return self::createInstance($instance, $values);
+    }
+
+    /**
+     * @param AbstractModel $instance
+     * @param array         $values
+     *
+     * @return ReflectionClass
+     */
+    public static function mergeValuesWithInstance(AbstractModel $instance, array $values) {
         return self::createInstance($instance, $values);
     }
 
@@ -43,7 +53,7 @@ class ModelDeserializer extends AbstractSerializer
      * @param array                      $values
      * @param array                      $instanceArgs
      *
-     * @return AbstractModel[]
+     * @return \MetroPublisher\Api\Models\AbstractModel[]
      */
     public static function convertCollection(ModelTypeResolverInterface $resolver, array $values, array $instanceArgs = []) {
         $collection = [];

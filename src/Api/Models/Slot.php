@@ -3,7 +3,7 @@ namespace MetroPublisher\Api\Models;
 
 use MetroPublisher\Api\AbstractResourceModel;
 use MetroPublisher\Api\Models\Exception\ModelValidationException;
-use MetroPublisher\Api\Models\Factory\SlotMediaResolver;
+use MetroPublisher\Api\Models\Resolvers\SlotMediaResolver;
 use MetroPublisher\Common\Serializers\ModelDeserializer;
 
 /**
@@ -87,7 +87,7 @@ class Slot extends AbstractResourceModel
      * @return SlotMedia[]
      */
     public function getMedia() {
-        $response = $this->client->get("/content/{$this->uuid}/slots/{$this->uuid}/media");
+        $response = $this->client->get("/content/{$this->content_uuid}/slots/{$this->uuid}/media");
 
         /** @var SlotMedia[] $media */
         $media = ModelDeserializer::convertCollection(new SlotMediaResolver(), $response);
@@ -186,5 +186,17 @@ class Slot extends AbstractResourceModel
             'display',
             'content_url'
         ], parent::getFieldNames());
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function loadMetaData()
+    {
+        if(empty($this->content_uuid)) {
+            throw new ModelValidationException("Cannot load slot meta fields with no content UUID set.");
+        }
+
+        return $this->client->get("/content/{$this->content_uuid}/slots/{$this->uuid}");
     }
 }
