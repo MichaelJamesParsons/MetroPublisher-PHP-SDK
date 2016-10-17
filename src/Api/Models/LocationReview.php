@@ -6,11 +6,12 @@ use MetroPublisher\MetroPublisher;
 /**
  * Class LocationReview
  * @package MetroPublisher\Api\Models
- *
- * @property string $location_uuid
  */
 class LocationReview extends AbstractReview
 {
+    /** @var  string */
+    protected $location_uuid;
+
     /**
      * LocationReview constructor.
      *
@@ -40,5 +41,13 @@ class LocationReview extends AbstractReview
         $this->location_uuid = $location_uuid;
 
         return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public static function getMetaFields()
+    {
+        return array_merge(['location_uuid'], parent::getMetaFields());
     }
 }

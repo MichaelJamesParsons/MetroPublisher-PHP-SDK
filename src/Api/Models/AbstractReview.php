@@ -9,6 +9,9 @@ namespace MetroPublisher\Api\Models;
  */
 class AbstractReview extends Content
 {
+    /** @var  string */
+    protected $rating;
+
     /**
      * @return string
      */
@@ -35,8 +38,6 @@ class AbstractReview extends Content
      */
     public static function getMetaFields()
     {
-        return array_merge([
-            'rating'
-        ], parent::getMetaFields());
+        return array_merge(['rating'], parent::getMetaFields());
     }
 }

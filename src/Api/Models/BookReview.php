@@ -7,16 +7,27 @@ use MetroPublisher\MetroPublisher;
 /**
  * Class BookReview
  * @package MetroPublisher\Api\Models
- *
- * @property string     $book_title
- * @property string     $book_image_uuid
- * @property string     $book_isbn
- * @property DateTime   $book_issued
- * @property string[]   $book_provider_urls
- * @property string[]   $book_buy_urls
  */
 class BookReview extends AbstractReview
 {
+    /** @var  string */
+    protected $book_title;
+
+    /** @var  string */
+    protected $book_image_uuid;
+
+    /** @var  string */
+    protected $book_isbn;
+
+    /** @var  DateTime */
+    protected $book_issued;
+
+    /** @var  array */
+    protected $book_provider_urls;
+
+    /** @var  array */
+    protected $book_buy_urls;
+
     /**
      * BookReview constructor.
      *
@@ -150,13 +161,6 @@ class BookReview extends AbstractReview
 
     /**
      * @inheritdoc
-     *
-     *  * @property string     $book_title
-     * @property string     $book_image_uuid
-     * @property string     $book_isbn
-     * @property DateTime   $book_issued
-     * @property string[]   $book_provider_urls
-     * @property string[]   $book_buy_urls
      */
     public static function getDefaultFields() {
         return array_merge([
@@ -164,6 +168,9 @@ class BookReview extends AbstractReview
         ], parent::getDefaultFields());
     }
 
+    /**
+     * @inheritdoc
+     */
     public static function getMetaFields()
     {
         return array_merge([

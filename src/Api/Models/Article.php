@@ -17,7 +17,7 @@ class Article extends Content
      */
     public function __construct(MetroPublisher $metroPublisher)
     {
-        parent::__construct($metroPublisher, new ArticleCollection($metroPublisher));
+        parent::__construct($metroPublisher);
         $this->properties['contentType'] = Content::CONTENT_TYPE_ARTICLE;
     }
 }
