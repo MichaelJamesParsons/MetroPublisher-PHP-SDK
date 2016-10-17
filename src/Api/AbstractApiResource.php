@@ -24,6 +24,11 @@ abstract class AbstractApiResource
     /** @var ModelSerializerInterface */
     protected $serializer;
 
+    /**
+     * AbstractApiResource constructor.
+     *
+     * @param MetroPublisher $metroPublisher
+     */
     public function __construct(MetroPublisher $metroPublisher) {
         $this->context = $metroPublisher;
         $this->client  = $metroPublisher->getClient();

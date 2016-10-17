@@ -6,30 +6,84 @@ use MetroPublisher\Api\AbstractResourceModel;
 /**
  * Class Location
  * @package MetroPublisher\Api\Models
- *
- * @property string $title
- * @property string $description
- * @property array  $coords
- * @property string $state
- * @property string $thumb_uuid
- * @property string $street
- * @property string $streetnumber
- * @property string $pcode
- * @property string $geoname_id
- * @property string $phone
- * @property string $fax
- * @property string $email
- * @property string $website
- * @property string $price_index
- * @property string $opening_hours
- * @property string $content
- * @property boolean  $closed
- * @property string   $print_description
- * @property string   $sort_title
- * @property boolean  $is_listing
  */
 class Location extends AbstractResourceModel
 {
+    /** @var  string */
+    protected $title;
+
+    /** @var  string */
+    protected $description;
+
+    /** @var  array */
+    protected $coords;
+
+    /** @var  string */
+    protected $state;
+
+    /** @var  string */
+    protected $thumb_uuid;
+
+    /** @var  string */
+    protected $street;
+
+    /** @var  string */
+    protected $streetnumber;
+
+    /** @var  string */
+    protected $pcode;
+
+    /** @var  string */
+    protected $geoname_id;
+
+    /** @var  string */
+    protected $phone;
+
+    /** @var  string */
+    protected $fax;
+
+    /** @var  string */
+    protected $email;
+
+    /** @var  string */
+    protected $website;
+
+    /** @var  string */
+    protected $price_index;
+
+    /** @var  string */
+    protected $opening_hours;
+
+    /** @var  string */
+    protected $content;
+
+    /** @var  boolean */
+    protected $closed;
+
+    /** @var  string */
+    protected $print_description;
+
+    /** @var  string */
+    protected $sort_title;
+
+    /** @var  boolean */
+    protected $is_listing;
+
+    /**
+     * @inheritdoc
+     */
+    public function save()
+    {
+        return parent::save("/locations/{$this->uuid}");
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function delete() {
+        return parent::delete("/locations/{$this->uuid}");
+    }
+
     /**
      * @return string
      */
@@ -413,7 +467,7 @@ class Location extends AbstractResourceModel
     /**
      * @inheritdoc
      */
-    public function getFieldNames()
+    public static function getMetaFields()
     {
         return array_merge([
             'title',
@@ -436,6 +490,6 @@ class Location extends AbstractResourceModel
             'print_description',
             'sort_title',
             'is_listing'
-        ], parent::getFieldNames());
+        ], parent::getMetaFields());
     }
 }

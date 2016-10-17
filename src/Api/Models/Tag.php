@@ -2,25 +2,36 @@
 namespace MetroPublisher\Api\Models;
 
 use MetroPublisher\Api\AbstractResourceModel;
+use MetroPublisher\Api\Models\Resolvers\ModelResolver;
+use MetroPublisher\Common\Serializers\ModelDeserializer;
 
 /**
  * Class Tag
  * @package MetroPublisher\Api\Models
- *
- * @property string $last_name_or_title
- * @property string $first_name
- * @property string $description
- * @property string $state
- * @property array  $synonyms
- *                  - @todo add field getters/setters.
- *                  - @todo convert to string before save.
- *                  - @todo convert to array when value is set from API
- * @property string $content
- * @property string $feature_image_uuid
- *
  */
 class Tag extends AbstractResourceModel
 {
+    /** @var  string */
+    protected $last_name_or_title;
+
+    /** @var  $first_name */
+    protected $first_name;
+
+    /** @var  string */
+    protected $description;
+
+    /** @var  string */
+    protected $state;
+
+    /** @var  string */
+    protected $synonyms;
+
+    /** @var  string */
+    protected $content;
+
+    /** @var  string */
+    protected $feature_image_uuid;
+
     /**
      * A non-person tag.
      *
@@ -134,6 +145,100 @@ class Tag extends AbstractResourceModel
     /**
      * @inheritdoc
      */
+    public function save($endpoint)
+    {
+        return parent::save("/tags/{$this->uuid}");
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function delete($endpoint)
+    {
+        return parent::delete("/tags/{$this->uuid}");
+    }
+
+    /**
+     * Retrieve a batched collection of the categories of a specific tag.
+     *
+     * @link https://api.metropublisher.com/resources/tag.html#resource-get-tag-cats
+     *
+     * @return TagCategory[]
+     */
+    public function getCategories() {
+        $response = $this->client->get("/tags/{$this->uuid}/categories");
+
+        /** @var TagCategory[] $categories */
+        $categories = ModelDeserializer::convertCollection(
+            new ModelResolver(TagCategory::class),
+            $response,
+            $this->context
+        );
+
+        return $categories;
+    }
+
+    /**
+     * Gets the path history for this content.
+     *
+     * @link https://api.metropublisher.com/resources/content.html#content_path_history
+     *
+     * @return array
+     */
+    public function getPathHistory() {
+        $response = $this->client->get(
+            sprintf('%s/content/%s/path_history', $this->getBaseUri(), $this->uuid)
+        );
+
+        return ModelDeserializer::convertCollection(new ModelResolver($response), $response, $this->context);
+    }
+
+    /**
+     * Sets the path history for this tag.
+     *
+     * This method will replace all path_history entries for this
+     * content item with the list of path history items. To remove
+     * all path history items, call this method with an empty array
+     * as the first parameter.
+     *
+     * To add many entries at once, fetch this content's path history
+     * entries, then merge your own entries with the results and pass
+     * the collection into this method.
+     *
+     * @see Tag::addPathHistory()   To add a single path_history entry.
+     *
+     * @param array $pathHistories A list of PathHistory objects.
+     *
+     * @return array
+     */
+    public function setPathHistory(array $pathHistories) {
+        $response = $this->client->put(
+            sprintf('%s/tag/%s/path_history', $this->getBaseUri(), $this->uuid),
+            [ 'items' => $pathHistories ]
+        );
+
+        return ModelDeserializer::convertCollection(new ModelResolver(PathHistory::class), $response, $this->context);
+    }
+
+    /**
+     * Adds a path history entry for this tag.
+     *
+     * @see Tag::setPathHistory()   To add many entries at once.
+     *
+     * @param PathHistory $pathHistory
+     *
+     * @return array
+     */
+    public function addPathHistory(PathHistory $pathHistory) {
+        return $this->client->post(
+            sprintf('%s/content/%s/path_history', $this->getBaseUri(), $this->uuid),
+            [ 'path' => $pathHistory->getPath() ]
+        );
+    }
+
+    /**
+     * @inheritdoc
+     */
     public static function getFieldNames()
     {
         return array_merge([
@@ -228,7 +333,7 @@ class Tag extends AbstractResourceModel
     }
 
     /**
-     * @return array
+     * @return string
      */
     public function getSynonyms()
     {
@@ -236,7 +341,7 @@ class Tag extends AbstractResourceModel
     }
 
     /**
-     * @param array $synonyms
+     * @param string $synonyms
      *
      * @return $this
      */

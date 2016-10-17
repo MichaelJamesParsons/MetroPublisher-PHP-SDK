@@ -154,21 +154,6 @@ abstract class Content extends AbstractResourceModel implements TaggableInterfac
     }
 
     /**
-     * Get the details of a single slot.
-     *
-     * @link https://api.metropublisher.com/resources/content.html#content_slot_delete
-     *
-     * @param Slot $slot
-     *
-     * @return AbstractModel
-     *
-     * @todo Move to slot object.
-     */
-    private function getSlotInfo(Slot $slot) {
-        return $this->slotCollection->find($slot);
-    }
-
-    /**
      * Gets the path history for this content.
      *
      * @link https://api.metropublisher.com/resources/content.html#content_path_history
