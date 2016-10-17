@@ -1,7 +1,6 @@
 <?php
 namespace MetroPublisher\Api\Collections;
 
-use MetroPublisher\Api\AbstractQueryableCollection;
 use MetroPublisher\Api\AbstractResourceCollection;
 use MetroPublisher\Api\Models\Content;
 

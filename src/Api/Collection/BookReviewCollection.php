@@ -9,6 +9,9 @@ use MetroPublisher\Api\Models\BookReview;
  */
 class BookReviewCollection extends ContentCollection
 {
+    /**
+     * @inheritdoc
+     */
     public function all($page = 1, array $options = [])
     {
         $options['ctypes'] = ContentCollection::TYPE_REVIEWS_BOOK;

@@ -2,26 +2,26 @@
 namespace MetroPublisher\Api\Collections;
 
 use MetroPublisher\Api\AbstractResourceCollection;
-use MetroPublisher\Api\Models\Tag;
+use MetroPublisher\Api\Models\TagCategory;
 
 /**
- * Class TagCollection
+ * Class TagCategoryCollection
  * @package MetroPublisher\Api\Collections
  */
-class TagCollection extends AbstractResourceCollection
+class TagCategoryCollection extends AbstractResourceCollection
 {
     /**
      * @inheritdoc
      */
     public function all() {
-        return parent::all("/tags");
+        return parent::all("/tags/categories");
     }
 
     /**
      * @inheritdoc
      */
     public function find($uuid) {
-        return parent::find("/tags/{$uuid}");
+        return parent::find("/tags/categories/{$uuid}");
     }
 
     /**
@@ -29,6 +29,6 @@ class TagCollection extends AbstractResourceCollection
      */
     protected function getModelClass()
     {
-        return Tag::class;
+        return TagCategory::class;
     }
 }

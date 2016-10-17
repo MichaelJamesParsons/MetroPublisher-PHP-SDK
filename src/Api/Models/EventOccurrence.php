@@ -9,11 +9,34 @@ use DateTime;
  */
 class EventOccurrence extends AbstractModel
 {
+    /** @var  string */
+    protected $event_uuid;
+
     /** @var  DateTime */
     protected $start_time;
 
     /** @var DateTime */
     protected $end_time;
+
+    /**
+     * @return string
+     */
+    public function getEventUuid()
+    {
+        return $this->event_uuid;
+    }
+
+    /**
+     * @param string $event_uuid
+     *
+     * @return $this
+     */
+    public function setEventUuid($event_uuid)
+    {
+        $this->event_uuid = $event_uuid;
+
+        return $this;
+    }
 
     /**
      * @return DateTime

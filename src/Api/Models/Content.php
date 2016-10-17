@@ -87,10 +87,16 @@ abstract class Content extends AbstractResourceModel implements TaggableInterfac
         $this->tagCollection = new TagCollection($metroPublisher);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function save() {
         return parent::save("/content/{$this->uuid}");
     }
 
+    /**
+     * @inheritdoc
+     */
     public function delete() {
         return parent::delete("/content/{$this->uuid}");
     }
