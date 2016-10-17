@@ -2,7 +2,8 @@
 namespace MetroPublisher\Api;
 
 use MetroPublisher\Api\Models\AbstractModel;
-use MetroPublisher\Api\Models\Serializers\ResourceModelSerializer;
+use MetroPublisher\Api\Models\Resolvers\ModelResolver;
+use MetroPublisher\Common\Serializers\ModelDeserializer;
 use MetroPublisher\MetroPublisher;
 
 /**
@@ -11,13 +12,18 @@ use MetroPublisher\MetroPublisher;
  */
 abstract class AbstractResourceCollection extends AbstractApiResource
 {
-    /** @var ResourceModelSerializer */
-    protected $serializer;
+    /** @var  ModelDeserializer */
+    protected $deserializer;
 
+    /**
+     * AbstractResourceCollection constructor.
+     *
+     * @param MetroPublisher $metroPublisher
+     */
     public function __construct(MetroPublisher $metroPublisher)
     {
         parent::__construct($metroPublisher);
-        $this->serializer = new ResourceModelSerializer($metroPublisher);
+        $this->deserializer = new ModelDeserializer();
     }
 
     /**
@@ -34,10 +40,10 @@ abstract class AbstractResourceCollection extends AbstractApiResource
         $options['page']   = $page;
         $response = $this->client->get($this->getBaseUri() . $endpoint, $options);
 
-        return $this->serializer->serializeArrayCollectionToObjects(
-            $this->getModelClass(),
-            $fields,
-            $response['items']
+        return ModelDeserializer::convertCollection(
+            new ModelResolver($this->getModelClass()),
+            $response['items'],
+            [$this->context]
         );
     }
 
@@ -47,11 +53,8 @@ abstract class AbstractResourceCollection extends AbstractApiResource
      * @return AbstractModel
      */
     public function find($endpoint) {
-        return $this->serializer->serializeArrayToObject(
-            $this->getModelClass(),
-            $this->getModelFieldNames(),
-            $this->client->get($this->getBaseUri() . $endpoint)
-        );
+        $model = $this->client->get($this->getBaseUri() . $endpoint);
+        return ModelDeserializer::convert(new ModelResolver($this->getModelClass()), $model, [$this->context]);
     }
 
     protected function getModelDefaultFields() {

@@ -1,22 +1,25 @@
 <?php
 namespace MetroPublisher\Api\Collections;
 
-use MetroPublisher\Api\Models\Article;
+use MetroPublisher\Api\Models\BookReview;
 
 /**
- * Class ArticleCollection
+ * Class BookReviewCollection
  * @package MetroPublisher\Api\Collections
  */
-class ArticleCollection extends ContentCollection
+class BookReviewCollection extends ContentCollection
 {
     public function all($page = 1, array $options = [])
     {
-        $options['ctypes'] = 'articles';
+        $options['ctypes'] = ContentCollection::TYPE_REVIEWS_BOOK;
         return parent::all($page, $options);
     }
 
+    /**
+     * @inheritdoc
+     */
     protected function getModelClass()
     {
-        return Article::class;
+        return BookReview::class;
     }
 }

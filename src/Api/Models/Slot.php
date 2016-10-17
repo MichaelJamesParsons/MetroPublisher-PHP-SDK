@@ -1,21 +1,32 @@
 <?php
 namespace MetroPublisher\Api\Models;
 
+use MetroPublisher\Api\AbstractResourceModel;
+use MetroPublisher\Api\Models\Exception\ModelValidationException;
+use MetroPublisher\Api\Models\Factory\SlotMediaResolver;
+use MetroPublisher\Common\Serializers\ModelDeserializer;
+
 /**
  * Class Slot
  * @package MetroPublisher\Api\Models
- *
- * @property string $uuid
- * @property string $content_uuid
- * @property string $relevance
- * @property string $display
- * @property string $url
- * @property string $content_url
- *
- * @todo Consider converting this into an AbstractResourceModel
  */
-class Slot extends AbstractModel
+class Slot extends AbstractResourceModel
 {
+    /** @var  string */
+    protected $content_uuid;
+
+    /** @var  string */
+    protected $relevance;
+
+    /** @var  string */
+    protected $display;
+
+    /** @var  string */
+    protected $url;
+
+    /** @var  string */
+    protected $content_url;
+
     /**
      * Relevance of the slot, i.e. how prominently it should be displayed within the content.
      *
@@ -45,23 +56,42 @@ class Slot extends AbstractModel
     const DISPLAY_CAROUSEL = 'carousel';
 
     /**
-     * @return string
+     * @inheritdoc
      */
-    public function getUuid()
+    public function save($endpoint)
     {
-        return $this->uuid;
+        if(empty($this->content_uuid)) {
+            throw new ModelValidationException("Cannot save slot with no content UUID set.");
+        }
+
+        return parent::save("/content/{$this->content_uuid}/slots/{$this->uuid}");
     }
 
     /**
-     * @param string $uuid
-     *
-     * @return $this
+     * @inheritdoc
      */
-    public function setUuid($uuid)
+    public function delete($endpoint)
     {
-        $this->uuid = $uuid;
+        if(empty($this->content_uuid)) {
+            throw new ModelValidationException("Cannot save slot with no content UUID set.");
+        }
 
-        return $this;
+        return parent::delete("/content/{$this->content_uuid}/slots/{$this->uuid}");
+    }
+
+    /**
+     * Fetch the the slot's media objects.
+     *
+     * @link https://api.metropublisher.com/resources/content.html#content_slot_media_get
+     *
+     * @return SlotMedia[]
+     */
+    public function getMedia() {
+        $response = $this->client->get("/content/{$this->uuid}/slots/{$this->uuid}/media");
+
+        /** @var SlotMedia[] $media */
+        $media = ModelDeserializer::convertCollection(new SlotMediaResolver(), $response);
+        return $media;
     }
 
     /**
@@ -147,15 +177,14 @@ class Slot extends AbstractModel
     /**
      * @inheritdoc
      */
-    public function getFieldNames()
+    public static function getFieldNames()
     {
-        return [
-            'uuid',
+        return array_merge([
             'url',
             'content_uuid',
             'relevance',
             'display',
             'content_url'
-        ];
+        ], parent::getFieldNames());
     }
 }

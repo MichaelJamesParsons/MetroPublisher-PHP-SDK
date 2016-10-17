@@ -134,7 +134,7 @@ class Tag extends AbstractResourceModel
     /**
      * @inheritdoc
      */
-    public function getFieldNames()
+    public static function getFieldNames()
     {
         return array_merge([
             'last_name_or_title',

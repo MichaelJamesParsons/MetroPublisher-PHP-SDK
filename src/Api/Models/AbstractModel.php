@@ -71,10 +71,6 @@ abstract class AbstractModel extends AbstractApiResource
         }
     }
 
-    public function toJson() {
-        return json_encode($this->properties);
-    }
-
     /**
      * Returns a list of fields associated with this object.
      *

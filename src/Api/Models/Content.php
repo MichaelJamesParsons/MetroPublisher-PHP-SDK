@@ -1,36 +1,65 @@
 <?php
-namespace MetroPublisher\Api;
+namespace MetroPublisher\Api\Models;
 
 use DateTime;
-use MetroPublisher\Api\Collections\ContentCollection;
+use MetroPublisher\Api\AbstractResourceModel;
 use MetroPublisher\Api\Collections\SlotCollection;
-use MetroPublisher\Api\Models\AbstractModel;
-use MetroPublisher\Api\Models\PathHistory;
-use MetroPublisher\Api\Models\Slot;
+use MetroPublisher\Api\Collections\TagCollection;
+use MetroPublisher\Api\Models\Resolvers\ModelResolver;
+use MetroPublisher\Api\TaggableInterface;
+use MetroPublisher\Common\Serializers\ModelDeserializer;
 use MetroPublisher\MetroPublisher;
 
 /**
  * Class Content
  * @package MetroPublisher\Api\Content
- *
- * @property string $content_type
- * @property string $title
- * @property string $description
- * @property string $content
- * @property string $state
- * @property string $meta_title
- * @property string $meta_description
- * @property string $print_description
- * @property datetime $issued
- * @property string $urlname
- * @property boolean $evergreen
- * @property string teaser_image_uuid
- * @property string feature_image_uuid
  */
-class Content extends AbstractResourceModel
+abstract class Content extends AbstractResourceModel implements TaggableInterface
 {
+    /** @var  string */
+    protected $content_type;
+
+    /** @var  string */
+    protected $title;
+
+    /** @var  string */
+    protected $description;
+
+    /** @var  string */
+    protected $content;
+
+    /** @var  string */
+    protected $state;
+
+    /** @var  string */
+    protected $meta_title;
+
+    /** @var  string */
+    protected $meta_description;
+
+    /** @var  string */
+    protected $print_description;
+
+    /** @var  DateTime */
+    protected $issued;
+
+    /** @var  string */
+    protected $urlname;
+
+    /** @var  boolean */
+    protected $evergreen;
+
+    /** @var  string */
+    protected $teaser_image_uuid;
+
+    /** @var  string */
+    protected $feature_image_uuid;
+
     /** @var  SlotCollection */
     protected $slotCollection;
+
+    /** @var  TagCollection */
+    protected $tagCollection;
 
     const CONTENT_TYPE_ARTICLE = 'article';
     const CONTENT_TYPE_EVENT   = 'event';
@@ -45,11 +74,17 @@ class Content extends AbstractResourceModel
     const STATE_DRAFT     = 'draft';
     const STATE_PUBLISHED = 'published';
 
+    /**
+     * Content constructor.
+     *
+     * @param MetroPublisher $metroPublisher
+     */
     public function __construct(MetroPublisher $metroPublisher)
     {
-        parent::__construct($metroPublisher, new ContentCollection($metroPublisher));
+        parent::__construct($metroPublisher);
 
         $this->slotCollection = new SlotCollection($metroPublisher, $this);
+        $this->tagCollection = new TagCollection($metroPublisher);
     }
 
     public function save() {
@@ -82,47 +117,31 @@ class Content extends AbstractResourceModel
     }
 
     /**
-     * Get the tags associated with the content object.
+     * @inheritdoc
      *
-     * The tags may be filtered by specifying a state. The 'approved' state is
-     * used by default if the user is public. Otherwise, not filter will be
-     * applied.
-     *
-     * @link https://api.metropublisher.com/resources/content.html#content_tags_all
-     *
-     * @param string $state The state of which the tags must have to be
-     *                      included in the the results.
-     *
-     * @return array
+     * @link https://api.metropublisher.com/resources/content.html#content_tags
      */
     public function getTags($state = 'approved') {
-        return $this->client->get(
+        $tags = $this->client->get(
             sprintf('%s/content/%s/tags', $this->getBaseUri(), $this->uuid),
             ['state' => $state]
         );
+
+        return ModelDeserializer::convertCollection(new ModelResolver(Tag::class), $tags['items'], $this->context);
     }
 
     /**
-     * Get the tags for a content object that represent a specific tag/content
-     * relationship, defined by 'predicate'.
+     * @inheritdoc
      *
-     * The tags may be filtered by specifying a state. The 'approved' state is
-     * used by default if the user is public. Otherwise, not filter will be
-     * applied.
-     *
-     * @link https://api.metropublisher.com/resources/content.html#content_tags
-     *
-     * @param string $predicate The targeted predicate.
-     * @param string $state     The state of which the tags must have to be
-     *                          included in the the results.
-     *
-     * @return array
+     * @link https://api.metropublisher.com/resources/content.html#content_tags_all
      */
     public function getTagsWithPredicate($predicate, $state = 'approved') {
-        return $this->client->get(
+        $tags = $this->client->get(
             sprintf('%s/content/%s/tags/%s', $this->getBaseUri(), $this->uuid, $predicate),
             ['state' => $state]
         );
+
+        return ModelDeserializer::convertCollection(new ModelResolver(Tag::class), $tags['items'], $this->context);
     }
 
     /**
@@ -142,22 +161,11 @@ class Content extends AbstractResourceModel
      * @param Slot $slot
      *
      * @return AbstractModel
+     *
+     * @todo Move to slot object.
      */
-    public function getSlotInfo(Slot $slot) {
+    private function getSlotInfo(Slot $slot) {
         return $this->slotCollection->find($slot);
-    }
-
-    /**
-     * @todo Complete
-     *
-     * @param Slot $slot
-     *
-     * @return array
-     */
-    public function deleteSlot(Slot $slot) {
-        return $this->client->get(
-            sprintf('%s/content/%s/slots/%s', $this->getBaseUri(), $this->uuid)
-        );
     }
 
     /**
@@ -168,9 +176,11 @@ class Content extends AbstractResourceModel
      * @return array
      */
     public function getPathHistory() {
-        return $this->client->get(
+        $response = $this->client->get(
             sprintf('%s/content/%s/path_history', $this->getBaseUri(), $this->uuid)
         );
+
+        return ModelDeserializer::convertCollection(new ModelResolver($response), $response, $this->context);
     }
 
     /**
@@ -193,10 +203,12 @@ class Content extends AbstractResourceModel
      * @return array
      */
     public function setPathHistory(array $pathHistories) {
-        return $this->client->put(
+        $response = $this->client->put(
             sprintf('%s/content/%s/path_history', $this->getBaseUri(), $this->uuid),
             [ 'items' => $pathHistories ]
         );
+
+        return ModelDeserializer::convertCollection(new ModelResolver(PathHistory::class), $response, $this->context);
     }
 
     /**
@@ -212,7 +224,7 @@ class Content extends AbstractResourceModel
     public function addPathHistory(PathHistory $pathHistory) {
         return $this->client->post(
             sprintf('%s/content/%s/path_history', $this->getBaseUri(), $this->uuid),
-            [ 'path' => $pathHistory ]
+            [ 'path' => $pathHistory->getPath() ]
         );
     }
 

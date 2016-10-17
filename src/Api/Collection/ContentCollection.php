@@ -2,7 +2,7 @@
 namespace MetroPublisher\Api\Collections;
 
 use MetroPublisher\Api\AbstractQueryableCollection;
-use MetroPublisher\Api\Content;
+use MetroPublisher\Api\Models\Content;
 
 /**
  * Class ContentCollection
@@ -10,6 +10,12 @@ use MetroPublisher\Api\Content;
  */
 class ContentCollection extends AbstractQueryableCollection
 {
+    const TYPE_REVIEWS_BOOK = 'reviews_book';
+    const TYPE_REVIEWS_ALBUM = 'reviews_album';
+    const TYPE_REVIEWS_LOCATION = 'reviews_location';
+    const TYPE_ROUNDUPS_LOCATION = 'roundups_location';
+    const TYPE_ARTICLES = 'articles';
+
     public function all($page = 1, array $options = [])
     {
         return parent::all('/content', $page, $options);

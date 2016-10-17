@@ -1,6 +1,7 @@
 <?php
 namespace MetroPublisher\Http;
 
+use GuzzleHttp\Exception\ClientException;
 use \InvalidArgumentException;
 use GuzzleHttp\Client as Guzzle;
 use MetroPublisher\Http\Response\ResponseMediator;
@@ -92,7 +93,11 @@ class Client implements HttpClientInterface
 
         $options = array_merge($options, $this->getDefaultOptions());
 
-        $response = call_user_func_array([$this->client, $method], [$endpoint, $options]);
+        try {
+            $response = call_user_func_array([$this->client, $method], [$endpoint, $options]);
+        } catch(ClientException $e) {
+            $response = $e->getResponse();
+        }
         return $this->handleResponse($response);
     }
 

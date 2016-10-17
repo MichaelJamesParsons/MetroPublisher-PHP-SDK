@@ -2,7 +2,7 @@
 namespace MetroPublisher\Api\Collections;
 
 use MetroPublisher\Api\AbstractResourceCollection;
-use MetroPublisher\Api\Content;
+use MetroPublisher\Api\Models\Content;
 use MetroPublisher\Api\Models\Slot;
 use MetroPublisher\MetroPublisher;
 

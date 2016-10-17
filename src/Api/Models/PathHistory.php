@@ -4,15 +4,22 @@ namespace MetroPublisher\Api\Models;
 /**
  * Class PathHistory
  * @package MetroPublisher\Api\Models
- *
- * @property string $path
  */
 class PathHistory extends AbstractModel
 {
+    /** @var  string */
+    private $path;
+
+    /**
+     * @return string
+     */
     public function getPath() {
         return $this->path;
     }
 
+    /**
+     * @param $path
+     */
     public function setPath($path) {
         $this->path = $path;
     }
@@ -20,7 +27,7 @@ class PathHistory extends AbstractModel
     /**
      * @inheritdoc
      */
-    public function getFieldNames()
+    public static function getFieldNames()
     {
         return [
             'path'
