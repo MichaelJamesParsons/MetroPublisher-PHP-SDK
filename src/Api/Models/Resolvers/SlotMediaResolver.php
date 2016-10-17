@@ -1,9 +1,8 @@
 <?php
-namespace MetroPublisher\Api\Models\Factory;
+namespace MetroPublisher\Api\Models\Resolvers;
 
 use MetroPublisher\Api\Models\EmbedSlotMedia;
 use MetroPublisher\Api\Models\ExternalSlotMedia;
-use MetroPublisher\Api\Models\Resolvers\ModelTypeResolverInterface;
 use MetroPublisher\Api\Models\SlotMedia;
 
 /**

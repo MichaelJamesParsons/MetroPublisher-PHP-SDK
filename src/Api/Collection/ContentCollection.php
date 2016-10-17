@@ -2,13 +2,14 @@
 namespace MetroPublisher\Api\Collections;
 
 use MetroPublisher\Api\AbstractQueryableCollection;
+use MetroPublisher\Api\AbstractResourceCollection;
 use MetroPublisher\Api\Models\Content;
 
 /**
  * Class ContentCollection
  * @package MetroPublisher\Api
  */
-class ContentCollection extends AbstractQueryableCollection
+class ContentCollection extends AbstractResourceCollection
 {
     const TYPE_REVIEWS_BOOK = 'reviews_book';
     const TYPE_REVIEWS_ALBUM = 'reviews_album';
@@ -25,11 +26,9 @@ class ContentCollection extends AbstractQueryableCollection
         return parent::find("/content/{$uuid}");
     }
 
-    public function findBy(array $fields, $page = 1, array $options = [])
-    {
-        return parent::findBy("/content", $fields, $page, $options);
-    }
-
+    /**
+     * @inheritdoc
+     */
     protected function getModelClass()
     {
         return Content::class;

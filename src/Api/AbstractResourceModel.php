@@ -5,17 +5,11 @@ use DateTime;
 use Exception;
 use MetroPublisher\Api\Models\AbstractModel;
 use MetroPublisher\Api\Models\Exception\ModelValidationException;
-use MetroPublisher\Common\Serializers\ModelDeserializer;
 use MetroPublisher\MetroPublisher;
 
 /**
  * Class AbstractResourceModel
  * @package MetroPublisher\Api\Models
- *
- * @property string   $uuid
- * @property string   $urlname
- * @property DateTime $modified
- * @property DateTime $created
  */
 abstract class AbstractResourceModel extends AbstractModel
 {
@@ -167,15 +161,6 @@ abstract class AbstractResourceModel extends AbstractModel
         return $this->client->delete($this->getBaseUri() . $endpoint, $this->serialize());
     }
 
-    public function __get($property)
-    {
-        if(in_array($property, static::getMetaFields()) && !$this->isMetaDataLoaded) {
-            $this->syncMetaData();
-        }
-
-        return parent::__get($property);
-    }
-
     /**
      * Get additional information about an object.
      *
@@ -207,6 +192,16 @@ abstract class AbstractResourceModel extends AbstractModel
 
         foreach($model::getFieldNames() as $field) {
             $this->{$field} = $model->{$field};
+        }
+    }
+
+    /**
+     * @param $property
+     */
+    public function __get($property)
+    {
+        if(in_array($property, static::getMetaFields()) && !$this->isMetaDataLoaded) {
+            $this->syncMetaData();
         }
     }
 
