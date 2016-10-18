@@ -117,4 +117,12 @@ abstract class SlotMedia extends AbstractResourceModel
     {
         return array_merge(['content'], parent::getMetaFields());
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function loadMetaData()
+    {
+        return $this->client->get("/content/{$this->content_uuid}/slots/{$this->uuid}");
+    }
 }

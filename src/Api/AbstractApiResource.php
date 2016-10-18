@@ -1,7 +1,7 @@
 <?php
 namespace MetroPublisher\Api;
 
-use MetroPublisher\Common\Serializers\JsonModelSerializer;
+use MetroPublisher\Common\Serializers\ModelArraySerializer;
 use MetroPublisher\Common\Serializers\ModelSerializerInterface;
 use MetroPublisher\Http\HttpClientInterface;
 use MetroPublisher\MetroPublisher;
@@ -33,7 +33,7 @@ abstract class AbstractApiResource
         $this->context = $metroPublisher;
         $this->client  = $metroPublisher->getClient();
         $this->baseUri = sprintf('%s/%s', $metroPublisher::API_BASE, $metroPublisher->getAccountId());
-        $this->serializer = new JsonModelSerializer($metroPublisher);
+        $this->serializer = new ModelArraySerializer($metroPublisher);
     }
 
     protected function getBaseUri() {

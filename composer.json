@@ -1,5 +1,5 @@
 {
-  "name": "michaeljamesparsons/metropublisher-php-api",
+  "name": "michaeljamesparsons/metropublisher-php-sdk",
   "description": "A simple wrapper for the MetroPublisher API.",
   "type": "library",
   "license": "MIT",

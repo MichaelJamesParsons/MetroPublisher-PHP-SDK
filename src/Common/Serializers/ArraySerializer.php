@@ -6,10 +6,10 @@ use MetroPublisher\Api\Models\AbstractModel;
 use MetroPublisher\Common\ReflectionUtils;
 
 /**
- * Class JsonModelSerializer
+ * Class ModelArraySerializer
  * @package MetroPublisher\Common\Serializers
  */
-class JsonModelSerializer implements ModelSerializerInterface
+class ModelArraySerializer implements ModelSerializerInterface
 {
     /**
      * @inheritdoc
@@ -21,12 +21,16 @@ class JsonModelSerializer implements ModelSerializerInterface
         $array = [];
 
         foreach($fields as $field) {
-            $array[] = $this->convertValueToSerializable(
-                $reflection->getProperty($field)->getValue()
-            );
+            $propertyReflection = $reflection->getProperty($field);
+            $propertyReflection->setAccessible(true);
+            $value = $propertyReflection->getValue($model);
+
+            if(!is_null($value)) {
+                $array[$field] = $this->convertValueToSerializable($value);
+            }
         }
 
-        return json_encode($array);
+        return $array;
     }
 
     /**

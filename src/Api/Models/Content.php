@@ -506,16 +506,7 @@ abstract class Content extends AbstractResourceModel implements TaggableInterfac
             'print_description',
             'evergreen',
             'teaser_image_uuid',
-            'feature_image_uuid',
-            'feature_image_url',
-            'feature_image_caption',
-            'feature_image_alttext',
-            'feature_thumb_url',
-            'teaser_image_url',
-            'section_uuid',
-            'blog_uuid',
-            'perma_url_path',
-            'video_uuid'
+            'feature_image_uuid'
         ];
     }
 
