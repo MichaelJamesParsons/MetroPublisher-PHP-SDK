@@ -3,6 +3,8 @@
 
 This is a fully featured SDK for the [MetroPublisher<sup>TM</sup> REST API](https://api.metropublisher.com/index.html). It takes care of the boilerplate HTTP client request/response logic for you so you can dive right into implementing the API into your app.
 
+Complete documentation coming soon!
+
 ## Installation
 
 The recommended method of installation is through [composer](https://getcomposer.org).
@@ -72,27 +74,19 @@ Non-resource models are dependent on another resource model to exist. For exampl
 
 Each resource model has a corresponding collection object. A collection object allows you to fetch groups of a resource model, an individual resource model, or groups of models that are related to the resource model.
     
+    <?php
+    ... 
+    
     $articleCollection = new ArticleCollection($metroPublisher);
     
     //Get group of articles
-    $articles =  $articleCollection->all(1);
+    $articles =  $articleCollection->all();
         
-    //Get page 2 of articles
+    //Get next group of articles
     $moreArticles = $articleCollection->all(2);
     
     //Get a single article
     $singleArticle = $articleCollection->find('e6ebac9c-94cb-11e6-ae22-56b6b6499611');
-    
-
-
-## Before You Start
-
-There are some things you should know before you dive into your next MetroPublisher project.
-
-### Sometimes fields are missing
-
-...
-
 
 ## Tests
 

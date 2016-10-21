@@ -4,6 +4,8 @@ namespace MetroPublisher\Api;
 use MetroPublisher\Api\Models\AbstractModel;
 use MetroPublisher\Api\Models\Resolvers\ModelResolver;
 use MetroPublisher\Common\Serializers\ModelDeserializer;
+use MetroPublisher\Exception\MetroPublisherException;
+use MetroPublisher\Http\Exception\ResourceNotFoundException;
 use MetroPublisher\MetroPublisher;
 
 /**
@@ -48,13 +50,19 @@ abstract class AbstractResourceCollection extends AbstractApiResource
     }
 
     /**
+     * Find a single object with the given UUID.
+     *
      * @param $endpoint
      *
      * @return AbstractModel
      */
     public function find($endpoint) {
-        $model = $this->client->get($this->getBaseUri() . $endpoint);
-        return ModelDeserializer::convert(new ModelResolver($this->getModelClass()), $model, [$this->context]);
+        try {
+            $model = $this->client->get($this->getBaseUri() . $endpoint);
+            return ModelDeserializer::convert(new ModelResolver($this->getModelClass()), $model, [$this->context]);
+        } catch(ResourceNotFoundException $e) {
+            return null;
+        }
     }
 
     protected function getModelDefaultFields() {

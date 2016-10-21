@@ -2,7 +2,6 @@
 namespace MetroPublisher\Api;
 
 use DateTime;
-use Exception;
 use MetroPublisher\Api\Models\AbstractModel;
 use MetroPublisher\Api\Models\Exception\ModelValidationException;
 use MetroPublisher\Common\Serializers\ModelDeserializer;
@@ -29,6 +28,9 @@ abstract class AbstractResourceModel extends AbstractModel
     /** @var  boolean */
     protected $isMetaDataLoaded;
 
+    /** @var  array */
+    protected $changedFields;
+
     /**
      * AbstractResourceModel constructor.
      *
@@ -39,6 +41,7 @@ abstract class AbstractResourceModel extends AbstractModel
         parent::__construct($metroPublisher);
 
         $this->isMetaDataLoaded = false;
+        $this->changedFields = [];
     }
 
     /**
@@ -168,21 +171,26 @@ abstract class AbstractResourceModel extends AbstractModel
      * This information will include meta fields, such as the
      * public URL of this content.
      */
-    public function syncMetaData() {
+    public function syncFields() {
         /** @var array $values */
         $values = $this->loadMetaData();
-        $this->syncFields($values);
+        ModelDeserializer::mergeValuesWithInstance($this, $this->unsetChangedFields($values));
         $this->setMetaDataLoaded(true);
     }
 
     /**
+     * Unset the array key if it has been changed.
      *
-     * @param array $values
+     * @param array $values - The results to alter.
      *
-     * @throws Exception
+     * @return array        - The results with specific keys unset.
      */
-    protected function syncFields(array $values) {
-        ModelDeserializer::mergeValuesWithInstance($this, $values);
+    protected function unsetChangedFields(array $values) {
+        foreach($this->changedFields as $changedField => $value) {
+            unset($values[$changedField]);
+        }
+
+        return $values;
     }
 
     /**
@@ -191,7 +199,13 @@ abstract class AbstractResourceModel extends AbstractModel
     public function __get($property)
     {
         if(in_array($property, static::getMetaFields()) && !$this->isMetaDataLoaded) {
-            $this->syncMetaData();
+            $this->syncFields();
+        }
+    }
+
+    public function __set($property, $value) {
+        if(!$this->isMetaDataLoaded() && in_array($property, static::getMetaFields())) {
+            $this->changedFields[] = $property;
         }
     }
 

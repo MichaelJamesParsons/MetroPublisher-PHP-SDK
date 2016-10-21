@@ -1,5 +1,5 @@
 <?php
-namespace MetroPublisher\Exception;
+namespace MetroPublisher\Http\Exception;
 
 use \Exception;
 

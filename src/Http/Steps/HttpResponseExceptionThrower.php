@@ -1,9 +1,9 @@
 <?php
 namespace MetroPublisher\Http\Steps;
 
-
-use MetroPublisher\Exception\ApiException;
-use MetroPublisher\Exception\BadParametersException;
+use Exception;
+use MetroPublisher\Http\Exception\BadParametersException;
+use MetroPublisher\Http\Exception\ResourceNotFoundException;
 use MetroPublisher\Http\Response\ResponseMediator;
 use Psr\Http\Message\ResponseInterface;
 
@@ -33,12 +33,10 @@ class HttpResponseExceptionThrower implements HttpStepInterface
         switch($body['error']) {
             case 'bad_parameters':
                 return new BadParametersException($body["error_description"], $body["error_info"]);
-                break;
             case 'not_found':
-                return new ApiException($body["error_description"]);
-                break;
+                return new ResourceNotFoundException($body["error_description"]);
             default:
-                return new \Exception("Request failed.");
+                return new Exception("Request failed.");
         }
     }
 }

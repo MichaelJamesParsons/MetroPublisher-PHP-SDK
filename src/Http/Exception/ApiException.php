@@ -1,5 +1,7 @@
 <?php
-namespace MetroPublisher\Exception;
+namespace MetroPublisher\Http\Exception;
+
+use MetroPublisher\Exception\MetroPublisherException;
 
 /**
  * Class ApiException

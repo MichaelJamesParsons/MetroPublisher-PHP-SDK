@@ -2,3 +2,5 @@
 composer.lock
 vendor/
 Tests/
+apigen.phar
+docs/ export-ignore

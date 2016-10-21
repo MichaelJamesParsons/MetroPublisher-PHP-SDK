@@ -115,7 +115,7 @@ abstract class Content extends AbstractResourceModel implements TaggableInterfac
      *
      * @return array
      */
-    public function getRelatedLinks($state = 'live') {
+    public function getRelatedLinks($state = 'published') {
         return $this->client->get(
             sprintf('%s/content/%s/related_links', $this->getBaseUri(), $this->uuid),
             ['state' => $state]
@@ -177,7 +177,7 @@ abstract class Content extends AbstractResourceModel implements TaggableInterfac
             sprintf('%s/content/%s/path_history', $this->getBaseUri(), $this->uuid)
         );
 
-        return ModelDeserializer::convertCollection(new ModelResolver($response), $response, [$this->context]);
+        return ModelDeserializer::convertCollection(new ModelResolver(PathHistory::class), $response['items'], [$this->context]);
     }
 
     /**
