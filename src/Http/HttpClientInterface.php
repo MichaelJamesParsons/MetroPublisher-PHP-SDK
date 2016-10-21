@@ -9,35 +9,32 @@ use Psr\Http\Message\ResponseInterface;
  */
 interface HttpClientInterface
 {
-    /**
-     * @param       $resource
-     * @param array $args
-     *
-     * @return ResponseInterface
-     */
-    public function get($resource, array $args = []);
+    public function __construct(array $steps = []);
 
     /**
-     * @param       $resource
-     * @param array $args
+     * @param       $method
+     * @param       $endpoint
+     * @param array $fields
+     * @param array $options
      *
-     * @return ResponseInterface
+     * @return string
      */
-    public function post($resource, array $args = []);
+    public function execute($method, $endpoint, array $fields = [], array $options = []);
 
     /**
-     * @param       $resource
-     * @param array $args
+     * @param ResponseInterface $response
      *
-     * @return ResponseInterface
+     * @return string
      */
-    public function put($resource, array $args = []);
+    public function handleResponse(ResponseInterface $response);
 
     /**
-     * @param       $resource
-     * @param array $args
-     *
-     * @return ResponseInterface
+     * @return array
      */
-    public function delete($resource, array $args = []);
+    public function getDefaultOptions();
+
+    /**
+     * @param array $options
+     */
+    public function setDefaultOptions(array $options);
 }
