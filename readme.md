@@ -90,7 +90,7 @@ Each resource model has a corresponding collection object. A collection object a
 
 ## Tests
 
-Comming soon!
+Coming soon!
 
 ## License
 
