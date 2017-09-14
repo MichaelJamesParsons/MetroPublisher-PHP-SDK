@@ -1,6 +1,7 @@
 <?php
 namespace MetroPublisher;
 
+use Http\Guzzle\GuzzleAdapter;
 use MetroPublisher\Http\Client;
 use MetroPublisher\Http\ConnectionException;
 use MetroPublisher\Http\HttpClientInterface;
@@ -30,16 +31,20 @@ class MetroPublisher
     const API_BASE = "https://api.metropublisher.com";
     const O_AUTH_BASE = "https://go.metropublisher.com";
 
-    public function __construct($key, $secret, array $clientOptions = [])
+    public function __construct($key, $secret, HttpClientInterface $httpClient = null)
     {
         $this->apiKey = $key;
         $this->secretKey = $secret;
 
-        $clientOptions["verify"]       = false;
-        $clientOptions["content-type"] = "application/json; charset=UTF-8";
-        $clientOptions['base_uri']     = MetroPublisher::API_BASE;
+        if ($httpClient === null) {
+            $httpClient = new GuzzleAdapter(new \GuzzleHttp\Client());
+        }
 
-        $this->client = new Client($clientOptions, [
+        $httpClient->setSslVerification(false);
+        $httpClient->setDefaultContentType("application/json; charset=UTF-8");
+        $httpClient->setBaseUri(MetroPublisher::O_AUTH_BASE);
+
+        $this->client = new Client($httpClient, [
             new HttpResponseExceptionThrower()
         ]);
     }
@@ -83,9 +88,11 @@ class MetroPublisher
 
             $this->accountId = $response['items'][0]['id'];
             $this->bearer    = $response['access_token'];
-            $this->client->setDefaultOptions([
-                "headers" => ["Authorization" => "Bearer {$this->bearer}"]
-            ]);
+
+            // Add default authorization header to HTTP client
+            $clientConfig = $this->client->getOptions();
+            $clientConfig['headers']['Authorization'] = "Bearer {$this->bearer}";
+            $this->client->setOptions($clientConfig);
         } catch(\Exception $e) {
             throw new ConnectionException("Failed to fetch bearer. Please check API credentials.", $e->getCode(), $e);
         }

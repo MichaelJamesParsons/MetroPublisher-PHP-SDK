@@ -3,7 +3,6 @@ namespace MetroPublisher\Http;
 
 use GuzzleHttp\Exception\ClientException;
 use \InvalidArgumentException;
-use GuzzleHttp\Client as Guzzle;
 use MetroPublisher\Http\Response\ResponseMediator;
 use MetroPublisher\Http\Steps\HttpStepInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -18,30 +17,27 @@ use Psr\Http\Message\ResponseInterface;
  * @method array patch($endpoint, array $fields = [], array $options = [])
  * @method array delete($endpoint, array $fields = [], array $options = [])
  */
-class Client implements HttpClientInterface
+class Client
 {
-    /** @var  array */
-    protected $defaultOptions;
-
     /** @var  array */
     protected $steps;
 
-    /** @var  Client */
-    private $client;
+    /** @var  HttpClientInterface */
+    private $httpClient;
 
     private static $httpMethods = ['get', 'post', 'put', 'patch', 'delete'];
 
     /**
      * Client constructor.
      *
-     * @param array $options
-     * @param array $steps
+     * @param HttpClientInterface $client
+     * @param array               $options
+     * @param array               $steps
      */
-    public function __construct(array $options = [], array $steps = [])
+    public function __construct(HttpClientInterface $client, array $options = [], array $steps = [])
     {
-        $this->client = new Guzzle($options);
-        $this->steps  = $steps;
-        $this->defaultOptions = [];
+        $this->httpClient = $client;
+        $this->steps      = $steps;
     }
 
     /**
@@ -91,10 +87,10 @@ class Client implements HttpClientInterface
             $options['form_params'] = $fields;
         }
 
-        $options = array_merge($options, $this->getDefaultOptions());
+        $options = array_merge($options, $this->getOptions());
 
         try {
-            $response = call_user_func_array([$this->client, $method], [$endpoint, $options]);
+            $response = call_user_func_array([$this->httpClient, $method], [$endpoint, $options]);
         } catch(ClientException $e) {
             $response = $e->getResponse();
         }
@@ -136,15 +132,15 @@ class Client implements HttpClientInterface
     /**
      * @return array
      */
-    public function getDefaultOptions() {
-        return $this->defaultOptions;
+    public function getOptions() {
+        return $this->httpClient->getOptions();
     }
 
     /**
      * @param array $options
      */
-    public function setDefaultOptions(array $options)
+    public function setOptions(array $options)
     {
-        $this->defaultOptions = $options;
+        $this->httpClient->setOptions($options);
     }
 }
