@@ -6,6 +6,8 @@ use MetroPublisher\MetroPublisher;
 /**
  * Class EmbedSlotMedia
  * @package MetroPublisher\Api\Models
+ *
+ * @property string $embed_code
  */
 class EmbedSlotMedia extends SlotMedia
 {
@@ -26,26 +28,6 @@ class EmbedSlotMedia extends SlotMedia
     {
         parent::__construct($metroPublisher, $slot);
         $this->type = SlotMedia::TYPE_EMBED_CODE;
-    }
-
-    /**
-     * @return string
-     */
-    public function getEmbedCode()
-    {
-        return $this->embed_code;
-    }
-
-    /**
-     * @param string $embed_code
-     *
-     * @return $this
-     */
-    public function setEmbedCode($embed_code)
-    {
-        $this->embed_code = $embed_code;
-
-        return $this;
     }
 
     /**

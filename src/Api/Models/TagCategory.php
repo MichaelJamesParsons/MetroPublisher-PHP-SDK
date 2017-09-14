@@ -6,12 +6,11 @@ use MetroPublisher\Api\AbstractResourceModel;
 /**
  * Class TagCategory
  * @package MetroPublisher\Api\Models
+ *
+ * @property string $title
  */
 class TagCategory extends AbstractResourceModel
 {
-    /** @var  string */
-    protected $title;
-
     /**
      * @inheritdoc
      */

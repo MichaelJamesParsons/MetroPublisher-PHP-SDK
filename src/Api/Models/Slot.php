@@ -9,24 +9,15 @@ use MetroPublisher\Common\Serializers\ModelDeserializer;
 /**
  * Class Slot
  * @package MetroPublisher\Api\Models
+ *
+ * @property string $content_uuid
+ * @property string $relevance
+ * @property string $display
+ * @property string $url
+ * @property string $content_url
  */
 class Slot extends AbstractResourceModel
 {
-    /** @var  string */
-    protected $content_uuid;
-
-    /** @var  string */
-    protected $relevance;
-
-    /** @var  string */
-    protected $display;
-
-    /** @var  string */
-    protected $url;
-
-    /** @var  string */
-    protected $content_url;
-
     /**
      * Relevance of the slot, i.e. how prominently it should be displayed within the content.
      *
@@ -92,86 +83,6 @@ class Slot extends AbstractResourceModel
         /** @var SlotMedia[] $media */
         $media = ModelDeserializer::convertCollection(new SlotMediaResolver(), $response);
         return $media;
-    }
-
-    /**
-     * @return string
-     */
-    public function getContentUuid()
-    {
-        return $this->content_uuid;
-    }
-
-    /**
-     * @param string $content_uuid
-     *
-     * @return $this
-     */
-    public function setContentUuid($content_uuid)
-    {
-        $this->content_uuid = $content_uuid;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRelevance()
-    {
-        return $this->relevance;
-    }
-
-    /**
-     * @param string $relevance
-     *
-     * @return $this
-     */
-    public function setRelevance($relevance)
-    {
-        $this->relevance = $relevance;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDisplay()
-    {
-        return $this->display;
-    }
-
-    /**
-     * @param string $display
-     *
-     * @return $this
-     */
-    public function setDisplay($display)
-    {
-        $this->display = $display;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getUrl()
-    {
-        return $this->url;
-    }
-
-    /**
-     * @param string $url
-     *
-     * @return $this
-     */
-    public function setUrl($url)
-    {
-        $this->url = $url;
-
-        return $this;
     }
 
     /**

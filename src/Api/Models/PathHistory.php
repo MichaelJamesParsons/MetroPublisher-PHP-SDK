@@ -6,29 +6,14 @@ use MetroPublisher\MetroPublisher;
 /**
  * Class PathHistory
  * @package MetroPublisher\Api\Models
+ *
+ * @property string $path
  */
 class PathHistory extends AbstractModel
 {
-    /** @var  string */
-    private $path;
-
     public function __construct(MetroPublisher $metroPublisher, $path)
     {
         parent::__construct($metroPublisher);
-        $this->path = $path;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPath() {
-        return $this->path;
-    }
-
-    /**
-     * @param $path
-     */
-    public function setPath($path) {
         $this->path = $path;
     }
 
@@ -37,8 +22,6 @@ class PathHistory extends AbstractModel
      */
     public static function getFieldNames()
     {
-        return [
-            'path'
-        ];
+        return ['path'];
     }
 }

@@ -9,26 +9,15 @@ namespace MetroPublisher\Api\Models;
  */
 abstract class AbstractReview extends Content
 {
-    /** @var  string */
-    protected $rating;
-
     /**
-     * @return string
-     */
-    public function getRating()
-    {
-        return $this->rating;
-    }
-
-    /**
-     * @param string $rating
+     * @param int $rating
      *
      * @return $this
      */
     public function setRating($rating)
     {
         //Convert float to string to prevent API errors.
-        $this->rating = $rating . "";
+        $this->fields['rating'] = $rating . "";
 
         return $this;
     }

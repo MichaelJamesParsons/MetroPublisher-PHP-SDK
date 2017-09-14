@@ -8,30 +8,17 @@ use MetroPublisher\Common\Serializers\ModelDeserializer;
 /**
  * Class Tag
  * @package MetroPublisher\Api\Models
+ *
+ * @property string $last_name_or_title
+ * @property string $first_name
+ * @property string $description
+ * @property string $state
+ * @property string $synonyms
+ * @property string $content
+ * @property string $feature_image_uuid
  */
 class Tag extends AbstractResourceModel
 {
-    /** @var  string */
-    protected $last_name_or_title;
-
-    /** @var  $first_name */
-    protected $first_name;
-
-    /** @var  string */
-    protected $description;
-
-    /** @var  string */
-    protected $state;
-
-    /** @var  string */
-    protected $synonyms;
-
-    /** @var  string */
-    protected $content;
-
-    /** @var  string */
-    protected $feature_image_uuid;
-
     /**
      * A non-person tag.
      *
@@ -250,146 +237,6 @@ class Tag extends AbstractResourceModel
             'content',
             'feature_image_uuid'
         ], parent::getFieldNames());
-    }
-
-    /**
-     * @return string
-     */
-    public function getLastNameOrTitle()
-    {
-        return $this->last_name_or_title;
-    }
-
-    /**
-     * @param string $last_name_or_title
-     *
-     * @return $this
-     */
-    public function setLastNameOrTitle($last_name_or_title)
-    {
-        $this->last_name_or_title = $last_name_or_title;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getFirstName()
-    {
-        return $this->first_name;
-    }
-
-    /**
-     * @param string $first_name
-     *
-     * @return $this
-     */
-    public function setFirstName($first_name)
-    {
-        $this->first_name = $first_name;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * @param string $description
-     *
-     * @return $this
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getState()
-    {
-        return $this->state;
-    }
-
-    /**
-     * @param string $state
-     *
-     * @return $this
-     */
-    public function setState($state)
-    {
-        $this->state = $state;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSynonyms()
-    {
-        return $this->synonyms;
-    }
-
-    /**
-     * @param string $synonyms
-     *
-     * @return $this
-     */
-    public function setSynonyms($synonyms)
-    {
-        $this->synonyms = $synonyms;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getContent()
-    {
-        return $this->content;
-    }
-
-    /**
-     * @param string $content
-     *
-     * @return $this
-     */
-    public function setContent($content)
-    {
-        $this->content = $content;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getFeatureImageUuid()
-    {
-        return $this->feature_image_uuid;
-    }
-
-    /**
-     * @param string $feature_image_uuid
-     *
-     * @return $this
-     */
-    public function setFeatureImageUuid($feature_image_uuid)
-    {
-        $this->feature_image_uuid = $feature_image_uuid;
-
-        return $this;
     }
 
     /**

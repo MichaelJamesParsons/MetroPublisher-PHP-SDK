@@ -2,6 +2,7 @@
 namespace MetroPublisher\Api\Models;
 
 use MetroPublisher\Api\AbstractApiResource;
+use MetroPublisher\Exception\MetroPublisherException;
 use MetroPublisher\MetroPublisher;
 
 /**
@@ -10,6 +11,9 @@ use MetroPublisher\MetroPublisher;
  */
 abstract class AbstractModel extends AbstractApiResource
 {
+    /** @var  array */
+    protected $fields;
+
     /**
      * AbstractModel constructor.
      *
@@ -18,6 +22,7 @@ abstract class AbstractModel extends AbstractApiResource
     public function __construct(MetroPublisher $metroPublisher)
     {
         parent::__construct($metroPublisher);
+        $this->fields = [];
     }
 
     /**
@@ -67,5 +72,35 @@ abstract class AbstractModel extends AbstractApiResource
      */
     public static function getMetaFields() {
         return [];
+    }
+
+    public function __get($property)
+    {
+        if (!$this->hasField($property)) {
+            throw new MetroPublisherException(sprintf(
+                'Resource model %s has no field %s',
+                static::class,
+                $property
+            ));
+        }
+
+        return $this->fields[$property];
+    }
+
+    public function __set($property, $value)
+    {
+        if (!$this->hasField($property)) {
+            throw new MetroPublisherException(sprintf(
+                'Resource model %s has no field %s',
+                static::class,
+                $property
+            ));
+        }
+
+        $this->fields[$property] = $value;
+    }
+
+    private function hasField($property) {
+        return in_array($this::getMetaFields(), $property) || in_array($this::getMetaFields(), $property);
     }
 }
