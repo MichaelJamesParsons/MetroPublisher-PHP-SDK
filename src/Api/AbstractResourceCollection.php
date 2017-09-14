@@ -4,7 +4,6 @@ namespace MetroPublisher\Api;
 use MetroPublisher\Api\Models\AbstractModel;
 use MetroPublisher\Api\Models\Resolvers\ModelResolver;
 use MetroPublisher\Common\Serializers\ModelDeserializer;
-use MetroPublisher\Exception\MetroPublisherException;
 use MetroPublisher\Http\Exception\ResourceNotFoundException;
 use MetroPublisher\MetroPublisher;
 

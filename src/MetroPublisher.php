@@ -28,7 +28,6 @@ class MetroPublisher
     public $client;
 
     const API_BASE = "https://api.metropublisher.com";
-
     const O_AUTH_BASE = "https://go.metropublisher.com";
 
     public function __construct($key, $secret, array $clientOptions = [])

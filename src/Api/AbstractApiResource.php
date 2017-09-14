@@ -33,7 +33,7 @@ abstract class AbstractApiResource
         $this->context = $metroPublisher;
         $this->client  = $metroPublisher->getClient();
         $this->baseUri = sprintf('%s/%s', $metroPublisher::API_BASE, $metroPublisher->getAccountId());
-        $this->serializer = new ModelArraySerializer($metroPublisher);
+        $this->serializer = new ModelArraySerializer();
     }
 
     protected function getBaseUri() {
