@@ -1,6 +1,7 @@
 <?php
 namespace MetroPublisher\Api\Models;
 
+use Api\ResourceModelInterface;
 use MetroPublisher\Api\AbstractApiResource;
 use MetroPublisher\Exception\MetroPublisherException;
 use MetroPublisher\MetroPublisher;
@@ -9,7 +10,7 @@ use MetroPublisher\MetroPublisher;
  * Class AbstractModel
  * @package MetroPublisher\Api\Models
  */
-abstract class AbstractModel extends AbstractApiResource
+abstract class AbstractModel extends AbstractApiResource implements ResourceModelInterface
 {
     /** @var  array */
     protected $fields;
