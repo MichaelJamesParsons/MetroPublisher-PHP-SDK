@@ -27,7 +27,7 @@ class SlotCollection extends AbstractResourceCollection
         $this->content = $content;
     }
 
-    public function all() {
+    public function all($page = 1, array $options = []) {
         return parent::all(sprintf('%s/content/%s/slots', $this->getBaseUri(), $this->content->getUuid()));
     }
 

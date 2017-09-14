@@ -1,14 +1,15 @@
 <?php
 namespace MetroPublisher\Api\Collections;
 
-use MetroPublisher\Api\AbstractResourceCollection;
+use Api\ResourceCollectionInterface;
 use MetroPublisher\Api\Models\Content;
+use MetroPublisher\Api\AbstractResourceCollection;
 
 /**
  * Class ContentCollection
  * @package MetroPublisher\Api
  */
-class ContentCollection extends AbstractResourceCollection
+class ContentCollection extends AbstractResourceCollection implements ResourceCollectionInterface
 {
     const TYPE_REVIEWS_BOOK = 'reviews_book';
     const TYPE_REVIEWS_ALBUM = 'reviews_album';

@@ -2,9 +2,10 @@
 namespace MetroPublisher\Api\Collections;
 
 use DateTime;
-use MetroPublisher\Api\AbstractResourceCollection;
+use Api\ResourceCollectionInterface;
 use MetroPublisher\Api\Models\Event;
 use MetroPublisher\Api\Models\EventOccurrence;
+use MetroPublisher\Api\AbstractResourceCollection;
 use MetroPublisher\Api\Models\Resolvers\ModelResolver;
 use MetroPublisher\Common\Serializers\ModelDeserializer;
 
@@ -12,7 +13,7 @@ use MetroPublisher\Common\Serializers\ModelDeserializer;
  * Class EventCollection
  * @package MetroPublisher\Api\Collections
  */
-class EventCollection extends AbstractResourceCollection
+class EventCollection extends AbstractResourceCollection implements ResourceCollectionInterface
 {
     /**
      * @inheritdoc

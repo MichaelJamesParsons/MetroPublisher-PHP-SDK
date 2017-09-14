@@ -13,8 +13,8 @@ class TagCategoryCollection extends AbstractResourceCollection
     /**
      * @inheritdoc
      */
-    public function all() {
-        return parent::all("/tags/categories");
+    public function all($page = 1, array $options = []) {
+        return parent::all("/tags/categories", $page, $options);
     }
 
     /**
