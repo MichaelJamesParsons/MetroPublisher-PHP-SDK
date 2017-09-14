@@ -20,7 +20,7 @@ class LocationReview extends AbstractReview
     public function __construct(MetroPublisher $metroPublisher)
     {
         parent::__construct($metroPublisher);
-        $this->properties['contentType'] = Content::CONTENT_TYPE_REVIEW_LOCATION;
+        $this->content_type = Content::CONTENT_TYPE_REVIEW_LOCATION;
     }
 
     /**

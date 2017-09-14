@@ -144,7 +144,7 @@ abstract class AbstractResourceModel extends AbstractModel
      * @return array
      * @throws ModelValidationException
      */
-    protected function save($endpoint) {
+    protected function doSave($endpoint) {
         if(empty($this->uuid)) {
             throw new ModelValidationException("Cannot save " . gettype($this) . ". UUID not set.");
         }
@@ -161,7 +161,7 @@ abstract class AbstractResourceModel extends AbstractModel
      *
      * @return array
      */
-    protected function delete($endpoint) {
+    protected function doDelete($endpoint) {
         return $this->client->delete($this->getBaseUri() . $endpoint, $this->serialize());
     }
 

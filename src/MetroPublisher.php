@@ -43,8 +43,6 @@ class MetroPublisher
         $this->client = new Client($clientOptions, [
             new HttpResponseExceptionThrower()
         ]);
-
-        $this->connect();
     }
 
     /**
@@ -104,5 +102,9 @@ class MetroPublisher
     public function getAccountId()
     {
         return $this->accountId;
+    }
+
+    public function isAuthenticated() {
+        return !empty($this->accountId) && !empty($this->bearer);
     }
 }

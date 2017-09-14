@@ -147,7 +147,7 @@ class Tag extends AbstractResourceModel
      */
     public function save($endpoint)
     {
-        return parent::save("/tags/{$this->uuid}");
+        return parent::doSave("/tags/{$this->uuid}");
     }
 
     /**

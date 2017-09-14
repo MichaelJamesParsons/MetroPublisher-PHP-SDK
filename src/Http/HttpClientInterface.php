@@ -1,16 +1,12 @@
 <?php
 namespace MetroPublisher\Http;
 
-use Psr\Http\Message\ResponseInterface;
-
 /**
  * Interface HttpClientInterface
  * @package MetroPublisher\Http
  */
 interface HttpClientInterface
 {
-    public function __construct(array $steps = []);
-
     /**
      * @param       $method
      * @param       $endpoint
@@ -22,13 +18,6 @@ interface HttpClientInterface
     public function execute($method, $endpoint, array $fields = [], array $options = []);
 
     /**
-     * @param ResponseInterface $response
-     *
-     * @return string
-     */
-    public function handleResponse(ResponseInterface $response);
-
-    /**
      * @return array
      */
     public function getDefaultOptions();
@@ -37,4 +26,9 @@ interface HttpClientInterface
      * @param array $options
      */
     public function setDefaultOptions(array $options);
+
+    public function get($endpoint, array $fields = [], array $options = []);
+    public function patch($endpoint, array $fields = [], array $options = []);
+    public function post($endpoint, array $fields = [], array $options = []);
+    public function delete($endpoint, array $fields = [], array $options = []);
 }

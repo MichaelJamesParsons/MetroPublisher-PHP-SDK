@@ -106,7 +106,7 @@ class Client implements HttpClientInterface
      *
      * @return array
      */
-    public function handleResponse(ResponseInterface $response) {
+    private function handleResponse(ResponseInterface $response) {
         /** @var HttpStepInterface $step */
         foreach($this->steps as $step) {
             $response = $step->handle($response);

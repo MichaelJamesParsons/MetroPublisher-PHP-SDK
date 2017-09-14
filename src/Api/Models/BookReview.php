@@ -36,7 +36,7 @@ class BookReview extends AbstractReview
     public function __construct(MetroPublisher $metroPublisher)
     {
         parent::__construct($metroPublisher);
-        $this->properties['content_type'] = Content::CONTENT_TYPE_REVIEW_BOOK;
+        $this->content_type = Content::CONTENT_TYPE_REVIEW_BOOK;
     }
 
     /**

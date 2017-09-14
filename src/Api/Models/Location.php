@@ -74,7 +74,7 @@ class Location extends AbstractResourceModel
      */
     public function save()
     {
-        return parent::save("/locations/{$this->uuid}");
+        return parent::doSave("/locations/{$this->uuid}");
     }
 
     /**

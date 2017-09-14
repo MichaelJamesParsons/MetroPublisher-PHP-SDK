@@ -91,14 +91,14 @@ abstract class Content extends AbstractResourceModel implements TaggableInterfac
      * @inheritdoc
      */
     public function save() {
-        return parent::save("/content/{$this->uuid}");
+        return parent::doSave("/content/{$this->uuid}");
     }
 
     /**
      * @inheritdoc
      */
     public function delete() {
-        return parent::delete("/content/{$this->uuid}");
+        return parent::doDelete("/content/{$this->uuid}");
     }
 
     /**
@@ -155,14 +155,11 @@ abstract class Content extends AbstractResourceModel implements TaggableInterfac
      *
      * @link https://api.metropublisher.com/resources/content.html#content_slots
      *
-     * @return Slot[]
+     * @return AbstractModel[]|Slot[]
      */
     public function getSlots() {
         $response = $this->client->get(sprintf('%s/content/%s/slots', $this->getBaseUri(), $this->uuid));
-
-        /** @var Slot[] $slots */
-        $slots = ModelDeserializer::convertCollection(new ModelResolver(Slot::class), $response['items'], [$this->context]);
-        return $slots;
+        return ModelDeserializer::convertCollection(new ModelResolver(Slot::class), $response['items'], [$this->context]);
     }
 
     /**

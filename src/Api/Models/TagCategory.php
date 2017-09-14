@@ -17,7 +17,7 @@ class TagCategory extends AbstractResourceModel
      */
     public function save()
     {
-        return parent::save("/tags/categories/{$this->uuid}");
+        return parent::doSave("/tags/categories/{$this->uuid}");
     }
 
     /**

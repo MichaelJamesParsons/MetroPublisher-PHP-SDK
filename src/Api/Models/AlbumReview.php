@@ -19,10 +19,10 @@ class AlbumReview extends AbstractReview
     /** @var  DateTime */
     protected $album_issued;
 
-    /** @var  string */
+    /** @var  array */
     protected $album_provider_urls;
 
-    /** @var  string */
+    /** @var  array */
     protected $album_buy_urls;
 
     /**
@@ -33,7 +33,9 @@ class AlbumReview extends AbstractReview
     public function __construct(MetroPublisher $metroPublisher)
     {
         parent::__construct($metroPublisher);
-        $this->properties['contentType'] = Content::CONTENT_TYPE_REVIEW_ALBUM;
+        $this->content_type = Content::CONTENT_TYPE_REVIEW_ALBUM;
+        $this->album_provider_urls = [];
+        $this->album_buy_urls = [];
     }
 
     /**

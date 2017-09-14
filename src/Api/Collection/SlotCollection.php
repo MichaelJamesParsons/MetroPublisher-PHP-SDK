@@ -10,7 +10,7 @@ use MetroPublisher\MetroPublisher;
  * Class SlotCollection
  * @package MetroPublisher\Api\Collections
  */
-class SlotCollection extends AbstractResourceCollection
+class SlotCollection extends Abstr actResourceCollection
 {
     /** @var  Content $content */
     private $content;

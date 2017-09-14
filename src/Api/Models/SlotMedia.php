@@ -87,7 +87,7 @@ abstract class SlotMedia extends AbstractResourceModel
      */
     public function save($endpoint)
     {
-        return parent::save("/content/{$this->slot_uuid}/slots/{}/media");
+        return parent::doSave("/content/{$this->slot_uuid}/slots/{}/media");
     }
 
     /**

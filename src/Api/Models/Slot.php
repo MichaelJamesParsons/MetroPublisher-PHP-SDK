@@ -64,7 +64,7 @@ class Slot extends AbstractResourceModel
             throw new ModelValidationException("Cannot save slot with no content UUID set.");
         }
 
-        return parent::save("/content/{$this->content_uuid}/slots/{$this->uuid}");
+        return parent::doSave("/content/{$this->content_uuid}/slots/{$this->uuid}");
     }
 
     /**
