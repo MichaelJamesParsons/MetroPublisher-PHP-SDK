@@ -20,6 +20,7 @@ class GuzzleAdapter implements HttpClientInterface
     public function __construct(Client $guzzle)
     {
         $this->guzzle = $guzzle;
+        $this->options = [];
     }
 
     /**

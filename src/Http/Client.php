@@ -31,10 +31,9 @@ class Client
      * Client constructor.
      *
      * @param HttpClientInterface $client
-     * @param array               $options
      * @param array               $steps
      */
-    public function __construct(HttpClientInterface $client, array $options = [], array $steps = [])
+    public function __construct(HttpClientInterface $client, array $steps = [])
     {
         $this->httpClient = $client;
         $this->steps      = $steps;
@@ -102,7 +101,7 @@ class Client
      *
      * @return array
      */
-    private function handleResponse(ResponseInterface $response) {
+    protected function handleResponse(ResponseInterface $response) {
         /** @var HttpStepInterface $step */
         foreach($this->steps as $step) {
             $response = $step->handle($response);
@@ -133,7 +132,8 @@ class Client
      * @return array
      */
     public function getOptions() {
-        return $this->httpClient->getOptions();
+        $options = $this->httpClient->getOptions();
+        return (is_array($options)) ? $options : [];
     }
 
     /**
