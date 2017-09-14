@@ -20,29 +20,31 @@ If you are using composer, these dependencies should be installed automatically.
 
 ## Quickstart
 
-    use \MetroPublisher\MetroPublisher;
-    use MetroPublisher\Api\Models\Article;
-    use MetroPublisher\Api\Models\Content;
-    ...
-    
-    //Create a new MetroPublisher API instance
-    $metroPublisher = new \MetroPublisher\MetroPublisher($publicKey, $secretKey);
-    
-    //Create a new article
-    $article = new Article($metroPublisher);
-    $article->setUuid('e6ebac9c-94cb-11e6-ae22-56b6b6499611')
-            ->setUrlname("lorem-ipsum")
-            ->setTitle('Lorem Ipsum')
-            ->setDescription('Parturient lacus a tempus.')
-            ->setContent('<p>Parturient lacus a tempus sed ultricies nibh.</p>')
-            ->setIssued(new DateTime('10/1/2016'))
-            ->setState(Content::STATE_PUBLISHED);
-    
-    //Save the article
-    $article->save();
-    
-    //Delete the article
-    $article->delete();
+```php
+<?php
+use MetroPublisher\MetroPublisher;
+use MetroPublisher\Api\Models\Article;
+use MetroPublisher\Api\Models\Content;
+
+//Create a new MetroPublisher API instance
+$metroPublisher = new MetroPublisher($publicKey, $secretKey);
+
+//Create a new article
+$article = new Article($metroPublisher);
+$article->uuid('e6ebac9c-94cb-11e6-ae22-56b6b6499611')
+        ->urlname("lorem-ipsum")
+        ->title('Lorem Ipsum')
+        ->description('Parturient lacus a tempus.')
+        ->content('<p>Parturient lacus a tempus sed ultricies nibh.</p>')
+        ->issued(new DateTime('10/1/2016'))
+        ->state(Content::STATE_PUBLISHED);
+
+//Save the article
+$article->save();
+
+//Delete the article
+$article->delete();
+```
 
 ## Dictionary
 
@@ -73,24 +75,26 @@ Non-resource models are dependent on another resource model to exist. For exampl
 ### Collections
 
 Each resource model has a corresponding collection object. A collection object allows you to fetch groups of a resource model, an individual resource model, or groups of models that are related to the resource model.
+
+```php
+<?php
+... 
+
+$articleCollection = new ArticleCollection($metroPublisher);
+
+//Get group of articles
+$articles =  $articleCollection->all();
     
-    <?php
-    ... 
-    
-    $articleCollection = new ArticleCollection($metroPublisher);
-    
-    //Get group of articles
-    $articles =  $articleCollection->all();
-        
-    //Get next group of articles
-    $moreArticles = $articleCollection->all(2);
-    
-    //Get a single article
-    $singleArticle = $articleCollection->find('e6ebac9c-94cb-11e6-ae22-56b6b6499611');
+//Get next group of articles
+$moreArticles = $articleCollection->all(2);
+
+//Get a single article
+$singleArticle = $articleCollection->find('e6ebac9c-94cb-11e6-ae22-56b6b6499611');
+```   
 
 ## Tests
 
-Comming soon!
+Coming soon!
 
 ## License
 
