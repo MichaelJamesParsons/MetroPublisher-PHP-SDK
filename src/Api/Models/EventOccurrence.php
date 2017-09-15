@@ -13,10 +13,10 @@ class EventOccurrence extends AbstractModel
     protected $event_uuid;
 
     /** @var  DateTime */
-    protected $start_time;
+    protected $dtstart;
 
     /** @var DateTime */
-    protected $end_time;
+    protected $dtend;
 
     /**
      * @return string
@@ -41,19 +41,19 @@ class EventOccurrence extends AbstractModel
     /**
      * @return DateTime
      */
-    public function getStartTime()
+    public function getDtstart()
     {
-        return $this->start_time;
+        return $this->dtstart;
     }
 
     /**
-     * @param DateTime $start_time
+     * @param DateTime $dtstart
      *
      * @return $this
      */
-    public function setStartTime($start_time)
+    public function setDtstart($dtstart)
     {
-        $this->start_time = $start_time;
+        $this->dtstart = $dtstart;
 
         return $this;
     }
@@ -61,20 +61,29 @@ class EventOccurrence extends AbstractModel
     /**
      * @return DateTime
      */
-    public function getEndTime()
+    public function getDtend()
     {
-        return $this->end_time;
+        return $this->dtend;
     }
 
     /**
-     * @param DateTime $end_time
+     * @param DateTime $dtend
      *
      * @return $this
      */
-    public function setEndTime($end_time)
+    public function setDtend($dtend)
     {
-        $this->end_time = $end_time;
+        $this->dtend = $dtend;
 
         return $this;
+    }
+
+    public static function getDefaultFields()
+    {
+        return array(
+            'event_uuid',
+            'dtstart',
+            'dtend'
+        );
     }
 }

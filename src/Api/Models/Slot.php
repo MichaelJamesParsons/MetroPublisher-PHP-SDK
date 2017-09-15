@@ -5,6 +5,7 @@ use MetroPublisher\Api\AbstractResourceModel;
 use MetroPublisher\Api\Models\Exception\ModelValidationException;
 use MetroPublisher\Api\Models\Resolvers\SlotMediaResolver;
 use MetroPublisher\Common\Serializers\ModelDeserializer;
+use MetroPublisher\MetroPublisher;
 
 /**
  * Class Slot
@@ -26,6 +27,9 @@ class Slot extends AbstractResourceModel
 
     /** @var  string */
     protected $content_url;
+
+    /** @var  SlotMedia[] */
+    protected $items;
 
     /**
      * Relevance of the slot, i.e. how prominently it should be displayed within the content.
@@ -55,16 +59,29 @@ class Slot extends AbstractResourceModel
      */
     const DISPLAY_CAROUSEL = 'carousel';
 
+    public function __construct(MetroPublisher $metroPublisher)
+    {
+        parent::__construct($metroPublisher);
+        $this->display = self::DISPLAY_GALLERY;
+        $this->relevance = self::RELEVANCE_INLINE;
+    }
+
     /**
      * @inheritdoc
      */
-    public function save($endpoint)
+    public function save()
     {
-        if(empty($this->content_uuid)) {
-            throw new ModelValidationException("Cannot save slot with no content UUID set.");
+        $endpoint = "/content/{$this->content_uuid}/slots/{$this->uuid}";
+        $response = parent::save($endpoint);
+
+        $serializedMedia = [];
+        foreach($this->items as $media) {
+            $tmp = $this->serializer->serialize($media);
+            unset($tmp['file_uuid']);
+            $serializedMedia[] = $tmp;
         }
 
-        return parent::save("/content/{$this->content_uuid}/slots/{$this->uuid}");
+        return $this->client->put($this->getBaseUri() . $endpoint . '/media', ['items' => $serializedMedia]);
     }
 
     /**
@@ -86,7 +103,8 @@ class Slot extends AbstractResourceModel
      *
      * @return SlotMedia[]
      */
-    public function getMedia() {
+    public function getMedia()
+    {
         $response = $this->client->get("/content/{$this->content_uuid}/slots/{$this->uuid}/media");
 
         /** @var SlotMedia[] $media */
@@ -186,6 +204,11 @@ class Slot extends AbstractResourceModel
             'display',
             'content_url'
         ], parent::getFieldNames());
+    }
+
+    public function addMedia(SlotMedia $mediaSlot)
+    {
+        $this->items[] = $mediaSlot;
     }
 
     /**

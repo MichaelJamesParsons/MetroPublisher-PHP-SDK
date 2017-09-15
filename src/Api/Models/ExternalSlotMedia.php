@@ -15,7 +15,7 @@ class ExternalSlotMedia extends SlotMedia
      * Identifies the external media as a specific type of embed (e.g. YouTube),
      * or file (audio/video file).
      *
-     * @see \MetroPublisher\Api\Models\FileMedia   To embed images.
+     * @see \MetroPublisher\Api\Models\FileMeta   To embed images.
      *
      * @var string
      */

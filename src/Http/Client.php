@@ -87,11 +87,11 @@ class Client implements HttpClientInterface
             $options['query'] = $fields;
         } elseif($method == 'put' || $method == 'patch') {
             $options['json'] = $fields;
-        } else {
+        } else if(!isset($options['multipart']) && !isset($options['body'])) {
             $options['form_params'] = $fields;
         }
 
-        $options = array_merge($options, $this->getDefaultOptions());
+        $options = array_merge_recursive($options, $this->getDefaultOptions());
 
         try {
             $response = call_user_func_array([$this->client, $method], [$endpoint, $options]);
@@ -146,5 +146,9 @@ class Client implements HttpClientInterface
     public function setDefaultOptions(array $options)
     {
         $this->defaultOptions = $options;
+    }
+
+    public function getHttpClient() {
+        return $this->client;
     }
 }
