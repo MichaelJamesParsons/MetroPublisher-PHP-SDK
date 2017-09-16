@@ -23,6 +23,7 @@ class ClientTest extends TestCase
     }
 
     public function testInvalidHttpMethodsRejected() {
+        /** @var \PHPUnit_Framework_MockObject_MockObject|HttpClientInterface $mockHttpClient */
         $mockHttpClient = $this->createMock(HttpClientInterface::class);
 
         /** @var \PHPUnit_Framework_MockObject_MockObject|HttpClientInterface $mockSdkClient */
@@ -33,13 +34,36 @@ class ClientTest extends TestCase
 
         $this->expectException(\BadMethodCallException::class);
         $client = new Client($mockHttpClient);
+
+        // Attempt to dynamically call a non-http method
         $client->notValidHttpMethod('/', []);
     }
 
     public function testAllStepsAreExecuted() {
-        $mockStep1 = $this->createMock(HttpStepInterface::class);
-        $mockStep2 = $this->createMock(HttpStepInterface::class);
-        $mockStep3 = $this->createMock(HttpStepInterface::class);
+        $mockResponse = $this->createMock(ResponseInterface::class);
+        $mockStep = $this->createMock(HttpStepInterface::class);
+        $mockStep->expects($this->exactly(1))
+            ->method('handle')
+            ->willReturn($mockResponse);
+
+        /** @var \PHPUnit_Framework_MockObject_MockObject|HttpClientInterface $mockHttpClient */
+        $mockHttpClient = $this->createMock(HttpClientInterface::class);
+        $mockHttpClient->expects($this->exactly(1))
+            ->method('get')
+            ->withAnyParameters()
+            ->willReturn($mockResponse);
+
+        /** @var \PHPUnit_Framework_MockObject_MockObject|Client $mockClient */
+        $mockClient = $this->getMockBuilder(Client::class)
+            ->setConstructorArgs([$mockHttpClient, [$mockStep]])
+            ->setMethods(['parseResponseContent'])
+            ->getMock();
+
+        $mockClient->expects($this->exactly(1))
+            ->method('parseResponseContent')
+            ->willReturn(null);
+
+        $mockClient->get('/');
     }
 
     public function testGetRequestsSendFieldsAsQueryParams() {
@@ -75,6 +99,9 @@ class ClientTest extends TestCase
         $mockSdkClient->post('/', ['name' => 'john doe']);
     }
 
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
     private function getMockHttpResponse() {
         return $this->createMock(ResponseInterface::class);
     }
@@ -87,11 +114,11 @@ class ClientTest extends TestCase
     private function getMockSdkClient($mockHttpClient) {
         $mockSdkClient = $this->getMockBuilder(Client::class)
                               ->setConstructorArgs([$mockHttpClient])
-                              ->setMethods(['handleResponse'])
+                              ->setMethods(['parseResponseContent'])
                               ->getMock();
 
-        $mockSdkClient->expects($this->exactly(1))
-                      ->method('handleResponse')
+        $mockSdkClient
+                      ->method('parseResponseContent')
                       ->willReturn(null);
 
         return $mockSdkClient;

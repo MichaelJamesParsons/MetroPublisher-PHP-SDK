@@ -10,6 +10,10 @@ use Psr\Http\Message\ResponseInterface;
 class ResponseMediator
 {
     public static function getContent(ResponseInterface $response) {
-        return json_decode($response->getBody()->getContents(), true);
+        if ($response->getHeader('Content-Type') === 'application/json') {
+            return json_decode($response->getBody()->getContents(), true);
+        }
+
+        return $response->getBody()->getContents();
     }
 }

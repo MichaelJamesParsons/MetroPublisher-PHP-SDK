@@ -77,7 +77,7 @@ class Client
      * @param array $fields
      * @param array $options
      *
-     * @return array
+     * @return array|mixed
      */
     public function execute($method, $endpoint, array $fields = [], array $options = []) {
         unset($options['json'], $options['query']);
@@ -97,20 +97,30 @@ class Client
         } catch(ClientException $e) {
             $response = $e->getResponse();
         }
-        return $this->handleResponse($response);
+
+        $response = $this->executeResponseMiddleware($response);
+        return $this->parseResponseContent($response);
     }
 
     /**
      * @param ResponseInterface $response
      *
-     * @return array
+     * @return ResponseInterface
      */
-    protected function handleResponse(ResponseInterface $response) {
+    protected function executeResponseMiddleware(ResponseInterface $response) {
         /** @var HttpStepInterface $step */
         foreach($this->steps as $step) {
             $response = $step->handle($response);
         }
 
+        return $response;
+    }
+
+    /**
+     * @param ResponseInterface $response
+     * @return array|mixed
+     */
+    protected function parseResponseContent(ResponseInterface $response) {
         return ResponseMediator::getContent($response);
     }
 
