@@ -48,7 +48,10 @@ class Client
     public function __call($method, $arguments)
     {
         if(!in_array($method, self::$httpMethods)) {
-            throw new \BadMethodCallException(sprintf('Class %s does not have method "%s"', $method));
+            throw new \BadMethodCallException(sprintf(
+                'Class %s does not contain method %s.',
+                    get_class($this),
+                    $method));
         }
 
         if(count($arguments) < 1) {
@@ -59,7 +62,8 @@ class Client
             ]));
         }
 
-        $endpoint   = (isset($arguments[0])) ? $arguments[0] : [];
+        // @todo - Add validation for these fields?
+        $endpoint   = $arguments[0];
         $fields     = (isset($arguments[1])) ? $arguments[1] : [];
         $options    = (isset($arguments[2])) ? $arguments[2] : [];
 

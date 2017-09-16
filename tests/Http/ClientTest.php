@@ -3,21 +3,43 @@ namespace Http;
 
 use MetroPublisher\Http\Client;
 use MetroPublisher\Http\HttpClientInterface;
+use MetroPublisher\Http\Steps\HttpStepInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 
 class ClientTest extends TestCase
 {
     public function testValidHttpMethodsAccepted() {
+        /** @var \PHPUnit_Framework_MockObject_MockObject|HttpClientInterface $mockSdkClient */
+        $mockSdkClient = $this->createMock(Client::class);
+        $mockSdkClient->method('execute')
+            ->withAnyParameters()
+            ->willReturn(null);
 
+        $mockSdkClient->get('/');
+        $mockSdkClient->patch('/');
+        $mockSdkClient->post('/');
+        $mockSdkClient->delete('/');
     }
 
     public function testInvalidHttpMethodsRejected() {
+        $mockHttpClient = $this->createMock(HttpClientInterface::class);
 
+        /** @var \PHPUnit_Framework_MockObject_MockObject|HttpClientInterface $mockSdkClient */
+        $mockSdkClient = $this->createMock(Client::class);
+        $mockSdkClient->method('execute')
+                      ->withAnyParameters()
+                      ->willReturn(null);
+
+        $this->expectException(\BadMethodCallException::class);
+        $client = new Client($mockHttpClient);
+        $client->notValidHttpMethod('/', []);
     }
 
     public function testAllStepsAreExecuted() {
-
+        $mockStep1 = $this->createMock(HttpStepInterface::class);
+        $mockStep2 = $this->createMock(HttpStepInterface::class);
+        $mockStep3 = $this->createMock(HttpStepInterface::class);
     }
 
     public function testGetRequestsSendFieldsAsQueryParams() {
@@ -57,6 +79,11 @@ class ClientTest extends TestCase
         return $this->createMock(ResponseInterface::class);
     }
 
+    /**
+     * @param $mockHttpClient
+     *
+     * @return \PHPUnit_Framework_MockObject_MockObject|HttpClientInterface
+     */
     private function getMockSdkClient($mockHttpClient) {
         $mockSdkClient = $this->getMockBuilder(Client::class)
                               ->setConstructorArgs([$mockHttpClient])
