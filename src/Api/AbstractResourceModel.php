@@ -10,11 +10,6 @@ use MetroPublisher\MetroPublisher;
 /**
  * Class AbstractResourceModel
  * @package MetroPublisher\Api\Models
- *
- * @property string     $uuid
- * @property string     $urlname
- * @property DateTime   $modified
- * @property DateTime   $created
  */
 abstract class AbstractResourceModel extends AbstractModel
 {
@@ -35,84 +30,6 @@ abstract class AbstractResourceModel extends AbstractModel
 
         $this->isMetaDataLoaded = false;
         $this->changedFields = [];
-    }
-
-    /**
-     * @return string
-     */
-    public function getUuid()
-    {
-        return $this->uuid;
-    }
-
-    /**
-     * @param string $uuid
-     *
-     * @return $this
-     */
-    public function setUuid($uuid)
-    {
-        $this->uuid = $uuid;
-
-        return $this;
-    }
-
-    /**
-     * @return $this
-     */
-    public function getUrlname() {
-        return $this;
-    }
-
-    /**
-     * @param $urlname
-     *
-     * @return $this
-     */
-    public function setUrlname($urlname) {
-        $this->urlname = $urlname;
-
-        return $this;
-    }
-
-    /**
-     * @return DateTime
-     */
-    public function getModified()
-    {
-        return new DateTime($this->modified);
-    }
-
-    /**
-     * @param DateTime $modified
-     *
-     * @return $this
-     */
-    public function setModified($modified)
-    {
-        $this->modified = $modified;
-
-        return $this;
-    }
-
-    /**
-     * @return DateTime
-     */
-    public function getCreated()
-    {
-        return new DateTime($this->created);
-    }
-
-    /**
-     * @param DateTime $created
-     *
-     * @return $this
-     */
-    public function setCreated($created)
-    {
-        $this->created = $created;
-
-        return $this;
     }
 
     /**
@@ -138,7 +55,7 @@ abstract class AbstractResourceModel extends AbstractModel
      * @throws ModelValidationException
      */
     protected function doSave($endpoint) {
-        if(empty($this->uuid)) {
+        if(empty($this->fields['uuid'])) {
             throw new ModelValidationException("Cannot save " . gettype($this) . ". UUID not set.");
         }
 
@@ -188,6 +105,7 @@ abstract class AbstractResourceModel extends AbstractModel
 
     /**
      * @param $property
+     * @return void
      */
     public function __get($property)
     {
@@ -201,6 +119,71 @@ abstract class AbstractResourceModel extends AbstractModel
             $this->changedFields[] = $property;
         }
     }
+
+    /**
+     * @return string
+     */
+    public function getUuid()
+    {
+        return $this->fields['uuid'];
+    }
+
+    /**
+     * @param string $uuid
+     */
+    public function setUuid($uuid)
+    {
+        $this->fields['uuid'] = $uuid;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrlname()
+    {
+        return $this->fields['urlname'];
+    }
+
+    /**
+     * @param string $urlname
+     */
+    public function setUrlname($urlname)
+    {
+        $this->fields['urlname'] = $urlname;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getModified()
+    {
+        return $this->fields['modified'];
+    }
+
+    /**
+     * @param DateTime $modified
+     */
+    public function setModified($modified)
+    {
+        $this->fields['modified'] = $modified;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getCreated()
+    {
+        return $this->fields['created'];
+    }
+
+    /**
+     * @param DateTime $created
+     */
+    public function setCreated($created)
+    {
+        $this->fields['created'] = $created;
+    }
+
 
     /**
      * @inheritdoc

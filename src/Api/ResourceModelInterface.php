@@ -1,5 +1,5 @@
 <?php
-namespace Api;
+namespace MetroPublisher\Api;
 
 interface ResourceModelInterface
 {

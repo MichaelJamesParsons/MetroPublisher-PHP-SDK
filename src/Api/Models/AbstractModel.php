@@ -1,10 +1,10 @@
 <?php
 namespace MetroPublisher\Api\Models;
 
-use Api\ResourceModelInterface;
-use MetroPublisher\Api\AbstractApiResource;
-use MetroPublisher\Exception\MetroPublisherException;
 use MetroPublisher\MetroPublisher;
+use MetroPublisher\Api\AbstractApiResource;
+use MetroPublisher\Api\ResourceModelInterface;
+use MetroPublisher\Exception\MetroPublisherException;
 
 /**
  * Class AbstractModel
