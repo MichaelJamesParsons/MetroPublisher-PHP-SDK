@@ -1,5 +1,5 @@
 <?php
-namespace Api;
+namespace MetroPublisher\Api;
 
 interface ResourceCollectionInterface
 {
@@ -10,7 +10,7 @@ interface ResourceCollectionInterface
      * @param array $options
      * @return ResourceModelInterface[]
      */
-    public function all($page = 1, array $options = []);
+    public function findAll($page = 1, array $options = []);
 
     /**
      * Retrieves a single resource model.

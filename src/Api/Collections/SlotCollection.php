@@ -1,16 +1,17 @@
 <?php
 namespace MetroPublisher\Api\Collections;
 
-use MetroPublisher\Api\AbstractResourceCollection;
-use MetroPublisher\Api\Models\Content;
-use MetroPublisher\Api\Models\Slot;
 use MetroPublisher\MetroPublisher;
+use MetroPublisher\Api\Models\Slot;
+use MetroPublisher\Api\Models\Content;
+use MetroPublisher\Api\AbstractResourceCollection;
+use MetroPublisher\Api\ResourceCollectionInterface;
 
 /**
  * Class SlotCollection
  * @package MetroPublisher\Api\Collections
  */
-class SlotCollection extends AbstractResourceCollection
+class SlotCollection extends AbstractResourceCollection implements ResourceCollectionInterface
 {
     /** @var  Content $content */
     private $content;
@@ -27,16 +28,16 @@ class SlotCollection extends AbstractResourceCollection
         $this->content = $content;
     }
 
-    public function all($page = 1, array $options = []) {
+    public function findAll($page = 1, array $options = []) {
         return parent::all(sprintf('%s/content/%s/slots', $this->getBaseUri(), $this->content->getUuid()));
     }
 
-    public function find(Slot $slot) {
+    public function find($slotUuid) {
         return parent::find(
             sprintf('%s/content/%s/slots/%s',
                 $this->getBaseUri(),
                 $this->content->getUuid(),
-                $slot->getUuid())
+                $slotUuid)
         );
     }
 

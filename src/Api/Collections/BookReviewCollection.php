@@ -12,10 +12,10 @@ class BookReviewCollection extends ContentCollection
     /**
      * @inheritdoc
      */
-    public function all($page = 1, array $options = [])
+    public function findAll($page = 1, array $options = [])
     {
         $options['ctypes'] = ContentCollection::TYPE_REVIEWS_BOOK;
-        return parent::all($page, $options);
+        return parent::findAll($page, $options);
     }
 
     /**

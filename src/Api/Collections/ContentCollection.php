@@ -20,7 +20,7 @@ class ContentCollection extends AbstractResourceCollection implements ResourceCo
     /**
      * @inheritdoc
      */
-    public function all($page = 1, array $options = [])
+    public function findAll($page = 1, array $options = [])
     {
         return parent::all('/content', $page, $options);
     }
