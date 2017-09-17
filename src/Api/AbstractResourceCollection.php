@@ -1,6 +1,7 @@
 <?php
 namespace MetroPublisher\Api;
 
+use Api\ResourceCollectionInterface;
 use MetroPublisher\Api\Models\AbstractModel;
 use MetroPublisher\Api\Models\Resolvers\ModelResolver;
 use MetroPublisher\Common\Serializers\ModelDeserializer;

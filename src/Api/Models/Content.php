@@ -232,4 +232,242 @@ class Content extends AbstractResourceModel implements TaggableInterface
             'issued',
         ], parent::getDefaultFields());
     }
+
+    /**
+     * @return string
+     */
+    public function getContentType()
+    {
+        return $this->content_type;
+    }
+
+    /**
+     * @param string $content_type
+     */
+    public function setContentType($content_type)
+    {
+        $this->content_type = $content_type;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param string $title
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    /**
+     * @param string $content
+     * @return $this
+     */
+    public function setContent($content)
+    {
+        $this->content = $content;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    /**
+     * @param string $state
+     * @return $this
+     */
+    public function setState($state)
+    {
+        $this->state = $state;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMetaTitle()
+    {
+        return $this->meta_title;
+    }
+
+    /**
+     * @param string $meta_title
+     * @return $this
+     */
+    public function setMetaTitle($meta_title)
+    {
+        $this->meta_title = $meta_title;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMetaDescription()
+    {
+        return $this->meta_description;
+    }
+
+    /**
+     * @param string $meta_description
+     * @return $this
+     */
+    public function setMetaDescription($meta_description)
+    {
+        $this->meta_description = $meta_description;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPrintDescription()
+    {
+        return $this->print_description;
+    }
+
+    /**
+     * @param string $print_description
+     * @return $this
+     */
+    public function setPrintDescription($print_description)
+    {
+        $this->print_description = $print_description;
+
+        return $this;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getIssued()
+    {
+        return $this->issued;
+    }
+
+    /**
+     * @param DateTime $issued
+     * @return $this
+     */
+    public function setIssued($issued)
+    {
+        $this->issued = $issued;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrlname()
+    {
+        return $this->urlname;
+    }
+
+    /**
+     * @param string $urlname
+     * @return $this
+     */
+    public function setUrlname($urlname)
+    {
+        $this->urlname = $urlname;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEvergreen()
+    {
+        return $this->evergreen;
+    }
+
+    /**
+     * @param bool $evergreen
+     * @return $this
+     */
+    public function setEvergreen($evergreen)
+    {
+        $this->evergreen = $evergreen;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTeaserImageUuid()
+    {
+        return $this->teaser_image_uuid;
+    }
+
+    /**
+     * @param string $teaser_image_uuid
+     * @return $this
+     */
+    public function setTeaserImageUuid($teaser_image_uuid)
+    {
+        $this->teaser_image_uuid = $teaser_image_uuid;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFeatureImageUuid()
+    {
+        return $this->feature_image_uuid;
+    }
+
+    /**
+     * @param string $feature_image_uuid
+     * @return $this
+     */
+    public function setFeatureImageUuid($feature_image_uuid)
+    {
+        $this->feature_image_uuid = $feature_image_uuid;
+
+        return $this;
+    }
 }

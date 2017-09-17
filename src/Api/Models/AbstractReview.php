@@ -10,6 +10,13 @@ namespace MetroPublisher\Api\Models;
 abstract class AbstractReview extends Content
 {
     /**
+     * @return float
+     */
+    public function getRating() {
+        return floatval($this->fields['rating']);
+    }
+
+    /**
      * @param int $rating
      *
      * @return $this

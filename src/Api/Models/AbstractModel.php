@@ -85,7 +85,7 @@ abstract class AbstractModel extends AbstractApiResource implements ResourceMode
             ));
         }
 
-        return $this->fields[$property];
+        return array_key_exists($property, $this->fields) ? $this->fields[$property] : null;
     }
 
     public function __set($property, $value)
@@ -102,6 +102,6 @@ abstract class AbstractModel extends AbstractApiResource implements ResourceMode
     }
 
     private function hasField($property) {
-        return in_array($this::getMetaFields(), $property) || in_array($this::getMetaFields(), $property);
+        return in_array($property, $this::getMetaFields()) || in_array($property, $this::getDefaultFields());
     }
 }

@@ -105,19 +105,23 @@ abstract class AbstractResourceModel extends AbstractModel
 
     /**
      * @param $property
-     * @return void
+     * @return mixed
      */
     public function __get($property)
     {
         if(in_array($property, static::getMetaFields()) && !$this->isMetaDataLoaded) {
             $this->syncFields();
         }
+
+        return parent::__get($property);
     }
 
     public function __set($property, $value) {
         if(!$this->isMetaDataLoaded() && in_array($property, static::getMetaFields())) {
             $this->changedFields[] = $property;
         }
+
+        parent::__set($property, $value);
     }
 
     /**
