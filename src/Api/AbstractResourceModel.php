@@ -10,6 +10,10 @@ use MetroPublisher\MetroPublisher;
 /**
  * Class AbstractResourceModel
  * @package MetroPublisher\Api\Models
+ *
+ * @property string     $uuid
+ * @property DateTime   $created
+ * @property DateTime   $modified
  */
 abstract class AbstractResourceModel extends AbstractModel
 {
@@ -55,7 +59,7 @@ abstract class AbstractResourceModel extends AbstractModel
      * @throws ModelValidationException
      */
     protected function doSave($endpoint) {
-        if(empty($this->fields['uuid'])) {
+        if(empty($this->uuid)) {
             throw new ModelValidationException("Cannot save " . gettype($this) . ". UUID not set.");
         }
 
@@ -109,7 +113,7 @@ abstract class AbstractResourceModel extends AbstractModel
      */
     public function __get($property)
     {
-        if(in_array($property, static::getMetaFields()) && !$this->isMetaDataLoaded) {
+        if(!empty($this->uuid) && in_array($property, static::getMetaFields()) && !$this->isMetaDataLoaded) {
             $this->syncFields();
         }
 
@@ -129,7 +133,7 @@ abstract class AbstractResourceModel extends AbstractModel
      */
     public function getUuid()
     {
-        return $this->fields['uuid'];
+        return $this->uuid;
     }
 
     /**
@@ -137,7 +141,7 @@ abstract class AbstractResourceModel extends AbstractModel
      */
     public function setUuid($uuid)
     {
-        $this->fields['uuid'] = $uuid;
+        $this->uuid = $uuid;
     }
 
     /**
@@ -145,7 +149,7 @@ abstract class AbstractResourceModel extends AbstractModel
      */
     public function getUrlname()
     {
-        return $this->fields['urlname'];
+        return $this->urlname;
     }
 
     /**
@@ -153,7 +157,7 @@ abstract class AbstractResourceModel extends AbstractModel
      */
     public function setUrlname($urlname)
     {
-        $this->fields['urlname'] = $urlname;
+        $this->urlname = $urlname;
     }
 
     /**
@@ -161,7 +165,7 @@ abstract class AbstractResourceModel extends AbstractModel
      */
     public function getModified()
     {
-        return $this->fields['modified'];
+        return $this->modified;
     }
 
     /**
@@ -169,7 +173,7 @@ abstract class AbstractResourceModel extends AbstractModel
      */
     public function setModified($modified)
     {
-        $this->fields['modified'] = $modified;
+        $this->modified = $modified;
     }
 
     /**
@@ -177,7 +181,7 @@ abstract class AbstractResourceModel extends AbstractModel
      */
     public function getCreated()
     {
-        return $this->fields['created'];
+        return $this->created;
     }
 
     /**
@@ -185,7 +189,7 @@ abstract class AbstractResourceModel extends AbstractModel
      */
     public function setCreated($created)
     {
-        $this->fields['created'] = $created;
+        $this->created = $created;
     }
 
 
