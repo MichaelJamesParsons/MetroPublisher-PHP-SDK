@@ -96,6 +96,11 @@ $singleArticle = $articleCollection->find('e6ebac9c-94cb-11e6-ae22-56b6b6499611'
 
 Coming soon!
 
+## Todo
+- [x] Implement HttpClient interface
+- [ ] Cache parsed model annotations
+- [ ] Support directly associating objects along side UUIDs
+
 ## License
 
  Released under the MIT license.

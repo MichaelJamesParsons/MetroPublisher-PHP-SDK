@@ -14,6 +14,8 @@ use MetroPublisher\MetroPublisher;
  * @property DateTime   $book_issued
  * @property array      $book_provider_urls
  * @property array      $book_buy_urls
+ *
+ * @todo - Support for addBookProvider
  */
 class BookReview extends AbstractReview
 {
