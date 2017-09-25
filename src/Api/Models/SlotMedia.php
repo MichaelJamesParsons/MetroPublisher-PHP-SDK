@@ -54,9 +54,9 @@ abstract class SlotMedia extends AbstractResourceModel
     /**
      * @inheritdoc
      */
-    public function save($endpoint)
+    public function save()
     {
-        return parent::doSave("/content/{$this->slot_uuid}/slots/{}/media");
+        return parent::doSave("/content/{$this->content_uuid}/slots/{$this->slot_uuid}/media");
     }
 
     /**
@@ -75,7 +75,9 @@ abstract class SlotMedia extends AbstractResourceModel
         return array_merge([
             'type',
             'title',
-            'thumb_uuid'
+            'thumb_uuid',
+            'slot_uuid',
+            'content_uuid'
         ], parent::getDefaultFields());
     }
 
@@ -93,5 +95,125 @@ abstract class SlotMedia extends AbstractResourceModel
     public function loadMetaData()
     {
         return $this->client->get("/content/{$this->content_uuid}/slots/{$this->uuid}");
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return $this
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param string $title
+     *
+     * @return $this
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    /**
+     * @param string $content
+     *
+     * @return $this
+     */
+    public function setContent($content)
+    {
+        $this->content = $content;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getThumbUuid()
+    {
+        return $this->thumb_uuid;
+    }
+
+    /**
+     * @param string $thumb_uuid
+     *
+     * @return $this
+     */
+    public function setThumbUuid($thumb_uuid)
+    {
+        $this->thumb_uuid = $thumb_uuid;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSlotUuid()
+    {
+        return $this->slot_uuid;
+    }
+
+    /**
+     * @param string $slot_uuid
+     *
+     * @return $this
+     */
+    public function setSlotUuid($slot_uuid)
+    {
+        $this->slot_uuid = $slot_uuid;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContentUuid()
+    {
+        return $this->content_uuid;
+    }
+
+    /**
+     * @param string $content_uuid
+     *
+     * @return $this
+     */
+    public function setContentUuid($content_uuid)
+    {
+        $this->content_uuid = $content_uuid;
+
+        return $this;
     }
 }

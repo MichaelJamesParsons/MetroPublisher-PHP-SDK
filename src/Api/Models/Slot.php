@@ -110,4 +110,104 @@ class Slot extends AbstractResourceModel
 
         return $this->client->get("/content/{$this->content_uuid}/slots/{$this->uuid}");
     }
+
+    /**
+     * @return string
+     */
+    public function getContentUuid()
+    {
+        return $this->content_uuid;
+    }
+
+    /**
+     * @param string $content_uuid
+     *
+     * @return $this
+     */
+    public function setContentUuid($content_uuid)
+    {
+        $this->content_uuid = $content_uuid;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRelevance()
+    {
+        return $this->relevance;
+    }
+
+    /**
+     * @param string $relevance
+     *
+     * @return $this
+     */
+    public function setRelevance($relevance)
+    {
+        $this->relevance = $relevance;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDisplay()
+    {
+        return $this->display;
+    }
+
+    /**
+     * @param string $display
+     *
+     * @return $this
+     */
+    public function setDisplay($display)
+    {
+        $this->display = $display;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    /**
+     * @param string $url
+     *
+     * @return $this
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContentUrl()
+    {
+        return $this->content_url;
+    }
+
+    /**
+     * @param string $content_url
+     *
+     * @return $this
+     */
+    public function setContentUrl($content_url)
+    {
+        $this->content_url = $content_url;
+
+        return $this;
+    }
 }
