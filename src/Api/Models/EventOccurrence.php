@@ -13,5 +13,12 @@ use DateTime;
  */
 class EventOccurrence extends AbstractModel
 {
-
+    public static function getDefaultFields()
+    {
+        return [
+            'event_uuid',
+            'start_time',
+            'end_time'
+        ];
+    }
 }
