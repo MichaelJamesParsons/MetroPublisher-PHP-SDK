@@ -78,15 +78,15 @@ Each resource model has a corresponding collection object. A collection object a
 
 ```php
 <?php
-... 
+use MetroPublisher\Api\Collections\ArticleCollection;
 
 $articleCollection = new ArticleCollection($metroPublisher);
 
 //Get group of articles
-$articles =  $articleCollection->all();
+$articles =  $articleCollection->findAll();
     
 //Get next group of articles
-$moreArticles = $articleCollection->all(2);
+$moreArticles = $articleCollection->findAll(2);
 
 //Get a single article
 $singleArticle = $articleCollection->find('e6ebac9c-94cb-11e6-ae22-56b6b6499611');
@@ -100,6 +100,7 @@ Coming soon!
 - [x] Implement HttpClient interface
 - [ ] Cache parsed model annotations
 - [ ] Support directly associating objects along side UUIDs
+- [ ] Make collections iterable
 
 ## License
 
