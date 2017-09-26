@@ -13,7 +13,7 @@ abstract class AbstractReview extends Content
      * @return float
      */
     public function getRating() {
-        return floatval($this->fields['rating']);
+        return floatval($this->rating);
     }
 
     /**
@@ -24,7 +24,7 @@ abstract class AbstractReview extends Content
     public function setRating($rating)
     {
         //Convert float to string to prevent API errors.
-        $this->fields['rating'] = $rating . "";
+        $this->rating = $rating . "";
 
         return $this;
     }
