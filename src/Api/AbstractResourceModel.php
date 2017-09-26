@@ -60,7 +60,7 @@ abstract class AbstractResourceModel extends AbstractModel
      */
     protected function doSave($endpoint) {
         if(empty($this->uuid)) {
-            throw new ModelValidationException("Cannot save " . gettype($this) . ". UUID not set.");
+            throw new ModelValidationException('Cannot save model of type ' . gettype($this) . '. No UUID is set.');
         }
 
         if(empty($this->created)) {
@@ -74,8 +74,13 @@ abstract class AbstractResourceModel extends AbstractModel
      * @param $endpoint
      *
      * @return array
+     * @throws ModelValidationException
      */
     protected function doDelete($endpoint) {
+        if (empty($this->uuid)) {
+            throw new ModelValidationException('Cannot delete model of type ' . gettype($this) . '. No UUID is set.');
+        }
+
         return $this->client->delete($this->getBaseUri() . $endpoint, $this->serialize());
     }
 
@@ -138,10 +143,14 @@ abstract class AbstractResourceModel extends AbstractModel
 
     /**
      * @param string $uuid
+     *
+     * @return $this
      */
     public function setUuid($uuid)
     {
         $this->uuid = $uuid;
+
+        return $this;
     }
 
     /**
@@ -154,10 +163,14 @@ abstract class AbstractResourceModel extends AbstractModel
 
     /**
      * @param string $urlname
+     *
+     * @return $this
      */
     public function setUrlname($urlname)
     {
         $this->urlname = $urlname;
+
+        return $this;
     }
 
     /**
@@ -170,10 +183,14 @@ abstract class AbstractResourceModel extends AbstractModel
 
     /**
      * @param DateTime $modified
+     *
+     * @return $this
      */
     public function setModified($modified)
     {
         $this->modified = $modified;
+
+        return $this;
     }
 
     /**
@@ -186,10 +203,14 @@ abstract class AbstractResourceModel extends AbstractModel
 
     /**
      * @param DateTime $created
+     *
+     * @return $this
      */
     public function setCreated($created)
     {
         $this->created = $created;
+
+        return $this;
     }
 
 
