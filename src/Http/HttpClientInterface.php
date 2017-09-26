@@ -55,6 +55,16 @@ interface HttpClientInterface
     public function patch($endpoint, array $options = []);
 
     /**
+     * Sends PUT request
+     *
+     * @param string $endpoint
+     * @param array  $options
+     *
+     * @return ResponseInterface
+     */
+    public function put($endpoint, array $options = []);
+
+    /**
      * Sends POST request
      *
      * @param string $endpoint

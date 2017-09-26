@@ -66,6 +66,19 @@ class GuzzleAdapter implements HttpClientInterface
     }
 
     /**
+     * Sends PUT request
+     *
+     * @param string $endpoint
+     * @param array  $options
+     *
+     * @return ResponseInterface
+     */
+    public function put($endpoint, array $options = [])
+    {
+        return $this->guzzle->patch($endpoint, $options);
+    }
+
+    /**
      * Sends POST request
      *
      * @param string $endpoint

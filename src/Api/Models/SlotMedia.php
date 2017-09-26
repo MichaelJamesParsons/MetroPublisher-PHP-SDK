@@ -2,6 +2,7 @@
 namespace MetroPublisher\Api\Models;
 
 use MetroPublisher\Api\AbstractResourceModel;
+use MetroPublisher\Api\Models\Exception\ModelValidationException;
 use MetroPublisher\MetroPublisher;
 
 /**
@@ -13,12 +14,18 @@ use MetroPublisher\MetroPublisher;
  * @property string $title
  * @property string $content - HTML content describing the media. The content is validated through a strict schema.
  *                             For more information, view the link below.
- * @property string $thumb_uuid
- * @property string $slot_uuid
- * @property string $content_uuid
  */
 abstract class SlotMedia extends AbstractResourceModel
 {
+    /** @var  string */
+    protected $thumb_uuid;
+
+    /** @var string */
+    protected $slot_uuid;
+
+    /** @var string */
+    protected $content_uuid;
+
     /**
      * The media is an embed code from another site.
      */
@@ -56,15 +63,31 @@ abstract class SlotMedia extends AbstractResourceModel
      */
     public function save()
     {
-        return parent::doSave("/content/{$this->content_uuid}/slots/{$this->slot_uuid}/media");
+        if (empty($this->slot_uuid)) {
+            throw new ModelValidationException('Slot Media cannot be saved without an associated slot UUID.');
+        }
+
+        if (empty($this->content_uuid)) {
+            throw new ModelValidationException('Slot Media cannot be saved without an associated content UUID.');
+        }
+
+        return $this->doSave("/content/{$this->content_uuid}/slots/{$this->slot_uuid}/media");
     }
 
     /**
      * @inheritdoc
      */
-    public function delete($endpoint)
+    public function delete()
     {
-        return parent::delete($endpoint);
+        if (empty($this->slot_uuid)) {
+            throw new ModelValidationException('Slot Media cannot be deleted without an associated slot UUID.');
+        }
+
+        if (empty($this->content_uuid)) {
+            throw new ModelValidationException('Slot Media cannot be deleted without an associated content UUID.');
+        }
+
+        return $this->doDelete("/content/{$this->content_uuid}/slots/{$this->slot_uuid}/media");
     }
 
     /**

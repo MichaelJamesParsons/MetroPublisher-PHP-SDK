@@ -2,23 +2,37 @@
 namespace MetroPublisher\Api\Models;
 
 use MetroPublisher\Api\AbstractResourceModel;
+use MetroPublisher\Api\Models\Exception\ModelValidationException;
 use MetroPublisher\Api\Models\Resolvers\ModelResolver;
 use MetroPublisher\Common\Serializers\ModelDeserializer;
 
 /**
  * Class Tag
  * @package MetroPublisher\Api\Models
- *
- * @property string $last_name_or_title
- * @property string $first_name
- * @property string $description
- * @property string $state
- * @property string $synonyms
- * @property string $content
- * @property string $feature_image_uuid
  */
 class Tag extends AbstractResourceModel
 {
+    /** @var  string */
+    protected $last_name_or_title;
+
+    /** @var  string */
+    protected $first_name;
+
+    /** @var  string */
+    protected $description;
+
+    /** @var  string */
+    protected $state;
+
+    /** @var  string */
+    protected $synonyms;
+
+    /** @var  string */
+    protected $content;
+
+    /** @var  string */
+    protected $feature_image_uuid;
+
     /**
      * A non-person tag.
      *
@@ -132,17 +146,17 @@ class Tag extends AbstractResourceModel
     /**
      * @inheritdoc
      */
-    public function save($endpoint)
+    public function save()
     {
-        return parent::doSave("/tags/{$this->uuid}");
+        return $this->doSave("/tags/{$this->uuid}");
     }
 
     /**
      * @inheritdoc
      */
-    public function delete($endpoint)
+    public function delete()
     {
-        return parent::delete("/tags/{$this->uuid}");
+        return $this->doDelete("/tags/{$this->uuid}");
     }
 
     /**
@@ -158,8 +172,7 @@ class Tag extends AbstractResourceModel
         /** @var TagCategory[] $categories */
         $categories = ModelDeserializer::convertCollection(
             new ModelResolver(TagCategory::class),
-            $response,
-            $this->context
+            $response
         );
 
         return $categories;
@@ -169,15 +182,16 @@ class Tag extends AbstractResourceModel
      * Gets the path history for this content.
      *
      * @link https://api.metropublisher.com/resources/content.html#content_path_history
-     *
      * @return array
+     * @throws ModelValidationException
      */
     public function getPathHistory() {
-        $response = $this->client->get(
-            sprintf('%s/content/%s/path_history', $this->getBaseUri(), $this->uuid)
-        );
+        if (empty($this->uuid)) {
+            throw new ModelValidationException('Tag must have a UUID set to get path history.');
+        }
 
-        return ModelDeserializer::convertCollection(new ModelResolver($response), $response, $this->context);
+        $response = $this->client->get("/tags/{$this->uuid}/path_history");
+        return ModelDeserializer::convertCollection(new ModelResolver($response), $response, [$this->context]);
     }
 
     /**
@@ -197,14 +211,18 @@ class Tag extends AbstractResourceModel
      * @param array $pathHistories A list of PathHistory objects.
      *
      * @return array
+     * @throws ModelValidationException
      */
     public function setPathHistory(array $pathHistories) {
-        $response = $this->client->put(
-            sprintf('%s/tag/%s/path_history', $this->getBaseUri(), $this->uuid),
+        if (empty($this->uuid)) {
+            throw new ModelValidationException('Tag must have a UUID set to set path history.');
+        }
+
+        $response = $this->client->put("/tags/{$this->uuid}/path_history",
             [ 'items' => $pathHistories ]
         );
 
-        return ModelDeserializer::convertCollection(new ModelResolver(PathHistory::class), $response, $this->context);
+        return ModelDeserializer::convertCollection(new ModelResolver(PathHistory::class), $response, [$this->context]);
     }
 
     /**
@@ -215,10 +233,14 @@ class Tag extends AbstractResourceModel
      * @param PathHistory $pathHistory
      *
      * @return array
+     * @throws ModelValidationException
      */
     public function addPathHistory(PathHistory $pathHistory) {
-        return $this->client->post(
-            sprintf('%s/content/%s/path_history', $this->getBaseUri(), $this->uuid),
+        if (empty($this->uuid)) {
+            throw new ModelValidationException('Tag must have a UUID set to add path history.');
+        }
+
+        return $this->client->post("/tags/{$this->uuid}/path_history",
             [ 'path' => $pathHistory->getPath() ]
         );
     }
@@ -226,7 +248,7 @@ class Tag extends AbstractResourceModel
     /**
      * @inheritdoc
      */
-    public static function getFieldNames()
+    public static function getDefaultFields()
     {
         return array_merge([
             'last_name_or_title',
@@ -236,7 +258,7 @@ class Tag extends AbstractResourceModel
             'synonyms',
             'content',
             'feature_image_uuid'
-        ], parent::getFieldNames());
+        ], parent::getDefaultFields());
     }
 
     /**
@@ -247,5 +269,145 @@ class Tag extends AbstractResourceModel
         return $this->client->get(
             sprintf('%s/tags/%s', $this->getBaseUri(), $this->uuid)
         );
+    }
+
+    /**
+     * @return string
+     */
+    public function getLastNameOrTitle()
+    {
+        return $this->last_name_or_title;
+    }
+
+    /**
+     * @param string $last_name_or_title
+     *
+     * @return $this
+     */
+    public function setLastNameOrTitle($last_name_or_title)
+    {
+        $this->last_name_or_title = $last_name_or_title;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFirstName()
+    {
+        return $this->first_name;
+    }
+
+    /**
+     * @param string $first_name
+     *
+     * @return $this
+     */
+    public function setFirstName($first_name)
+    {
+        $this->first_name = $first_name;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     *
+     * @return $this
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    /**
+     * @param string $state
+     *
+     * @return $this
+     */
+    public function setState($state)
+    {
+        $this->state = $state;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSynonyms()
+    {
+        return $this->synonyms;
+    }
+
+    /**
+     * @param string $synonyms
+     *
+     * @return $this
+     */
+    public function setSynonyms($synonyms)
+    {
+        $this->synonyms = $synonyms;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    /**
+     * @param string $content
+     *
+     * @return $this
+     */
+    public function setContent($content)
+    {
+        $this->content = $content;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFeatureImageUuid()
+    {
+        return $this->feature_image_uuid;
+    }
+
+    /**
+     * @param string $feature_image_uuid
+     *
+     * @return $this
+     */
+    public function setFeatureImageUuid($feature_image_uuid)
+    {
+        $this->feature_image_uuid = $feature_image_uuid;
+
+        return $this;
     }
 }

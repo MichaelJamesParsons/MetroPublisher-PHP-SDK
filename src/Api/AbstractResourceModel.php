@@ -10,13 +10,18 @@ use MetroPublisher\MetroPublisher;
 /**
  * Class AbstractResourceModel
  * @package MetroPublisher\Api\Models
- *
- * @property string     $uuid
- * @property DateTime   $created
- * @property DateTime   $modified
  */
 abstract class AbstractResourceModel extends AbstractModel
 {
+    /** @var  string */
+    protected $uuid;
+
+    /** @var  DateTime */
+    protected $created;
+
+    /** @var  DateTime */
+    protected $modified;
+
     /** @var  boolean */
     protected $isMetaDataLoaded;
 
