@@ -9,15 +9,24 @@ use MetroPublisher\Common\Serializers\ModelDeserializer;
 /**
  * Class Slot
  * @package MetroPublisher\Api\Models
- *
- * @property string $content_uuid
- * @property string $relevance
- * @property string $display
- * @property string $url
- * @property string $content_url
  */
 class Slot extends AbstractResourceModel
 {
+    /** @var string */
+    protected $content_uuid;
+
+    /** @var string */
+    protected $relevance;
+
+    /** @var string */
+    protected $display;
+
+    /** @var string */
+    protected $url;
+
+    /** @var string */
+    protected $content_url;
+
     /**
      * Relevance of the slot, i.e. how prominently it should be displayed within the content.
      *
@@ -49,25 +58,25 @@ class Slot extends AbstractResourceModel
     /**
      * @inheritdoc
      */
-    public function save($endpoint)
+    public function save()
     {
         if(empty($this->content_uuid)) {
             throw new ModelValidationException("Cannot save slot with no content UUID set.");
         }
 
-        return parent::doSave("/content/{$this->content_uuid}/slots/{$this->uuid}");
+        return $this->doSave("/content/{$this->content_uuid}/slots/{$this->uuid}");
     }
 
     /**
      * @inheritdoc
      */
-    public function delete($endpoint)
+    public function delete()
     {
         if(empty($this->content_uuid)) {
             throw new ModelValidationException("Cannot save slot with no content UUID set.");
         }
 
-        return parent::delete("/content/{$this->content_uuid}/slots/{$this->uuid}");
+        return $this->doDelete("/content/{$this->content_uuid}/slots/{$this->uuid}");
     }
 
     /**
@@ -88,15 +97,16 @@ class Slot extends AbstractResourceModel
     /**
      * @inheritdoc
      */
-    public static function getFieldNames()
+    public static function getDefaultFields()
     {
         return array_merge([
             'url',
             'content_uuid',
             'relevance',
             'display',
-            'content_url'
-        ], parent::getFieldNames());
+            'content_url',
+            'content_uuid'
+        ], parent::getDefaultFields());
     }
 
     /**
@@ -109,5 +119,105 @@ class Slot extends AbstractResourceModel
         }
 
         return $this->client->get("/content/{$this->content_uuid}/slots/{$this->uuid}");
+    }
+
+    /**
+     * @return string
+     */
+    public function getContentUuid()
+    {
+        return $this->content_uuid;
+    }
+
+    /**
+     * @param string $content_uuid
+     *
+     * @return $this
+     */
+    public function setContentUuid($content_uuid)
+    {
+        $this->content_uuid = $content_uuid;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRelevance()
+    {
+        return $this->relevance;
+    }
+
+    /**
+     * @param string $relevance
+     *
+     * @return $this
+     */
+    public function setRelevance($relevance)
+    {
+        $this->relevance = $relevance;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDisplay()
+    {
+        return $this->display;
+    }
+
+    /**
+     * @param string $display
+     *
+     * @return $this
+     */
+    public function setDisplay($display)
+    {
+        $this->display = $display;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    /**
+     * @param string $url
+     *
+     * @return $this
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContentUrl()
+    {
+        return $this->content_url;
+    }
+
+    /**
+     * @param string $content_url
+     *
+     * @return $this
+     */
+    public function setContentUrl($content_url)
+    {
+        $this->content_url = $content_url;
+
+        return $this;
     }
 }

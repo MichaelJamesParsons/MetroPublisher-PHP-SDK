@@ -35,14 +35,14 @@ class Location extends AbstractResourceModel
      */
     public function save()
     {
-        return parent::doSave("/locations/{$this->uuid}");
+        return $this->doSave("/locations/{$this->uuid}");
     }
 
     /**
      * @inheritdoc
      */
     public function delete() {
-        return parent::delete("/locations/{$this->uuid}");
+        return $this->doDelete("/locations/{$this->uuid}");
     }
 
     /**

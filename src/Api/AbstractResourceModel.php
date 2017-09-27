@@ -13,6 +13,15 @@ use MetroPublisher\MetroPublisher;
  */
 abstract class AbstractResourceModel extends AbstractModel
 {
+    /** @var  string */
+    protected $uuid;
+
+    /** @var  DateTime */
+    protected $created;
+
+    /** @var  DateTime */
+    protected $modified;
+
     /** @var  boolean */
     protected $isMetaDataLoaded;
 
@@ -55,8 +64,8 @@ abstract class AbstractResourceModel extends AbstractModel
      * @throws ModelValidationException
      */
     protected function doSave($endpoint) {
-        if(empty($this->fields['uuid'])) {
-            throw new ModelValidationException("Cannot save " . gettype($this) . ". UUID not set.");
+        if(empty($this->uuid)) {
+            throw new ModelValidationException('Cannot save model of type ' . gettype($this) . '. No UUID is set.');
         }
 
         if(empty($this->created)) {
@@ -70,8 +79,13 @@ abstract class AbstractResourceModel extends AbstractModel
      * @param $endpoint
      *
      * @return array
+     * @throws ModelValidationException
      */
     protected function doDelete($endpoint) {
+        if (empty($this->uuid)) {
+            throw new ModelValidationException('Cannot delete model of type ' . gettype($this) . '. No UUID is set.');
+        }
+
         return $this->client->delete($this->getBaseUri() . $endpoint, $this->serialize());
     }
 
@@ -112,7 +126,7 @@ abstract class AbstractResourceModel extends AbstractModel
      */
     public function __get($property)
     {
-        if(in_array($property, static::getMetaFields()) && !$this->isMetaDataLoaded) {
+        if(!empty($this->uuid) && in_array($property, static::getMetaFields()) && !$this->isMetaDataLoaded) {
             $this->syncFields();
         }
 
@@ -132,15 +146,19 @@ abstract class AbstractResourceModel extends AbstractModel
      */
     public function getUuid()
     {
-        return $this->fields['uuid'];
+        return $this->uuid;
     }
 
     /**
      * @param string $uuid
+     *
+     * @return $this
      */
     public function setUuid($uuid)
     {
-        $this->fields['uuid'] = $uuid;
+        $this->uuid = $uuid;
+
+        return $this;
     }
 
     /**
@@ -148,15 +166,19 @@ abstract class AbstractResourceModel extends AbstractModel
      */
     public function getUrlname()
     {
-        return $this->fields['urlname'];
+        return $this->urlname;
     }
 
     /**
      * @param string $urlname
+     *
+     * @return $this
      */
     public function setUrlname($urlname)
     {
-        $this->fields['urlname'] = $urlname;
+        $this->urlname = $urlname;
+
+        return $this;
     }
 
     /**
@@ -164,15 +186,19 @@ abstract class AbstractResourceModel extends AbstractModel
      */
     public function getModified()
     {
-        return $this->fields['modified'];
+        return $this->modified;
     }
 
     /**
      * @param DateTime $modified
+     *
+     * @return $this
      */
     public function setModified($modified)
     {
-        $this->fields['modified'] = $modified;
+        $this->modified = $modified;
+
+        return $this;
     }
 
     /**
@@ -180,15 +206,19 @@ abstract class AbstractResourceModel extends AbstractModel
      */
     public function getCreated()
     {
-        return $this->fields['created'];
+        return $this->created;
     }
 
     /**
      * @param DateTime $created
+     *
+     * @return $this
      */
     public function setCreated($created)
     {
-        $this->fields['created'] = $created;
+        $this->created = $created;
+
+        return $this;
     }
 
 
