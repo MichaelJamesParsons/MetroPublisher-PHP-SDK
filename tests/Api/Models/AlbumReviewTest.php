@@ -3,6 +3,7 @@ namespace Api\Models;
 
 use MetroPublisher\Api\Models\AlbumReview;
 use MetroPublisher\Api\Models\Content;
+use MetroPublisher\Http\HttpClientInterface;
 use MetroPublisher\MetroPublisher;
 use PHPUnit\Framework\TestCase;
 
@@ -55,5 +56,18 @@ class AlbumReviewTest extends TestCase
         $mp = $this->createMock(MetroPublisher::class);
         $review = new AlbumReview($mp);
         $this->assertEquals(Content::CONTENT_TYPE_REVIEW_ALBUM, $review->getContentType());
+    }
+
+    public function testAddBuyUrl() {
+        /** @var MetroPublisher $mp */
+        $mp = $this->createMock(MetroPublisher::class);
+        $mockClient = $this->createMock(HttpClientInterface::class);
+
+        $review = new AlbumReview($mp);
+        $review->addAlbumBuyUrl('http://example.com');
+
+        $urls = $review->getAlbumBuyUrls();
+        $this->assertEquals(1, count($urls));
+        $this->assertEquals('http://example.com', $urls[0]);
     }
 }

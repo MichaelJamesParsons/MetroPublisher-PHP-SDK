@@ -66,14 +66,14 @@ class Content extends AbstractResourceModel implements TaggableInterface
      * @inheritdoc
      */
     public function save() {
-        return $this->doSave("/content/{$this->fields['uuid']}");
+        return $this->doSave("/content/{$this->uuid}");
     }
 
     /**
      * @inheritdoc
      */
     public function delete() {
-        return $this->doDelete("/content/{$this->fields['uuid']}");
+        return $this->doDelete("/content/{$this->uuid}");
     }
 
     /**
@@ -92,7 +92,7 @@ class Content extends AbstractResourceModel implements TaggableInterface
      */
     public function getRelatedLinks($state = 'published') {
         return $this->client->get(
-            sprintf('%s/content/%s/related_links', $this->getBaseUri(), $this->fields['uuid']),
+            sprintf('%s/content/%s/related_links', $this->getBaseUri(), $this->uuid),
             ['state' => $state]
         );
     }
@@ -104,7 +104,7 @@ class Content extends AbstractResourceModel implements TaggableInterface
      */
     public function getTags($state = 'approved') {
         $tags = $this->client->get(
-            sprintf('%s/content/%s/tags', $this->getBaseUri(), $this->fields['uuid']),
+            sprintf('%s/content/%s/tags', $this->getBaseUri(), $this->uuid),
             ['state' => $state]
         );
 
@@ -118,7 +118,7 @@ class Content extends AbstractResourceModel implements TaggableInterface
      */
     public function getTagsWithPredicate($predicate, $state = 'approved') {
         $tags = $this->client->get(
-            sprintf('%s/content/%s/tags/%s', $this->getBaseUri(), $this->fields['uuid'], $predicate),
+            sprintf('%s/content/%s/tags/%s', $this->getBaseUri(), $this->uuid, $predicate),
             ['state' => $state]
         );
 
@@ -133,7 +133,7 @@ class Content extends AbstractResourceModel implements TaggableInterface
      * @return AbstractModel[]|Slot[]
      */
     public function getSlots() {
-        $response = $this->client->get(sprintf('%s/content/%s/slots', $this->getBaseUri(), $this->fields['uuid']));
+        $response = $this->client->get(sprintf('%s/content/%s/slots', $this->getBaseUri(), $this->uuid));
         return ModelDeserializer::convertCollection(new ModelResolver(Slot::class), $response['items'], [$this->context]);
     }
 
@@ -146,7 +146,7 @@ class Content extends AbstractResourceModel implements TaggableInterface
      */
     public function getPathHistory() {
         $response = $this->client->get(
-            sprintf('%s/content/%s/path_history', $this->getBaseUri(), $this->fields['uuid'])
+            sprintf('%s/content/%s/path_history', $this->getBaseUri(), $this->uuid)
         );
 
         return ModelDeserializer::convertCollection(new ModelResolver(PathHistory::class), $response['items'], [$this->context]);
@@ -173,7 +173,7 @@ class Content extends AbstractResourceModel implements TaggableInterface
      */
     public function setPathHistory(array $pathHistories) {
         $response = $this->client->put(
-            sprintf('%s/content/%s/path_history', $this->getBaseUri(), $this->fields['uuid']),
+            sprintf('%s/content/%s/path_history', $this->getBaseUri(), $this->uuid),
             [ 'items' => $pathHistories ]
         );
 
@@ -192,7 +192,7 @@ class Content extends AbstractResourceModel implements TaggableInterface
      */
     public function addPathHistory(PathHistory $pathHistory) {
         return $this->client->post(
-            sprintf('%s/content/%s/path_history', $this->getBaseUri(), $this->fields['uuid']),
+            sprintf('%s/content/%s/path_history', $this->getBaseUri(), $this->uuid),
             [ 'path' => $pathHistory->getPath() ]
         );
     }
@@ -202,7 +202,7 @@ class Content extends AbstractResourceModel implements TaggableInterface
      */
     protected function loadMetaData()
     {
-        return $this->client->get(sprintf('%s/content/%s', $this->getBaseUri(), $this->fields['uuid']));
+        return $this->client->get(sprintf('%s/content/%s', $this->getBaseUri(), $this->uuid));
     }
 
     /**

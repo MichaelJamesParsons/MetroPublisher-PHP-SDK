@@ -89,7 +89,10 @@ abstract class AbstractResourceModel extends AbstractModel
     }
 
     /**
-     * Unset the array key if it has been changed.
+     * Unset fields that are marked as changed.
+     *
+     * Fields that have been flagged as changed should be excluded from the sync
+     * to prevent old data from replacing pre-existing changes made by the application.
      *
      * @param array $values - The results to alter.
      *
