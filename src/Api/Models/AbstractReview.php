@@ -4,11 +4,20 @@ namespace MetroPublisher\Api\Models;
 /**
  * Class AbstractReview
  * @package MetroPublisher\Api\Models
- *
- * @property string $rating
  */
 abstract class AbstractReview extends Content
 {
+    /** @var  string */
+    protected $rating;
+
+    /**
+     * @inheritdoc
+     */
+    public static function getMetaFields()
+    {
+        return array_merge(['rating'], parent::getMetaFields());
+    }
+
     /**
      * @return float
      */
@@ -27,13 +36,5 @@ abstract class AbstractReview extends Content
         $this->rating = $rating . "";
 
         return $this;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public static function getMetaFields()
-    {
-        return array_merge(['rating'], parent::getMetaFields());
     }
 }

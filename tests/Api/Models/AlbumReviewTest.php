@@ -61,7 +61,6 @@ class AlbumReviewTest extends TestCase
     public function testAddBuyUrl() {
         /** @var MetroPublisher $mp */
         $mp = $this->createMock(MetroPublisher::class);
-        $mockClient = $this->createMock(HttpClientInterface::class);
 
         $review = new AlbumReview($mp);
         $review->addAlbumBuyUrl('http://example.com');

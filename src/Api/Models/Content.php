@@ -13,23 +13,49 @@ use MetroPublisher\MetroPublisher;
 /**
  * Class Content
  * @package MetroPublisher\Api\Content
- *
- * @property string     $content_type
- * @property string     $title
- * @property string     $description
- * @property string     $content
- * @property string     $state
- * @property string     $meta_title
- * @property string     $meta_description
- * @property string     $print_description
- * @property DateTime   $issued
- * @property string     $urlname
- * @property boolean    $evergreen
- * @property string     $teaser_image_uuid
- * @property string     $feature_image_uuid
  */
 class Content extends AbstractResourceModel implements TaggableInterface
 {
+
+    /** @var  string */
+    protected $content_type;
+
+    /** @var  string */
+    protected $title;
+
+    /** @var  string */
+    protected $description;
+
+    /** @var  string */
+    protected $content;
+
+    /** @var  string */
+    protected $state;
+
+    /** @var  string */
+    protected $meta_title;
+
+    /** @var  string */
+    protected $meta_description;
+
+    /** @var  string */
+    protected $print_description;
+
+    /** @var  DateTime */
+    protected $issued;
+
+    /** @var  string */
+    protected $urlname;
+
+    /** @var  boolean */
+    protected $evergreen;
+
+    /** @var  string */
+    protected $teaser_image_uuid;
+
+    /** @var  string */
+    protected $feature_image_uuid;
+
     /** @var  SlotCollection */
     protected $slotCollection;
 

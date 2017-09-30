@@ -2,11 +2,11 @@
 namespace MetroPublisher\Api\Collections;
 
 use DateTime;
-use Api\ResourceCollectionInterface;
 use MetroPublisher\Api\Models\Event;
 use MetroPublisher\Api\Models\EventOccurrence;
 use MetroPublisher\Api\AbstractResourceCollection;
 use MetroPublisher\Api\Models\Resolvers\ModelResolver;
+use MetroPublisher\Api\ResourceCollectionInterface;
 use MetroPublisher\Common\Serializers\ModelDeserializer;
 
 /**

@@ -7,15 +7,24 @@ use MetroPublisher\MetroPublisher;
 /**
  * Class AlbumReview
  * @package MetroPublisher\Api\Models
- *
- * @property string     $album_title
- * @property string     $album_image_uuid
- * @property DateTime   $album_issued
- * @property array      $album_provider_urls
- * @property array      $album_buy_urls
  */
 class AlbumReview extends AbstractReview
 {
+    /** @var  string */
+    protected $album_title;
+
+    /** @var  string */
+    protected $album_image_uuid;
+
+    /** @var  DateTime */
+    protected $album_issued;
+
+    /** @var array */
+    protected $album_provider_urls;
+    
+    /** @var array */
+    protected $album_buy_urls;
+
     /**
      * AlbumReview constructor.
      *
