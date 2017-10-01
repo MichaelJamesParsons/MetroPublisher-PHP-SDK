@@ -33,10 +33,14 @@ class GuzzleAdapter implements HttpClientInterface
 
     /**
      * @param array $options
+     *
+     * @return $this
      */
     public function setOptions(array $options)
     {
         $this->options = $options;
+
+        return $this;
     }
 
     /**
@@ -106,6 +110,8 @@ class GuzzleAdapter implements HttpClientInterface
 
     /**
      * @param boolean $isEnabled
+     *
+     * @return $this
      */
     public function setSslVerification($isEnabled)
     {
@@ -113,10 +119,14 @@ class GuzzleAdapter implements HttpClientInterface
             $this->options['verify'] = $isEnabled;
             $this->refreshGuzzleClient();
         }
+
+        return $this;
     }
 
     /**
      * @param string $baseUri
+     *
+     * @return $this
      */
     public function setBaseUri($baseUri)
     {
@@ -124,10 +134,13 @@ class GuzzleAdapter implements HttpClientInterface
             $this->options['base_uri'] = $baseUri;
             $this->refreshGuzzleClient();
         }
+
+        return $this;
     }
 
     /**
      * @param $contentType
+     * @return HttpClientInterface
      */
     public function setDefaultContentType($contentType)
     {
@@ -139,6 +152,8 @@ class GuzzleAdapter implements HttpClientInterface
             $this->options['headers']['content-type'] = $contentType;
             $this->refreshGuzzleClient();
         }
+
+        return $this;
     }
 
     /**

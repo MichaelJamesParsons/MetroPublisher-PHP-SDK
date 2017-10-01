@@ -166,9 +166,9 @@ class MetroPublisher
             // Add default authorization header to HTTP client
             $clientConfig = $this->httpClient->getOptions();
             $clientConfig['headers']['Authorization'] = "Bearer {$this->bearer}";
-            $this->httpClient->setOptions($clientConfig);
-            $this->httpClient->setBaseUri(MetroPublisher::API_BASE . "/{$this->accountId}/");
-            $this->httpClient->setDefaultContentType("application/json; charset=UTF-8");
+            $this->httpClient->setOptions($clientConfig)
+                 ->setBaseUri(MetroPublisher::API_BASE . "/{$this->accountId}/")
+                 ->setDefaultContentType("application/json; charset=UTF-8");
         } catch(\Exception $e) {
             throw new ConnectionException("Failed to fetch bearer. Please check API credentials.", $e->getCode(), $e);
         }
