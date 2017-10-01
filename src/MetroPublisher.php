@@ -127,6 +127,10 @@ class MetroPublisher
         $options = array_merge($options, $this->httpClient->getOptions());
 
         try {
+            if (substr($endpoint, 0, 1) === '/') {
+                $endpoint = substr($endpoint, 1);
+            }
+
             $response = call_user_func_array([$this->httpClient, $method], [$endpoint, $options]);
         } catch(ClientException $e) {
             $response = $e->getResponse();
@@ -163,7 +167,7 @@ class MetroPublisher
             $clientConfig = $this->httpClient->getOptions();
             $clientConfig['headers']['Authorization'] = "Bearer {$this->bearer}";
             $this->httpClient->setOptions($clientConfig);
-            $this->httpClient->setBaseUri(MetroPublisher::API_BASE . "/{$this->accountId}");
+            $this->httpClient->setBaseUri(MetroPublisher::API_BASE . "/{$this->accountId}/");
             $this->httpClient->setDefaultContentType("application/json; charset=UTF-8");
         } catch(\Exception $e) {
             throw new ConnectionException("Failed to fetch bearer. Please check API credentials.", $e->getCode(), $e);

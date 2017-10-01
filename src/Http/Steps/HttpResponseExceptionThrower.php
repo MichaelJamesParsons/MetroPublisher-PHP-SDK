@@ -30,6 +30,10 @@ class HttpResponseExceptionThrower implements HttpStepInterface
     private function getError(ResponseInterface $response) {
         $body = ResponseMediator::getContent($response);
 
+        if (!is_array($body)) {
+            return new Exception('Failed to send MetroPublisher API call: ' . $response->getReasonPhrase());
+        }
+
         switch($body['error']) {
             case 'bad_parameters':
                 return new BadParametersException($body["error_description"], $body["error_info"]);

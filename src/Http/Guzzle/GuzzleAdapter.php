@@ -75,7 +75,7 @@ class GuzzleAdapter implements HttpClientInterface
      */
     public function put($endpoint, array $options = [])
     {
-        return $this->guzzle->patch($endpoint, $options);
+        return $this->guzzle->put($endpoint, $options);
     }
 
     /**
@@ -120,7 +120,7 @@ class GuzzleAdapter implements HttpClientInterface
      */
     public function setBaseUri($baseUri)
     {
-        if (!isset($this->options['base_uri']) && $this->options['base_uri'] != $baseUri) {
+        if (!isset($this->options['base_uri']) || $this->options['base_uri'] != $baseUri) {
             $this->options['base_uri'] = $baseUri;
             $this->refreshGuzzleClient();
         }
@@ -135,7 +135,7 @@ class GuzzleAdapter implements HttpClientInterface
             $this->options['headers'] = array();
         }
         
-        if (!isset($this->options['headers']['content-type']) && $this->options['headers']['content-type'] != $contentType) {
+        if (!isset($this->options['headers']['content-type']) || $this->options['headers']['content-type'] != $contentType) {
             $this->options['headers']['content-type'] = $contentType;
             $this->refreshGuzzleClient();
         }

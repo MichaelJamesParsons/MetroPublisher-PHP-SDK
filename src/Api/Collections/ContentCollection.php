@@ -1,9 +1,9 @@
 <?php
 namespace MetroPublisher\Api\Collections;
 
-use Api\ResourceCollectionInterface;
 use MetroPublisher\Api\Models\Content;
 use MetroPublisher\Api\AbstractResourceCollection;
+use MetroPublisher\Api\ResourceCollectionInterface;
 
 /**
  * Class ContentCollection
