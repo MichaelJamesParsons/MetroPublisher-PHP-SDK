@@ -87,7 +87,7 @@ class Slot extends AbstractResourceModel
      * @return SlotMedia[]
      */
     public function getMedia() {
-        $response = $this->client->get("/content/{$this->content_uuid}/slots/{$this->uuid}/media");
+        $response = $this->context->get("/content/{$this->content_uuid}/slots/{$this->uuid}/media");
 
         /** @var SlotMedia[] $media */
         $media = ModelDeserializer::convertCollection(new SlotMediaResolver(), $response);
@@ -118,7 +118,7 @@ class Slot extends AbstractResourceModel
             throw new ModelValidationException("Cannot load slot meta fields with no content UUID set.");
         }
 
-        return $this->client->get("/content/{$this->content_uuid}/slots/{$this->uuid}");
+        return $this->context->get("/content/{$this->content_uuid}/slots/{$this->uuid}");
     }
 
     /**

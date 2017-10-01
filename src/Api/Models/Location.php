@@ -79,8 +79,6 @@ class Location extends AbstractResourceModel
      */
     protected function loadMetaData()
     {
-        return $this->client->get(
-            sprintf('%s/locations/%s', $this->getBaseUri(), $this->uuid)
-        );
+        return $this->context->get("/locations/{$this->uuid}");
     }
 }

@@ -69,10 +69,10 @@ abstract class AbstractResourceModel extends AbstractModel
         }
 
         if(empty($this->created)) {
-            return $this->client->put($this->getBaseUri() . $endpoint, $this->serialize());
+            return $this->context->put($endpoint, $this->serialize());
         }
 
-        return $this->client->post($this->getBaseUri() . $endpoint, $this->serialize());
+        return $this->context->post($endpoint, $this->serialize());
     }
 
     /**
@@ -86,7 +86,7 @@ abstract class AbstractResourceModel extends AbstractModel
             throw new ModelValidationException('Cannot delete model of type ' . gettype($this) . '. No UUID is set.');
         }
 
-        return $this->client->delete($this->getBaseUri() . $endpoint, $this->serialize());
+        return $this->context->delete($endpoint, $this->serialize());
     }
 
     /**
@@ -190,37 +190,12 @@ abstract class AbstractResourceModel extends AbstractModel
     }
 
     /**
-     * @param DateTime $modified
-     *
-     * @return $this
-     */
-    public function setModified($modified)
-    {
-        $this->modified = $modified;
-
-        return $this;
-    }
-
-    /**
      * @return DateTime
      */
     public function getCreated()
     {
         return $this->created;
     }
-
-    /**
-     * @param DateTime $created
-     *
-     * @return $this
-     */
-    public function setCreated($created)
-    {
-        $this->created = $created;
-
-        return $this;
-    }
-
 
     /**
      * @inheritdoc

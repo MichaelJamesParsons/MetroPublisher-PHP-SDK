@@ -29,13 +29,12 @@ class SlotCollection extends AbstractResourceCollection implements ResourceColle
     }
 
     public function findAll($page = 1, array $options = []) {
-        return parent::all(sprintf('%s/content/%s/slots', $this->getBaseUri(), $this->content->getUuid()));
+        return parent::all(sprintf('/content/%s/slots', $this->content->getUuid()));
     }
 
     public function find($slotUuid) {
         return parent::find(
-            sprintf('%s/content/%s/slots/%s',
-                $this->getBaseUri(),
+            sprintf("/content/%s/slots/%s",
                 $this->content->getUuid(),
                 $slotUuid)
         );

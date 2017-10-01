@@ -1,5 +1,5 @@
 <?php
-namespace Http\Guzzle;
+namespace MetroPublisher\Http\Guzzle;
 
 use GuzzleHttp\Client;
 use MetroPublisher\Http\HttpClientInterface;
@@ -109,7 +109,7 @@ class GuzzleAdapter implements HttpClientInterface
      */
     public function setSslVerification($isEnabled)
     {
-        if (isset($this->options['verify']) && $this->options['verify'] != $isEnabled) {
+        if (!isset($this->options['verify']) || $this->options['verify'] != $isEnabled) {
             $this->options['verify'] = $isEnabled;
             $this->refreshGuzzleClient();
         }
@@ -120,8 +120,8 @@ class GuzzleAdapter implements HttpClientInterface
      */
     public function setBaseUri($baseUri)
     {
-        if (isset($this->options['base_url']) && $this->options['base_url'] != $baseUri) {
-            $this->options['base_url'] = $baseUri;
+        if (!isset($this->options['base_uri']) && $this->options['base_uri'] != $baseUri) {
+            $this->options['base_uri'] = $baseUri;
             $this->refreshGuzzleClient();
         }
     }
@@ -132,11 +132,11 @@ class GuzzleAdapter implements HttpClientInterface
     public function setDefaultContentType($contentType)
     {
         if (!is_array($this->options['headers'])) {
-            $this->options = array();
+            $this->options['headers'] = array();
         }
         
-        if (isset($this->options['headers']['content_type']) && $this->options['headers']['content_type'] != $contentType) {
-            $this->options['headers']['content_type'] = $contentType;
+        if (!isset($this->options['headers']['content-type']) && $this->options['headers']['content-type'] != $contentType) {
+            $this->options['headers']['content-type'] = $contentType;
             $this->refreshGuzzleClient();
         }
     }

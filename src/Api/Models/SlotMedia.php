@@ -117,7 +117,7 @@ abstract class SlotMedia extends AbstractResourceModel
      */
     public function loadMetaData()
     {
-        return $this->client->get("/content/{$this->content_uuid}/slots/{$this->uuid}");
+        return $this->context->get("/content/{$this->content_uuid}/slots/{$this->uuid}");
     }
 
     /**

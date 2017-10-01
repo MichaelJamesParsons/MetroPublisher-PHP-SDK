@@ -39,7 +39,7 @@ abstract class AbstractResourceCollection extends AbstractApiResource
 
         $options['fields'] = implode('-', $fields);
         $options['page']   = $page;
-        $response = $this->client->get($this->getBaseUri() . $endpoint, $options);
+        $response = $this->context->get($endpoint, $options);
 
         return ModelDeserializer::convertCollection(
             new ModelResolver($this->getModelClass()),
@@ -57,7 +57,7 @@ abstract class AbstractResourceCollection extends AbstractApiResource
      */
     public function find($endpoint) {
         try {
-            $model = $this->client->get($this->getBaseUri() . $endpoint);
+            $model = $this->context->get($endpoint);
             return ModelDeserializer::convert(new ModelResolver($this->getModelClass()), $model, [$this->context]);
         } catch(ResourceNotFoundException $e) {
             return null;

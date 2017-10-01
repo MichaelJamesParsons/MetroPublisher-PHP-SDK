@@ -117,8 +117,7 @@ class Content extends AbstractResourceModel implements TaggableInterface
      * @return array
      */
     public function getRelatedLinks($state = 'published') {
-        return $this->client->get(
-            sprintf('%s/content/%s/related_links', $this->getBaseUri(), $this->uuid),
+        return $this->context->get("/content/{$this->uuid}/related_links",
             ['state' => $state]
         );
     }
@@ -129,8 +128,7 @@ class Content extends AbstractResourceModel implements TaggableInterface
      * @link https://api.metropublisher.com/resources/content.html#content_tags
      */
     public function getTags($state = 'approved') {
-        $tags = $this->client->get(
-            sprintf('%s/content/%s/tags', $this->getBaseUri(), $this->uuid),
+        $tags = $this->context->get("/content/{$this->uuid}/tags",
             ['state' => $state]
         );
 
@@ -143,8 +141,7 @@ class Content extends AbstractResourceModel implements TaggableInterface
      * @link https://api.metropublisher.com/resources/content.html#content_tags_all
      */
     public function getTagsWithPredicate($predicate, $state = 'approved') {
-        $tags = $this->client->get(
-            sprintf('%s/content/%s/tags/%s', $this->getBaseUri(), $this->uuid, $predicate),
+        $tags = $this->context->get("/content/{$this->uuid}/tags/{$predicate}",
             ['state' => $state]
         );
 
@@ -159,7 +156,7 @@ class Content extends AbstractResourceModel implements TaggableInterface
      * @return AbstractModel[]|Slot[]
      */
     public function getSlots() {
-        $response = $this->client->get(sprintf('%s/content/%s/slots', $this->getBaseUri(), $this->uuid));
+        $response = $this->context->get("/content/{$this->uuid}/slots");
         return ModelDeserializer::convertCollection(new ModelResolver(Slot::class), $response['items'], [$this->context]);
     }
 
@@ -171,10 +168,7 @@ class Content extends AbstractResourceModel implements TaggableInterface
      * @return array
      */
     public function getPathHistory() {
-        $response = $this->client->get(
-            sprintf('%s/content/%s/path_history', $this->getBaseUri(), $this->uuid)
-        );
-
+        $response = $this->context->get("/content/{$this->uuid}/path_history");
         return ModelDeserializer::convertCollection(new ModelResolver(PathHistory::class), $response['items'], [$this->context]);
     }
 
@@ -198,8 +192,7 @@ class Content extends AbstractResourceModel implements TaggableInterface
      * @return array
      */
     public function setPathHistory(array $pathHistories) {
-        $response = $this->client->put(
-            sprintf('%s/content/%s/path_history', $this->getBaseUri(), $this->uuid),
+        $response = $this->context->put("/content/{$this->uuid}/path_history",
             [ 'items' => $pathHistories ]
         );
 
@@ -217,8 +210,7 @@ class Content extends AbstractResourceModel implements TaggableInterface
      * @return array
      */
     public function addPathHistory(PathHistory $pathHistory) {
-        return $this->client->post(
-            sprintf('%s/content/%s/path_history', $this->getBaseUri(), $this->uuid),
+        return $this->context->post("/content/{$this->uuid}/path_history",
             [ 'path' => $pathHistory->getPath() ]
         );
     }
@@ -228,7 +220,7 @@ class Content extends AbstractResourceModel implements TaggableInterface
      */
     protected function loadMetaData()
     {
-        return $this->client->get(sprintf('%s/content/%s', $this->getBaseUri(), $this->uuid));
+        return $this->context->get("/content/{$this->uuid}");
     }
 
     /**
@@ -268,14 +260,6 @@ class Content extends AbstractResourceModel implements TaggableInterface
     }
 
     /**
-     * @param string $content_type
-     */
-    public function setContentType($content_type)
-    {
-        $this->content_type = $content_type;
-    }
-
-    /**
      * @return string
      */
     public function getTitle()
@@ -285,10 +269,14 @@ class Content extends AbstractResourceModel implements TaggableInterface
 
     /**
      * @param string $title
+     *
+     * @return $this
      */
     public function setTitle($title)
     {
         $this->title = $title;
+
+        return $this;
     }
 
     /**
@@ -301,10 +289,14 @@ class Content extends AbstractResourceModel implements TaggableInterface
 
     /**
      * @param string $description
+     *
+     * @return $this
      */
     public function setDescription($description)
     {
         $this->description = $description;
+
+        return $this;
     }
 
     /**

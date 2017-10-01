@@ -44,7 +44,7 @@ class EventCollection extends AbstractResourceCollection implements ResourceColl
      * @return \MetroPublisher\Api\Models\AbstractModel[]
      */
     public function getOccurrences(DateTime $start = null, DateTime $end = null, $page = 1) {
-        $occurrences = $this->client->get('/events', [
+        $occurrences = $this->context->get('/events', [
             'period' => sprintf('%s_%s', $start->format('Y-m-d'), $end->format('Y-m-d')),
             'page'   => $page
         ]);

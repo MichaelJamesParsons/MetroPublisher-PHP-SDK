@@ -167,7 +167,7 @@ class Tag extends AbstractResourceModel
      * @return TagCategory[]
      */
     public function getCategories() {
-        $response = $this->client->get("/tags/{$this->uuid}/categories");
+        $response = $this->context->get("/tags/{$this->uuid}/categories");
 
         /** @var TagCategory[] $categories */
         $categories = ModelDeserializer::convertCollection(
@@ -190,7 +190,7 @@ class Tag extends AbstractResourceModel
             throw new ModelValidationException('Tag must have a UUID set to get path history.');
         }
 
-        $response = $this->client->get("/tags/{$this->uuid}/path_history");
+        $response = $this->context->get("/tags/{$this->uuid}/path_history");
         return ModelDeserializer::convertCollection(new ModelResolver($response), $response, [$this->context]);
     }
 
@@ -218,7 +218,7 @@ class Tag extends AbstractResourceModel
             throw new ModelValidationException('Tag must have a UUID set to set path history.');
         }
 
-        $response = $this->client->put("/tags/{$this->uuid}/path_history",
+        $response = $this->context->put("/tags/{$this->uuid}/path_history",
             [ 'items' => $pathHistories ]
         );
 
@@ -240,7 +240,7 @@ class Tag extends AbstractResourceModel
             throw new ModelValidationException('Tag must have a UUID set to add path history.');
         }
 
-        return $this->client->post("/tags/{$this->uuid}/path_history",
+        return $this->context->post("/tags/{$this->uuid}/path_history",
             [ 'path' => $pathHistory->getPath() ]
         );
     }
@@ -266,8 +266,8 @@ class Tag extends AbstractResourceModel
      */
     protected function loadMetaData()
     {
-        return $this->client->get(
-            sprintf('%s/tags/%s', $this->getBaseUri(), $this->uuid)
+        return $this->context->get(
+            sprintf('/tags/%s', $this->uuid)
         );
     }
 

@@ -40,6 +40,6 @@ class TagCategory extends AbstractResourceModel
      */
     protected function loadMetaData()
     {
-        return $this->client->get("/tags/categories/{$this->uuid}");
+        return $this->context->get("/tags/categories/{$this->uuid}");
     }
 }
