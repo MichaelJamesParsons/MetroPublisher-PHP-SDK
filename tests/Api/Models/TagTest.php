@@ -1,5 +1,5 @@
 <?php
-namespace Api\Models;
+namespace MetroPublisher\Tests\Api\Models;
 
 use MetroPublisher\Api\Models\PathHistory;
 use MetroPublisher\Api\Models\Tag;

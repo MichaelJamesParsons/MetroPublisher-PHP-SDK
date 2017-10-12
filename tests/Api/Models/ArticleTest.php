@@ -1,5 +1,5 @@
 <?php
-namespace Api\Models;
+namespace MetroPublisher\Tests\Api\Models;
 
 use MetroPublisher\Api\Models\Article;
 use MetroPublisher\Api\Models\Content;

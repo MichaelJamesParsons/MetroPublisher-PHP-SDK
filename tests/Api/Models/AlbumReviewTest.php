@@ -1,9 +1,6 @@
 <?php
-namespace Api\Models;
+namespace MetroPublisher\Tests\Api\Models;
 
-use MetroPublisher\Api\Models\AlbumReview;
-use MetroPublisher\Api\Models\Content;
-use MetroPublisher\Http\HttpClientInterface;
 use MetroPublisher\MetroPublisher;
 use PHPUnit\Framework\TestCase;
 
@@ -63,7 +60,7 @@ class AlbumReviewTest extends TestCase
         $mp = $this->createMock(MetroPublisher::class);
 
         $review = new AlbumReview($mp);
-        $review->addAlbumBuyUrl('http://example.com');
+        $review->addAlbumBuyUrl('http://example.com', 'Example');
 
         $urls = $review->getAlbumBuyUrls();
         $this->assertEquals(1, count($urls));
