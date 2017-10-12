@@ -1,6 +1,9 @@
 <?php
 namespace MetroPublisher\Api\Models;
 
+use MetroPublisher\Exception\MetroPublisherException;
+use MetroPublisher\Http\Exception\BadParametersException;
+
 /**
  * Class AbstractReview
  * @package MetroPublisher\Api\Models
@@ -29,10 +32,15 @@ abstract class AbstractReview extends Content
      * @param int $rating
      *
      * @return $this
+     * @throws MetroPublisherException
      */
     public function setRating($rating)
     {
-        //Convert float to string to prevent API errors.
+        if ($rating !== 0 && ($rating < 0 || $rating > 5 || $rating % .5 > 0)) {
+            throw new MetroPublisherException('Rating must be 0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, or 5. ');
+        }
+
+        //API expects value to be string. Floats will trigger an error.
         $this->rating = $rating . "";
 
         return $this;

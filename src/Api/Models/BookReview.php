@@ -8,17 +8,28 @@ use MetroPublisher\MetroPublisher;
  * Class BookReview
  * @package MetroPublisher\Api\Models
  *
- * @property string     $book_title
- * @property string     $book_image_uuid
- * @property string     $book_isbn
- * @property DateTime   $book_issued
- * @property array      $book_provider_urls
- * @property array      $book_buy_urls
- *
  * @todo - Support for addBookProvider
  */
 class BookReview extends AbstractReview
 {
+    /** @var  string */
+    protected $book_title;
+
+    /** @var  string */
+    protected $book_image_uuid;
+
+    /** @var  string */
+    protected $book_isbn;
+
+    /** @var  DateTime */
+    protected $book_issued;
+
+    /** @var array */
+    protected $book_provider_urls;
+
+    /** @var array */
+    protected $book_buy_urls;
+
     /**
      * BookReview constructor.
      *
@@ -133,6 +144,19 @@ class BookReview extends AbstractReview
     }
 
     /**
+     * @param $url - A link to iTunes or Amazon.
+     *
+     * @return $this
+     */
+    public function addAlbumProviderUrl($url) {
+        if(!in_array($url, $this->book_provider_urls)) {
+            $this->book_provider_urls[] = $url;
+        }
+
+        return $this;
+    }
+
+    /**
      * @return array
      */
     public function getBookBuyUrls()
@@ -154,19 +178,22 @@ class BookReview extends AbstractReview
 
     /**
      * @param $url
+     * @param $linkText
      *
      * @return $this
      */
-    public function addBookBuyUrl($url) {
-        foreach($this->book_buy_urls as $bookBuyUrl) {
-            if($bookBuyUrl === $url) {
+    public function addBookBuyUrl($url, $linkText) {
+        foreach ($this->book_buy_urls as $dict) {
+            if ($dict['url'] === $url && $dict['link_text'] === $linkText) {
                 return $this;
             }
         }
 
-        $urls = $this->book_buy_urls;
-        $urls[] = $url;
-        $this->book_buy_urls = $urls;
+        $this->book_buy_urls[] = [
+            'url' => $url,
+            'link_text'  => $linkText
+        ];
+
         return $this;
     }
 
