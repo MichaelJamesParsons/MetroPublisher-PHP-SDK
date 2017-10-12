@@ -1,7 +1,6 @@
 <?php
-namespace MetroPublisher\Tests\Api\Models;
+namespace MetroPublisher\Api\Models;
 
-use MetroPublisher\Api\Models\EventOccurrence;
 use PHPUnit\Framework\TestCase;
 
 /**

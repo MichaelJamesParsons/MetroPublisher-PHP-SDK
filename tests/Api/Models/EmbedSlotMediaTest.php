@@ -1,9 +1,6 @@
 <?php
-namespace MetroPublisher\Tests\Api\Models;
+namespace MetroPublisher\Api\Models;
 
-use MetroPublisher\Api\Models\EmbedSlotMedia;
-use MetroPublisher\Api\Models\Slot;
-use MetroPublisher\Api\Models\SlotMedia;
 use MetroPublisher\MetroPublisher;
 use PHPUnit\Framework\TestCase;
 

@@ -1,13 +1,9 @@
 <?php
-namespace MetroPublisher\Tests\Api\Models;
+namespace MetroPublisher\Api\Models;
 
 use MetroPublisher\Api\Models\Exception\ModelValidationException;
-use MetroPublisher\Api\Models\Slot;
-use MetroPublisher\Http\HttpClientInterface;
 use MetroPublisher\MetroPublisher;
 use PHPUnit\Framework\TestCase;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\StreamInterface;
 
 /**
  * Class SlotTest

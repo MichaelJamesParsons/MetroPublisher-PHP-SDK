@@ -1,13 +1,8 @@
 <?php
-namespace MetroPublisher\Tests\Api\Models;
+namespace MetroPublisher\Api\Models;
 
-use MetroPublisher\Api\Models\PathHistory;
-use MetroPublisher\Api\Models\Tag;
-use MetroPublisher\Http\HttpClientInterface;
 use MetroPublisher\MetroPublisher;
 use PHPUnit\Framework\TestCase;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\StreamInterface;
 
 /**
  * Class TagTest

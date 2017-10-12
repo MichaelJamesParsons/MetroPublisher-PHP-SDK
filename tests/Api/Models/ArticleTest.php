@@ -1,8 +1,6 @@
 <?php
-namespace MetroPublisher\Tests\Api\Models;
+namespace MetroPublisher\Api\Models;
 
-use MetroPublisher\Api\Models\Article;
-use MetroPublisher\Api\Models\Content;
 use MetroPublisher\MetroPublisher;
 use PHPUnit\Framework\TestCase;
 
