@@ -25,8 +25,8 @@
   "minimum-stability": "stable",
   "autoload": {
     "psr-4": {
-      "MetroPublisher\\": "src/",
-      "MetroPublisher\\Tests\\": "tests/"
+      "MetroPublisher\\Tests\\": "tests/",
+      "MetroPublisher\\": "src/"
     }
   }
 }
