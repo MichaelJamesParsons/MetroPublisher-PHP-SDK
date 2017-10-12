@@ -1,6 +1,8 @@
 <?php
 namespace MetroPublisher\Tests\Api\Models;
 
+use MetroPublisher\Api\Models\AlbumReview;
+use MetroPublisher\Api\Models\Content;
 use MetroPublisher\MetroPublisher;
 use PHPUnit\Framework\TestCase;
 
@@ -64,6 +66,6 @@ class AlbumReviewTest extends TestCase
 
         $urls = $review->getAlbumBuyUrls();
         $this->assertEquals(1, count($urls));
-        $this->assertEquals('http://example.com', $urls[0]);
+        $this->assertEquals('http://example.com', $urls[0]['url']);
     }
 }

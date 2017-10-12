@@ -48,59 +48,69 @@ class TagTest extends TestCase
     }
 
     public function testGetCategories() {
-        $response = $this->getMockHttpResponse();
-        $mockClient = $this->createMock(HttpClientInterface::class);
-        $mockClient->expects($this->once())
-                   ->method('get')
-                   ->with('/tags/1/categories')
-                   ->willReturn($response);
+        /** @var \PHPUnit_Framework_MockObject_MockObject|MetroPublisher $mockMetroPublisher */
+        $mockMetroPublisher = $this->getMockBuilder(MetroPublisher::class)
+                                   ->setConstructorArgs([null, null])
+                                   ->setMethods(['get'])
+                                   ->getMock();
 
-        $metroPublisher = new MetroPublisher(null, null, $mockClient);
-        $tag = new Tag($metroPublisher);
+        $mockMetroPublisher->expects($this->once())
+                           ->method('get')
+                           ->with('/tags/1/categories')
+                           ->willReturn([]);
+
+        $tag = new Tag($mockMetroPublisher);
         $tag->setUuid('1')
             ->getCategories();
     }
 
     public function testGetPathHistory() {
-        $response = $this->getMockHttpResponse();
-        $mockClient = $this->createMock(HttpClientInterface::class);
-        $mockClient->expects($this->once())
-                   ->method('get')
-                   ->with('/tags/1/path_history')
-                   ->willReturn($response);
+        /** @var \PHPUnit_Framework_MockObject_MockObject|MetroPublisher $mockMetroPublisher */
+        $mockMetroPublisher = $this->getMockBuilder(MetroPublisher::class)
+                                   ->setConstructorArgs([null, null])
+                                   ->setMethods(['get'])
+                                   ->getMock();
 
-        $metroPublisher = new MetroPublisher(null, null, $mockClient);
-        $tag = new Tag($metroPublisher);
+        $mockMetroPublisher->expects($this->once())
+                           ->method('get')
+                           ->with('/tags/1/path_history')
+                           ->willReturn([]);
+
+        $tag = new Tag($mockMetroPublisher);
         $tag->setUuid('1')
             ->getPathHistory();
     }
 
     public function testSetPathHistory() {
-        $response = $this->getMockHttpResponse();
-        $mockClient = $this->createMock(HttpClientInterface::class);
-        $mockClient->expects($this->once())
-                   ->method('put')
-                   ->with('/tags/1/path_history')
-                   ->willReturn($response);
+        /** @var \PHPUnit_Framework_MockObject_MockObject|MetroPublisher $mockMetroPublisher */
+        $mockMetroPublisher = $this->getMockBuilder(MetroPublisher::class)
+                                   ->setConstructorArgs([null, null])
+                                   ->setMethods(['put'])
+                                   ->getMock();
 
-        $metroPublisher = new MetroPublisher(null, null, $mockClient);
-        $tag = new Tag($metroPublisher);
+        $mockMetroPublisher->expects($this->once())
+                           ->method('put')
+                           ->with('/tags/1/path_history', ['items' => []])
+                           ->willReturn([]);
+
+        $tag = new Tag($mockMetroPublisher);
         $tag->setUuid('1')
             ->setPathHistory([]);
     }
 
     public function testAddPathHistory() {
         /** @var \PHPUnit_Framework_MockObject_MockObject|MetroPublisher $mockMetroPublisher */
-        $mockMetroPublisher = $this->createMock(MetroPublisher::class);
-        $response = $this->getMockHttpResponse();
-        $mockClient = $this->createMock(HttpClientInterface::class);
-        $mockClient->expects($this->once())
-                   ->method('post')
-                   ->with('/tags/1/path_history')
-                   ->willReturn($response);
+        $mockMetroPublisher = $this->getMockBuilder(MetroPublisher::class)
+                                   ->setConstructorArgs([null, null])
+                                   ->setMethods(['post'])
+                                   ->getMock();
 
-        $metroPublisher = new MetroPublisher(null, null, $mockClient);
-        $tag = new Tag($metroPublisher);
+        $mockMetroPublisher->expects($this->once())
+                           ->method('post')
+                           ->with('/tags/1/path_history', ['path' => 'http://example.com'])
+                           ->willReturn([]);
+
+        $tag = new Tag($mockMetroPublisher);
         $tag->setUuid('1')
             ->addPathHistory(new PathHistory($mockMetroPublisher, 'http://example.com'));
     }
@@ -121,30 +131,5 @@ class TagTest extends TestCase
         ];
 
         $this->assertEquals($expected, Tag::getDefaultFields());
-    }
-
-    private function getMockHttpResponse() {
-        $mockStream = $this->createMock(StreamInterface::class);
-        $mockStream->expects($this->once())
-                   ->method('getContents')
-                   ->willReturn('[]');
-
-        $response = $this->createMock(ResponseInterface::class);
-        $response->expects($this->once())
-                 ->method('getBody')
-                 ->willReturn($mockStream);
-
-        // Set content type as json
-        $response->expects($this->once())
-                 ->method('getHeader')
-                 ->with('Content-Type')
-                 ->willReturn('application/json');
-
-        // Return 200 status code
-        $response->expects($this->once())
-                 ->method('getStatusCode')
-                 ->willReturn(200);
-
-        return $response;
     }
 }

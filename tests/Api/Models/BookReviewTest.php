@@ -49,7 +49,7 @@ class BookReviewTest extends TestCase
         $this->assertEquals([], $bookReview->getBookBuyUrls());
 
         // Test added value
-        $bookReview->addBookBuyUrl('http://metropublisher.com');
-        $this->assertEquals(['http://metropublisher.com'], $bookReview->getBookBuyUrls());
+        $bookReview->addBookBuyUrl('http://metropublisher.com', 'MetroPublisher');
+        $this->assertEquals([['url' => 'http://metropublisher.com', 'link_text' => 'MetroPublisher']], $bookReview->getBookBuyUrls());
     }
 }
