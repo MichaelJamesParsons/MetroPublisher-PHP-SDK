@@ -116,7 +116,11 @@ class MetroPublisher
         if($method == 'get') {
             $options['query'] = $fields;
         } elseif($method == 'put' || $method == 'patch') {
-            $options['json'] = $fields;
+            if (!empty($fields)) {
+                $options['json'] = $fields;
+            } else {
+                $options['json'] = array(null => null);
+            }
         } else {
             $options['form_params'] = $fields;
         }
