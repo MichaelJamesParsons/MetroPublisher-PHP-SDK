@@ -23,9 +23,9 @@ $albumReview->setUuid('55547ff8-3355-4f69-a867-7232165e6d29')
             ->setEvergreen(true)
             ->setIssued(new DateTime('now'))
             ->setAlbumTitle('Lorem ipsum')
-            ->setRating(0)
+            ->setRating(4.5)
             ->addAlbumBuyUrl('http://example.com', 'example')
-            ->addAlbumProviderUrl('https://www.amazon.com/REST-Design-Rulebook-Mark-Masse/dp/1449310508')
+            ->addAlbumProviderUrl('{URL to Amazon or iTunes}')
             ->save();
 
 // Delete the review
