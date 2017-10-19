@@ -7,8 +7,6 @@ use MetroPublisher\MetroPublisher;
 /**
  * Class BookReview
  * @package MetroPublisher\Api\Models
- *
- * @todo - Support for addBookProvider
  */
 class BookReview extends AbstractReview
 {
