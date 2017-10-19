@@ -16,7 +16,6 @@ use MetroPublisher\MetroPublisher;
  */
 class Content extends AbstractResourceModel implements TaggableInterface
 {
-
     /** @var  string */
     protected $content_type;
 

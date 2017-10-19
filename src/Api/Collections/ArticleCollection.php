@@ -1,6 +1,7 @@
 <?php
 namespace MetroPublisher\Api\Collections;
 
+use MetroPublisher\Api\Models\AlbumReview;
 use MetroPublisher\Api\Models\Article;
 
 /**
@@ -11,6 +12,8 @@ class ArticleCollection extends ContentCollection
 {
     /**
      * @inheritdoc
+     *
+     * @return AlbumReview[]
      */
     public function findAll($page = 1, array $options = [])
     {

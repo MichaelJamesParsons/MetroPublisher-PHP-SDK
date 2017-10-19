@@ -2,7 +2,6 @@
 namespace MetroPublisher\Api\Models;
 
 use MetroPublisher\Exception\MetroPublisherException;
-use MetroPublisher\Http\Exception\BadParametersException;
 
 /**
  * Class AbstractReview
