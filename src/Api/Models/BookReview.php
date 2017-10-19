@@ -148,7 +148,7 @@ class BookReview extends AbstractReview
      *
      * @return $this
      */
-    public function addAlbumProviderUrl($url) {
+    public function addBookProviderUrl($url) {
         if(!in_array($url, $this->book_provider_urls)) {
             $this->book_provider_urls[] = $url;
         }
