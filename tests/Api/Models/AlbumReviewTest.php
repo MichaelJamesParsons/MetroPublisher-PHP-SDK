@@ -60,7 +60,7 @@ class AlbumReviewTest extends TestCase
         $mp = $this->createMock(MetroPublisher::class);
 
         $review = new AlbumReview($mp);
-        $review->addAlbumBuyUrl('http://example.com', 'Example');
+        $review->addAlbumBuyUrl('http://amazon.com', 'Example');
 
         $urls = $review->getAlbumBuyUrls();
         $this->assertEquals(1, count($urls));
