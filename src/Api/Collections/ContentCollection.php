@@ -1,9 +1,13 @@
 <?php
 namespace MetroPublisher\Api\Collections;
 
+use MetroPublisher\Api\AbstractApiResource;
+use MetroPublisher\Api\AbstractResourceModel;
+use MetroPublisher\Api\Models\AbstractModel;
 use MetroPublisher\Api\Models\Content;
 use MetroPublisher\Api\AbstractResourceCollection;
 use MetroPublisher\Api\ResourceCollectionInterface;
+use MetroPublisher\Api\ResourceModelTrait;
 
 /**
  * Class ContentCollection
@@ -27,6 +31,8 @@ class ContentCollection extends AbstractResourceCollection implements ResourceCo
 
     /**
      * @inheritdoc
+     *
+     * @return Content|AbstractResourceModel
      */
     public function find($uuid) {
         return parent::find("/content/{$uuid}");

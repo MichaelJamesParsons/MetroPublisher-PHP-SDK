@@ -1,7 +1,6 @@
 <?php
-namespace Api\Models;
+namespace MetroPublisher\Api\Models;
 
-use MetroPublisher\Api\Models\Content;
 use PHPUnit\Framework\TestCase;
 
 class ContentTest extends TestCase

@@ -77,10 +77,7 @@ class MetroPublisher
     public function __call($method, $arguments)
     {
         if(!in_array($method, self::$httpMethods)) {
-            throw new \BadMethodCallException(sprintf(
-                'Class %s does not contain method %s.',
-                get_class($this),
-                $method));
+            throw new \BadMethodCallException("Class " . get_class($this) . " does not contain method {$method}.");
         }
 
         if(count($arguments) < 1) {
@@ -113,13 +110,17 @@ class MetroPublisher
      *
      * @return array|mixed
      */
-    private function execute($method, $endpoint, array $fields = [], array $options = []) {
+    public function execute($method, $endpoint, array $fields = [], array $options = []) {
         unset($options['json'], $options['query']);
 
         if($method == 'get') {
             $options['query'] = $fields;
         } elseif($method == 'put' || $method == 'patch') {
-            $options['json'] = $fields;
+            if (!empty($fields)) {
+                $options['json'] = $fields;
+            } else {
+                $options['json'] = array(null => null);
+            }
         } else {
             $options['form_params'] = $fields;
         }
@@ -127,7 +128,7 @@ class MetroPublisher
         $options = array_merge($options, $this->httpClient->getOptions());
 
         try {
-            if (substr($endpoint, 0, 1) === '/') {
+            if (substr($endpoint, 0, 1) === '/' && $endpoint !== '/') {
                 $endpoint = substr($endpoint, 1);
             }
 

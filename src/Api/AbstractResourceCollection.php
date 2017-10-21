@@ -53,7 +53,7 @@ abstract class AbstractResourceCollection extends AbstractApiResource
      *
      * @param $endpoint
      *
-     * @return AbstractModel
+     * @return AbstractResourceModel
      */
     public function find($endpoint) {
         try {

@@ -1,13 +1,9 @@
 <?php
-namespace Api\Models;
+namespace MetroPublisher\Api\Models;
 
 use MetroPublisher\Api\Models\Exception\ModelValidationException;
-use MetroPublisher\Api\Models\Slot;
-use MetroPublisher\Http\HttpClientInterface;
 use MetroPublisher\MetroPublisher;
 use PHPUnit\Framework\TestCase;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\StreamInterface;
 
 /**
  * Class SlotTest
@@ -86,34 +82,20 @@ class SlotTest extends TestCase
     }
 
     public function testGetMedia() {
-        $mockStream = $this->createMock(StreamInterface::class);
-        $mockStream->expects($this->once())
-            ->method('getContents')
-            ->willReturn('[]');
+        /** @var \PHPUnit_Framework_MockObject_MockObject|MetroPublisher $mockMetroPublisher */
+        $mockMetroPublisher = $this->getMockBuilder(MetroPublisher::class)
+            ->setConstructorArgs([null, null])
+            ->setMethods(['get'])
+            ->getMock();
 
-        $response = $this->createMock(ResponseInterface::class);
-        $response->expects($this->once())
-            ->method('getBody')
-            ->willReturn($mockStream);
+        $mockMetroPublisher->expects($this->once())
+                           ->method('get')
+                           ->with('/content/2/slots/1/media')
+                           ->willReturn([]);
 
-        // Set content type as json
-        $response->expects($this->once())
-            ->method('getHeader')
-            ->with('Content-Type')
-            ->willReturn('application/json');
-
-        // Return 200 status code
-        $response->expects($this->once())
-             ->method('getStatusCode')
-             ->willReturn(200);
-
-        $mockClient = $this->createMock(HttpClientInterface::class);
-        $mockClient->expects($this->once())
-            ->method('get')
-            ->willReturn($response);
-
-        $metroPublisher = new MetroPublisher(null, null, $mockClient);
-        $slot = new Slot($metroPublisher);
+        $slot = new Slot($mockMetroPublisher);
+        $slot->setUuid(1);
+        $slot->setContentUuid(2);
         $slot->getMedia();
     }
 

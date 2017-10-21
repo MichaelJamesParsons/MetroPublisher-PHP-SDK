@@ -102,10 +102,27 @@ class AlbumReview extends AbstractReview
 
     /**
      * @param array $album_provider_urls
+     *
+     * @return $this
      */
     public function setAlbumProviderUrls($album_provider_urls)
     {
         $this->album_provider_urls = $album_provider_urls;
+
+        return $this;
+    }
+
+    /**
+     * @param $url - A link to iTunes or Amazon.
+     *
+     * @return $this
+     */
+    public function addAlbumProviderUrl($url) {
+        if(!in_array($url, $this->album_provider_urls)) {
+            $this->album_provider_urls[] = $url;
+        }
+
+        return $this;
     }
 
     /**
@@ -128,12 +145,21 @@ class AlbumReview extends AbstractReview
 
     /**
      * @param $url
+     * @param $linkText
+     *
      * @return $this
      */
-    public function addAlbumBuyUrl($url) {
-        if(!in_array($url, $this->album_buy_urls)) {
-            $this->album_buy_urls[] = $url;
+    public function addAlbumBuyUrl($url, $linkText) {
+        foreach ($this->album_buy_urls as $dict) {
+            if ($dict['url'] === $url && $dict['link_text'] === $linkText) {
+                return $this;
+            }
         }
+
+        $this->album_buy_urls[] = [
+            'url' => $url,
+            'link_text'  => $linkText
+        ];
 
         return $this;
     }

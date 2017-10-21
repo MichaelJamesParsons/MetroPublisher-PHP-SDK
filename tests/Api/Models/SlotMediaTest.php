@@ -1,8 +1,7 @@
 <?php
-namespace Api\Models;
+namespace MetroPublisher\Api\Models;
 
 use MetroPublisher\Api\Models\Exception\ModelValidationException;
-use MetroPublisher\Api\Models\SlotMedia;
 use PHPUnit\Framework\TestCase;
 
 /**

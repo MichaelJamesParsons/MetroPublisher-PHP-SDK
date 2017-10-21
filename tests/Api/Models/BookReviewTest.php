@@ -1,8 +1,6 @@
 <?php
-namespace Api\Models;
+namespace MetroPublisher\Api\Models;
 
-use MetroPublisher\Api\Models\BookReview;
-use MetroPublisher\Api\Models\Content;
 use MetroPublisher\MetroPublisher;
 use PHPUnit\Framework\TestCase;
 
@@ -49,7 +47,7 @@ class BookReviewTest extends TestCase
         $this->assertEquals([], $bookReview->getBookBuyUrls());
 
         // Test added value
-        $bookReview->addBookBuyUrl('http://metropublisher.com');
-        $this->assertEquals(['http://metropublisher.com'], $bookReview->getBookBuyUrls());
+        $bookReview->addBookBuyUrl('http://metropublisher.com', 'MetroPublisher');
+        $this->assertEquals([['url' => 'http://metropublisher.com', 'link_text' => 'MetroPublisher']], $bookReview->getBookBuyUrls());
     }
 }

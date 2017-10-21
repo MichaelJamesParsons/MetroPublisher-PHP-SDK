@@ -1,7 +1,6 @@
 <?php
-namespace Api\Models;
+namespace MetroPublisher\Api\Models;
 
-use MetroPublisher\Api\Models\Event;
 use PHPUnit\Framework\TestCase;
 
 /**

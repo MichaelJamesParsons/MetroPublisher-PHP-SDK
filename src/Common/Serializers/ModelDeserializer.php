@@ -1,10 +1,10 @@
 <?php
 namespace MetroPublisher\Common\Serializers;
 
+use MetroPublisher\Api\AbstractResourceModel;
 use MetroPublisher\Api\Models\AbstractModel;
 use MetroPublisher\Api\Models\Resolvers\ModelTypeResolverInterface;
 use MetroPublisher\Common\ReflectionUtils;
-use ReflectionClass;
 use ReflectionObject;
 
 /**
@@ -18,7 +18,7 @@ class ModelDeserializer extends AbstractSerializer
      * @param array                      $values
      * @param array                      $instanceArgs
      *
-     * @return AbstractModel
+     * @return AbstractModel|AbstractResourceModel
      */
     public static function convert(ModelTypeResolverInterface $resolver, array $values, array $instanceArgs = []) {
         /** @var AbstractModel $modelType */
@@ -42,7 +42,7 @@ class ModelDeserializer extends AbstractSerializer
      * @param AbstractModel $instance
      * @param array         $values
      *
-     * @return ReflectionClass
+     * @return AbstractModel
      */
     public static function mergeValuesWithInstance(AbstractModel $instance, array $values) {
         return self::createInstance($instance, $values);
@@ -68,7 +68,7 @@ class ModelDeserializer extends AbstractSerializer
      * @param       $instance
      * @param array $values
      *
-     * @return ReflectionClass
+     * @return AbstractModel
      */
     protected static function createInstance($instance, array $values)
     {
@@ -83,7 +83,7 @@ class ModelDeserializer extends AbstractSerializer
      * @param array            $mapping
      * @param array            $properties
      *
-     * @return ReflectionClass
+     * @return AbstractModel
      */
     protected static function fillObjectProperties($instance, $reflection, array $mapping, array $properties)
     {
