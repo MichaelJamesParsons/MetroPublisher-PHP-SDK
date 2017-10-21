@@ -34,7 +34,7 @@ abstract class AbstractResourceCollection extends AbstractApiResource
      *
      * @return array
      */
-    public function all($endpoint, $page = 1, array $options = []) {
+    protected function all($endpoint, $page = 1, array $options = []) {
         $fields = $this->getModelDefaultFields();
 
         $options['fields'] = implode('-', $fields);
