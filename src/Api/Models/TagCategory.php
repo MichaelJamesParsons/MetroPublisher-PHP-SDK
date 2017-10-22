@@ -6,18 +6,17 @@ use MetroPublisher\Api\AbstractResourceModel;
 /**
  * Class TagCategory
  * @package MetroPublisher\Api\Models
+ *
+ * @property string $title
  */
 class TagCategory extends AbstractResourceModel
 {
-    /** @var  string */
-    protected $title;
-
     /**
      * @inheritdoc
      */
     public function save()
     {
-        return parent::save("/tags/categories/{$this->uuid}");
+        return $this->doSave("/tags/categories/{$this->uuid}");
     }
 
     /**
@@ -25,7 +24,7 @@ class TagCategory extends AbstractResourceModel
      */
     public function delete()
     {
-        return parent::delete("/tags/categories/{$this->uuid}");
+        return $this->doDelete("/tags/categories/{$this->uuid}");
     }
 
     /**
@@ -41,8 +40,6 @@ class TagCategory extends AbstractResourceModel
      */
     protected function loadMetaData()
     {
-        return $this->client->get(
-            sprintf('%s/tags/categories/%s', $this->getBaseUri(), $this->uuid)
-        );
+        return $this->context->get("/tags/categories/{$this->uuid}");
     }
 }

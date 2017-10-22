@@ -21,6 +21,9 @@ class AnnotationParser
     }
 
     private function __clone() {}
+
+    /** @noinspection SpellCheckingInspection */
+    /** @noinspection PhpUnusedPrivateMethodInspection */
     private function __wakeup() {}
 
     public static function getInstance() {

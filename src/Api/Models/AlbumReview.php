@@ -19,10 +19,10 @@ class AlbumReview extends AbstractReview
     /** @var  DateTime */
     protected $album_issued;
 
-    /** @var  string */
+    /** @var array */
     protected $album_provider_urls;
-
-    /** @var  string */
+    
+    /** @var array */
     protected $album_buy_urls;
 
     /**
@@ -33,7 +33,9 @@ class AlbumReview extends AbstractReview
     public function __construct(MetroPublisher $metroPublisher)
     {
         parent::__construct($metroPublisher);
-        $this->properties['contentType'] = Content::CONTENT_TYPE_REVIEW_ALBUM;
+        $this->content_type = Content::CONTENT_TYPE_REVIEW_ALBUM;
+        $this->album_provider_urls = [];
+        $this->album_buy_urls = [];
     }
 
     /**
@@ -46,13 +48,11 @@ class AlbumReview extends AbstractReview
 
     /**
      * @param string $album_title
-     *
      * @return $this
      */
     public function setAlbumTitle($album_title)
     {
         $this->album_title = $album_title;
-
         return $this;
     }
 
@@ -66,13 +66,11 @@ class AlbumReview extends AbstractReview
 
     /**
      * @param string $album_image_uuid
-     *
      * @return $this
      */
     public function setAlbumImageUuid($album_image_uuid)
     {
         $this->album_image_uuid = $album_image_uuid;
-
         return $this;
     }
 
@@ -86,13 +84,11 @@ class AlbumReview extends AbstractReview
 
     /**
      * @param DateTime $album_issued
-     *
      * @return $this
      */
     public function setAlbumIssued($album_issued)
     {
         $this->album_issued = $album_issued;
-
         return $this;
     }
 
@@ -117,6 +113,19 @@ class AlbumReview extends AbstractReview
     }
 
     /**
+     * @param $url - A link to iTunes or Amazon.
+     *
+     * @return $this
+     */
+    public function addAlbumProviderUrl($url) {
+        if(!in_array($url, $this->album_provider_urls)) {
+            $this->album_provider_urls[] = $url;
+        }
+
+        return $this;
+    }
+
+    /**
      * @return array
      */
     public function getAlbumBuyUrls()
@@ -126,12 +135,31 @@ class AlbumReview extends AbstractReview
 
     /**
      * @param array $album_buy_urls
-     *
      * @return $this
      */
     public function setAlbumBuyUrls($album_buy_urls)
     {
         $this->album_buy_urls = $album_buy_urls;
+        return $this;
+    }
+
+    /**
+     * @param $url
+     * @param $linkText
+     *
+     * @return $this
+     */
+    public function addAlbumBuyUrl($url, $linkText) {
+        foreach ($this->album_buy_urls as $dict) {
+            if ($dict['url'] === $url && $dict['link_text'] === $linkText) {
+                return $this;
+            }
+        }
+
+        $this->album_buy_urls[] = [
+            'url' => $url,
+            'link_text'  => $linkText
+        ];
 
         return $this;
     }

@@ -9,32 +9,82 @@ use Psr\Http\Message\ResponseInterface;
  */
 interface HttpClientInterface
 {
-    public function __construct(array $steps = []);
-
-    /**
-     * @param       $method
-     * @param       $endpoint
-     * @param array $fields
-     * @param array $options
-     *
-     * @return string
-     */
-    public function execute($method, $endpoint, array $fields = [], array $options = []);
-
-    /**
-     * @param ResponseInterface $response
-     *
-     * @return string
-     */
-    public function handleResponse(ResponseInterface $response);
-
     /**
      * @return array
      */
-    public function getDefaultOptions();
+    public function getOptions();
 
     /**
      * @param array $options
+     * @return HttpClientInterface
      */
-    public function setDefaultOptions(array $options);
+    public function setOptions(array $options);
+
+    /**
+     * @param boolean $isEnabled
+     * @return HttpClientInterface
+     */
+    public function setSslVerification($isEnabled);
+
+    /**
+     * @param string $baseUri
+     * @return HttpClientInterface
+     */
+    public function setBaseUri($baseUri);
+
+    /**
+     * @param $contentType
+     * @return HttpClientInterface
+     */
+    public function setDefaultContentType($contentType);
+
+    /**
+     * Sends GET request
+     *
+     * @param string $endpoint
+     * @param array  $options
+     *
+     * @return ResponseInterface
+     */
+    public function get($endpoint, array $options = []);
+
+    /**
+     * Sends PATCH request
+     *
+     * @param string $endpoint
+     * @param array  $options
+     *
+     * @return ResponseInterface
+     */
+    public function patch($endpoint, array $options = []);
+
+    /**
+     * Sends PUT request
+     *
+     * @param string $endpoint
+     * @param array  $options
+     *
+     * @return ResponseInterface
+     */
+    public function put($endpoint, array $options = []);
+
+    /**
+     * Sends POST request
+     *
+     * @param string $endpoint
+     * @param array  $options
+     *
+     * @return ResponseInterface
+     */
+    public function post($endpoint, array $options = []);
+
+    /**
+     * Sends DELETE request
+     *
+     * @param string $endpoint
+     * @param array  $options
+     *
+     * @return ResponseInterface
+     */
+    public function delete($endpoint, array $options = []);
 }

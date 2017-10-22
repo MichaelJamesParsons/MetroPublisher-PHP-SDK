@@ -14,7 +14,7 @@ use MetroPublisher\MetroPublisher;
  * Class Content
  * @package MetroPublisher\Api\Content
  */
-abstract class Content extends AbstractResourceModel implements TaggableInterface
+class Content extends AbstractResourceModel implements TaggableInterface
 {
     /** @var  string */
     protected $content_type;
@@ -91,14 +91,14 @@ abstract class Content extends AbstractResourceModel implements TaggableInterfac
      * @inheritdoc
      */
     public function save() {
-        return parent::save("/content/{$this->uuid}");
+        return $this->doSave("/content/{$this->uuid}");
     }
 
     /**
      * @inheritdoc
      */
     public function delete() {
-        return parent::delete("/content/{$this->uuid}");
+        return $this->doDelete("/content/{$this->uuid}");
     }
 
     /**
@@ -116,8 +116,7 @@ abstract class Content extends AbstractResourceModel implements TaggableInterfac
      * @return array
      */
     public function getRelatedLinks($state = 'published') {
-        return $this->client->get(
-            sprintf('%s/content/%s/related_links', $this->getBaseUri(), $this->uuid),
+        return $this->context->get("/content/{$this->uuid}/related_links",
             ['state' => $state]
         );
     }
@@ -128,8 +127,7 @@ abstract class Content extends AbstractResourceModel implements TaggableInterfac
      * @link https://api.metropublisher.com/resources/content.html#content_tags
      */
     public function getTags($state = 'approved') {
-        $tags = $this->client->get(
-            sprintf('%s/content/%s/tags', $this->getBaseUri(), $this->uuid),
+        $tags = $this->context->get("/content/{$this->uuid}/tags",
             ['state' => $state]
         );
 
@@ -142,8 +140,7 @@ abstract class Content extends AbstractResourceModel implements TaggableInterfac
      * @link https://api.metropublisher.com/resources/content.html#content_tags_all
      */
     public function getTagsWithPredicate($predicate, $state = 'approved') {
-        $tags = $this->client->get(
-            sprintf('%s/content/%s/tags/%s', $this->getBaseUri(), $this->uuid, $predicate),
+        $tags = $this->context->get("/content/{$this->uuid}/tags/{$predicate}",
             ['state' => $state]
         );
 
@@ -155,14 +152,11 @@ abstract class Content extends AbstractResourceModel implements TaggableInterfac
      *
      * @link https://api.metropublisher.com/resources/content.html#content_slots
      *
-     * @return Slot[]
+     * @return AbstractModel[]|Slot[]
      */
     public function getSlots() {
-        $response = $this->client->get(sprintf('%s/content/%s/slots', $this->getBaseUri(), $this->uuid));
-
-        /** @var Slot[] $slots */
-        $slots = ModelDeserializer::convertCollection(new ModelResolver(Slot::class), $response['items'], [$this->context]);
-        return $slots;
+        $response = $this->context->get("/content/{$this->uuid}/slots");
+        return ModelDeserializer::convertCollection(new ModelResolver(Slot::class), $response['items'], [$this->context]);
     }
 
     /**
@@ -173,10 +167,7 @@ abstract class Content extends AbstractResourceModel implements TaggableInterfac
      * @return array
      */
     public function getPathHistory() {
-        $response = $this->client->get(
-            sprintf('%s/content/%s/path_history', $this->getBaseUri(), $this->uuid)
-        );
-
+        $response = $this->context->get("/content/{$this->uuid}/path_history");
         return ModelDeserializer::convertCollection(new ModelResolver(PathHistory::class), $response['items'], [$this->context]);
     }
 
@@ -200,8 +191,7 @@ abstract class Content extends AbstractResourceModel implements TaggableInterfac
      * @return array
      */
     public function setPathHistory(array $pathHistories) {
-        $response = $this->client->put(
-            sprintf('%s/content/%s/path_history', $this->getBaseUri(), $this->uuid),
+        $response = $this->context->put("/content/{$this->uuid}/path_history",
             [ 'items' => $pathHistories ]
         );
 
@@ -219,8 +209,7 @@ abstract class Content extends AbstractResourceModel implements TaggableInterfac
      * @return array
      */
     public function addPathHistory(PathHistory $pathHistory) {
-        return $this->client->post(
-            sprintf('%s/content/%s/path_history', $this->getBaseUri(), $this->uuid),
+        return $this->context->post("/content/{$this->uuid}/path_history",
             [ 'path' => $pathHistory->getPath() ]
         );
     }
@@ -230,9 +219,35 @@ abstract class Content extends AbstractResourceModel implements TaggableInterfac
      */
     protected function loadMetaData()
     {
-        return $this->client->get(
-            sprintf('%s/content/%s', $this->getBaseUri(), $this->uuid)
-        );
+        return $this->context->get("/content/{$this->uuid}");
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public static function getMetaFields() {
+        return [
+            'content',
+            'meta_title',
+            'meta_description',
+            'print_description',
+            'evergreen',
+            'teaser_image_uuid',
+            'feature_image_uuid'
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public static function getDefaultFields() {
+        return array_merge([
+            'content_type',
+            'title',
+            'description',
+            'state',
+            'issued',
+        ], parent::getDefaultFields());
     }
 
     /**
@@ -241,18 +256,6 @@ abstract class Content extends AbstractResourceModel implements TaggableInterfac
     public function getContentType()
     {
         return $this->content_type;
-    }
-
-    /**
-     * @param string $content_type
-     *
-     * @return $this
-     */
-    public function setContentType($content_type)
-    {
-        $this->content_type = $content_type;
-
-        return $this;
     }
 
     /**
@@ -305,7 +308,6 @@ abstract class Content extends AbstractResourceModel implements TaggableInterfac
 
     /**
      * @param string $content
-     *
      * @return $this
      */
     public function setContent($content)
@@ -325,7 +327,6 @@ abstract class Content extends AbstractResourceModel implements TaggableInterfac
 
     /**
      * @param string $state
-     *
      * @return $this
      */
     public function setState($state)
@@ -345,7 +346,6 @@ abstract class Content extends AbstractResourceModel implements TaggableInterfac
 
     /**
      * @param string $meta_title
-     *
      * @return $this
      */
     public function setMetaTitle($meta_title)
@@ -365,7 +365,6 @@ abstract class Content extends AbstractResourceModel implements TaggableInterfac
 
     /**
      * @param string $meta_description
-     *
      * @return $this
      */
     public function setMetaDescription($meta_description)
@@ -385,7 +384,6 @@ abstract class Content extends AbstractResourceModel implements TaggableInterfac
 
     /**
      * @param string $print_description
-     *
      * @return $this
      */
     public function setPrintDescription($print_description)
@@ -405,7 +403,6 @@ abstract class Content extends AbstractResourceModel implements TaggableInterfac
 
     /**
      * @param DateTime $issued
-     *
      * @return $this
      */
     public function setIssued($issued)
@@ -425,7 +422,6 @@ abstract class Content extends AbstractResourceModel implements TaggableInterfac
 
     /**
      * @param string $urlname
-     *
      * @return $this
      */
     public function setUrlname($urlname)
@@ -436,7 +432,7 @@ abstract class Content extends AbstractResourceModel implements TaggableInterfac
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isEvergreen()
     {
@@ -444,8 +440,7 @@ abstract class Content extends AbstractResourceModel implements TaggableInterfac
     }
 
     /**
-     * @param boolean $evergreen
-     *
+     * @param bool $evergreen
      * @return $this
      */
     public function setEvergreen($evergreen)
@@ -465,7 +460,6 @@ abstract class Content extends AbstractResourceModel implements TaggableInterfac
 
     /**
      * @param string $teaser_image_uuid
-     *
      * @return $this
      */
     public function setTeaserImageUuid($teaser_image_uuid)
@@ -485,7 +479,6 @@ abstract class Content extends AbstractResourceModel implements TaggableInterfac
 
     /**
      * @param string $feature_image_uuid
-     *
      * @return $this
      */
     public function setFeatureImageUuid($feature_image_uuid)
@@ -493,33 +486,5 @@ abstract class Content extends AbstractResourceModel implements TaggableInterfac
         $this->feature_image_uuid = $feature_image_uuid;
 
         return $this;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public static function getMetaFields() {
-        return [
-            'content',
-            'meta_title',
-            'meta_description',
-            'print_description',
-            'evergreen',
-            'teaser_image_uuid',
-            'feature_image_uuid'
-        ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public static function getDefaultFields() {
-        return array_merge([
-            'content_type',
-            'title',
-            'description',
-            'state',
-            'issued',
-        ], parent::getDefaultFields());
     }
 }

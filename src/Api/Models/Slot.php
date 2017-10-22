@@ -12,19 +12,19 @@ use MetroPublisher\Common\Serializers\ModelDeserializer;
  */
 class Slot extends AbstractResourceModel
 {
-    /** @var  string */
+    /** @var string */
     protected $content_uuid;
 
-    /** @var  string */
+    /** @var string */
     protected $relevance;
 
-    /** @var  string */
+    /** @var string */
     protected $display;
 
-    /** @var  string */
+    /** @var string */
     protected $url;
 
-    /** @var  string */
+    /** @var string */
     protected $content_url;
 
     /**
@@ -58,25 +58,25 @@ class Slot extends AbstractResourceModel
     /**
      * @inheritdoc
      */
-    public function save($endpoint)
+    public function save()
     {
         if(empty($this->content_uuid)) {
             throw new ModelValidationException("Cannot save slot with no content UUID set.");
         }
 
-        return parent::save("/content/{$this->content_uuid}/slots/{$this->uuid}");
+        return $this->doSave("/content/{$this->content_uuid}/slots/{$this->uuid}");
     }
 
     /**
      * @inheritdoc
      */
-    public function delete($endpoint)
+    public function delete()
     {
         if(empty($this->content_uuid)) {
             throw new ModelValidationException("Cannot save slot with no content UUID set.");
         }
 
-        return parent::delete("/content/{$this->content_uuid}/slots/{$this->uuid}");
+        return $this->doDelete("/content/{$this->content_uuid}/slots/{$this->uuid}");
     }
 
     /**
@@ -87,11 +87,38 @@ class Slot extends AbstractResourceModel
      * @return SlotMedia[]
      */
     public function getMedia() {
-        $response = $this->client->get("/content/{$this->content_uuid}/slots/{$this->uuid}/media");
+        $response = $this->context->get("/content/{$this->content_uuid}/slots/{$this->uuid}/media");
 
         /** @var SlotMedia[] $media */
         $media = ModelDeserializer::convertCollection(new SlotMediaResolver(), $response);
         return $media;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public static function getDefaultFields()
+    {
+        return array_merge([
+            'url',
+            'content_uuid',
+            'relevance',
+            'display',
+            'content_url',
+            'content_uuid'
+        ], parent::getDefaultFields());
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function loadMetaData()
+    {
+        if(empty($this->content_uuid)) {
+            throw new ModelValidationException("Cannot load slot meta fields with no content UUID set.");
+        }
+
+        return $this->context->get("/content/{$this->content_uuid}/slots/{$this->uuid}");
     }
 
     /**
@@ -175,28 +202,22 @@ class Slot extends AbstractResourceModel
     }
 
     /**
-     * @inheritdoc
+     * @return string
      */
-    public static function getFieldNames()
+    public function getContentUrl()
     {
-        return array_merge([
-            'url',
-            'content_uuid',
-            'relevance',
-            'display',
-            'content_url'
-        ], parent::getFieldNames());
+        return $this->content_url;
     }
 
     /**
-     * @inheritdoc
+     * @param string $content_url
+     *
+     * @return $this
      */
-    protected function loadMetaData()
+    public function setContentUrl($content_url)
     {
-        if(empty($this->content_uuid)) {
-            throw new ModelValidationException("Cannot load slot meta fields with no content UUID set.");
-        }
+        $this->content_url = $content_url;
 
-        return $this->client->get("/content/{$this->content_uuid}/slots/{$this->uuid}");
+        return $this;
     }
 }

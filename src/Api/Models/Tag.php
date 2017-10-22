@@ -2,6 +2,7 @@
 namespace MetroPublisher\Api\Models;
 
 use MetroPublisher\Api\AbstractResourceModel;
+use MetroPublisher\Api\Models\Exception\ModelValidationException;
 use MetroPublisher\Api\Models\Resolvers\ModelResolver;
 use MetroPublisher\Common\Serializers\ModelDeserializer;
 
@@ -14,7 +15,7 @@ class Tag extends AbstractResourceModel
     /** @var  string */
     protected $last_name_or_title;
 
-    /** @var  $first_name */
+    /** @var  string */
     protected $first_name;
 
     /** @var  string */
@@ -145,17 +146,17 @@ class Tag extends AbstractResourceModel
     /**
      * @inheritdoc
      */
-    public function save($endpoint)
+    public function save()
     {
-        return parent::save("/tags/{$this->uuid}");
+        return $this->doSave("/tags/{$this->uuid}");
     }
 
     /**
      * @inheritdoc
      */
-    public function delete($endpoint)
+    public function delete()
     {
-        return parent::delete("/tags/{$this->uuid}");
+        return $this->doDelete("/tags/{$this->uuid}");
     }
 
     /**
@@ -166,13 +167,12 @@ class Tag extends AbstractResourceModel
      * @return TagCategory[]
      */
     public function getCategories() {
-        $response = $this->client->get("/tags/{$this->uuid}/categories");
+        $response = $this->context->get("/tags/{$this->uuid}/categories");
 
         /** @var TagCategory[] $categories */
         $categories = ModelDeserializer::convertCollection(
             new ModelResolver(TagCategory::class),
-            $response,
-            $this->context
+            $response
         );
 
         return $categories;
@@ -182,15 +182,16 @@ class Tag extends AbstractResourceModel
      * Gets the path history for this content.
      *
      * @link https://api.metropublisher.com/resources/content.html#content_path_history
-     *
      * @return array
+     * @throws ModelValidationException
      */
     public function getPathHistory() {
-        $response = $this->client->get(
-            sprintf('%s/content/%s/path_history', $this->getBaseUri(), $this->uuid)
-        );
+        if (empty($this->uuid)) {
+            throw new ModelValidationException('Tag must have a UUID set to get path history.');
+        }
 
-        return ModelDeserializer::convertCollection(new ModelResolver($response), $response, $this->context);
+        $response = $this->context->get("/tags/{$this->uuid}/path_history");
+        return ModelDeserializer::convertCollection(new ModelResolver($response), $response, [$this->context]);
     }
 
     /**
@@ -210,14 +211,18 @@ class Tag extends AbstractResourceModel
      * @param array $pathHistories A list of PathHistory objects.
      *
      * @return array
+     * @throws ModelValidationException
      */
     public function setPathHistory(array $pathHistories) {
-        $response = $this->client->put(
-            sprintf('%s/tag/%s/path_history', $this->getBaseUri(), $this->uuid),
+        if (empty($this->uuid)) {
+            throw new ModelValidationException('Tag must have a UUID set to set path history.');
+        }
+
+        $response = $this->context->put("/tags/{$this->uuid}/path_history",
             [ 'items' => $pathHistories ]
         );
 
-        return ModelDeserializer::convertCollection(new ModelResolver(PathHistory::class), $response, $this->context);
+        return ModelDeserializer::convertCollection(new ModelResolver(PathHistory::class), $response, [$this->context]);
     }
 
     /**
@@ -228,10 +233,14 @@ class Tag extends AbstractResourceModel
      * @param PathHistory $pathHistory
      *
      * @return array
+     * @throws ModelValidationException
      */
     public function addPathHistory(PathHistory $pathHistory) {
-        return $this->client->post(
-            sprintf('%s/content/%s/path_history', $this->getBaseUri(), $this->uuid),
+        if (empty($this->uuid)) {
+            throw new ModelValidationException('Tag must have a UUID set to add path history.');
+        }
+
+        return $this->context->post("/tags/{$this->uuid}/path_history",
             [ 'path' => $pathHistory->getPath() ]
         );
     }
@@ -239,7 +248,7 @@ class Tag extends AbstractResourceModel
     /**
      * @inheritdoc
      */
-    public static function getFieldNames()
+    public static function getDefaultFields()
     {
         return array_merge([
             'last_name_or_title',
@@ -249,7 +258,17 @@ class Tag extends AbstractResourceModel
             'synonyms',
             'content',
             'feature_image_uuid'
-        ], parent::getFieldNames());
+        ], parent::getDefaultFields());
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function loadMetaData()
+    {
+        return $this->context->get(
+            sprintf('/tags/%s', $this->uuid)
+        );
     }
 
     /**
@@ -390,15 +409,5 @@ class Tag extends AbstractResourceModel
         $this->feature_image_uuid = $feature_image_uuid;
 
         return $this;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function loadMetaData()
-    {
-        return $this->client->get(
-            sprintf('%s/tags/%s', $this->getBaseUri(), $this->uuid)
-        );
     }
 }

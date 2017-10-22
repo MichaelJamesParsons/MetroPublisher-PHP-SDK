@@ -1,6 +1,4 @@
 .idea/
 composer.lock
 vendor/
-Tests/
-apigen.phar
-docs/ export-ignore
+examples/config.php

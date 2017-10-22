@@ -4,7 +4,6 @@ namespace MetroPublisher\Api;
 use MetroPublisher\Api\Models\AbstractModel;
 use MetroPublisher\Api\Models\Resolvers\ModelResolver;
 use MetroPublisher\Common\Serializers\ModelDeserializer;
-use MetroPublisher\Exception\MetroPublisherException;
 use MetroPublisher\Http\Exception\ResourceNotFoundException;
 use MetroPublisher\MetroPublisher;
 
@@ -35,12 +34,12 @@ abstract class AbstractResourceCollection extends AbstractApiResource
      *
      * @return array
      */
-    public function all($endpoint, $page = 1, array $options = []) {
+    protected function all($endpoint, $page = 1, array $options = []) {
         $fields = $this->getModelDefaultFields();
 
         $options['fields'] = implode('-', $fields);
         $options['page']   = $page;
-        $response = $this->client->get($this->getBaseUri() . $endpoint, $options);
+        $response = $this->context->get($endpoint, $options);
 
         return ModelDeserializer::convertCollection(
             new ModelResolver($this->getModelClass()),
@@ -54,11 +53,11 @@ abstract class AbstractResourceCollection extends AbstractApiResource
      *
      * @param $endpoint
      *
-     * @return AbstractModel
+     * @return AbstractResourceModel
      */
     public function find($endpoint) {
         try {
-            $model = $this->client->get($this->getBaseUri() . $endpoint);
+            $model = $this->context->get($endpoint);
             return ModelDeserializer::convert(new ModelResolver($this->getModelClass()), $model, [$this->context]);
         } catch(ResourceNotFoundException $e) {
             return null;

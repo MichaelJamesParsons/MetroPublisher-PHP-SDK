@@ -22,10 +22,10 @@ class BookReview extends AbstractReview
     /** @var  DateTime */
     protected $book_issued;
 
-    /** @var  array */
+    /** @var array */
     protected $book_provider_urls;
 
-    /** @var  array */
+    /** @var array */
     protected $book_buy_urls;
 
     /**
@@ -36,7 +36,9 @@ class BookReview extends AbstractReview
     public function __construct(MetroPublisher $metroPublisher)
     {
         parent::__construct($metroPublisher);
-        $this->properties['content_type'] = Content::CONTENT_TYPE_REVIEW_BOOK;
+        $this->content_type = Content::CONTENT_TYPE_REVIEW_BOOK;
+        $this->book_buy_urls = [];
+        $this->book_provider_urls = [];
     }
 
     /**
@@ -120,7 +122,7 @@ class BookReview extends AbstractReview
     }
 
     /**
-     * @return \string[]
+     * @return array
      */
     public function getBookProviderUrls()
     {
@@ -128,7 +130,7 @@ class BookReview extends AbstractReview
     }
 
     /**
-     * @param \string[] $book_provider_urls
+     * @param array $book_provider_urls
      *
      * @return $this
      */
@@ -140,7 +142,20 @@ class BookReview extends AbstractReview
     }
 
     /**
-     * @return \string[]
+     * @param $url - A link to iTunes or Amazon.
+     *
+     * @return $this
+     */
+    public function addBookProviderUrl($url) {
+        if(!in_array($url, $this->book_provider_urls)) {
+            $this->book_provider_urls[] = $url;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return array
      */
     public function getBookBuyUrls()
     {
@@ -148,11 +163,11 @@ class BookReview extends AbstractReview
     }
 
     /**
-     * @param \string[] $book_buy_urls
+     * @param array $book_buy_urls
      *
      * @return $this
      */
-    public function setBookBuyUrls($book_buy_urls)
+    public function setBookBuyUrls(array $book_buy_urls)
     {
         $this->book_buy_urls = $book_buy_urls;
 
@@ -160,12 +175,24 @@ class BookReview extends AbstractReview
     }
 
     /**
-     * @inheritdoc
+     * @param $url
+     * @param $linkText
+     *
+     * @return $this
      */
-    public static function getDefaultFields() {
-        return array_merge([
+    public function addBookBuyUrl($url, $linkText) {
+        foreach ($this->book_buy_urls as $dict) {
+            if ($dict['url'] === $url && $dict['link_text'] === $linkText) {
+                return $this;
+            }
+        }
 
-        ], parent::getDefaultFields());
+        $this->book_buy_urls[] = [
+            'url' => $url,
+            'link_text'  => $linkText
+        ];
+
+        return $this;
     }
 
     /**

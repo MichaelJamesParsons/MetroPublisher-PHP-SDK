@@ -2,52 +2,28 @@
 namespace MetroPublisher\Api\Models;
 
 use MetroPublisher\Api\AbstractResourceModel;
+use MetroPublisher\Api\Models\Exception\ModelValidationException;
 use MetroPublisher\MetroPublisher;
 
 /**
  * Class SlotMedia
  * @package MetroPublisher\Api\Models
+ *
+ * @property string $type - The type of media. Describes the source of the media. Whether it be an external embed
+ *                          or file (image, audio file, video file).
+ * @property string $title
+ * @property string $content - HTML content describing the media. The content is validated through a strict schema.
+ *                             For more information, view the link below.
  */
 abstract class SlotMedia extends AbstractResourceModel
 {
-    /**
-     * The type of media.
-     *
-     * Describes the source of the media. Whether it be an
-     * external embed or file (image, audio file, video file).
-     *
-     * @var string
-     */
-    protected $type;
-
-    /** @var string */
-    protected $title;
-
-    /**
-     * HTML content describing the media.
-     *
-     * The content is validated through a strict schema. For more
-     * information, view the link below.
-     *
-     * @link https://api.metropublisher.com/mp_rng.html
-     *
-     * @var string
-     */
-    protected $content;
-
-    /**
-     * The UUID of an image thumbnail.
-     *
-     * The thumbnail must have already been uploaded before attaching
-     * it to this property.
-     *
-     * @var string
-     */
+    /** @var  string */
     protected $thumb_uuid;
 
-    /** @var  string */
+    /** @var string */
     protected $slot_uuid;
 
+    /** @var string */
     protected $content_uuid;
 
     /**
@@ -85,17 +61,33 @@ abstract class SlotMedia extends AbstractResourceModel
     /**
      * @inheritdoc
      */
-    public function save($endpoint)
+    public function save()
     {
-        return parent::save("/content/{$this->slot_uuid}/slots/{}/media");
+        if (empty($this->slot_uuid)) {
+            throw new ModelValidationException('Slot Media cannot be saved without an associated slot UUID.');
+        }
+
+        if (empty($this->content_uuid)) {
+            throw new ModelValidationException('Slot Media cannot be saved without an associated content UUID.');
+        }
+
+        return $this->doSave("/content/{$this->content_uuid}/slots/{$this->slot_uuid}/media");
     }
 
     /**
      * @inheritdoc
      */
-    public function delete($endpoint)
+    public function delete()
     {
-        return parent::delete($endpoint);
+        if (empty($this->slot_uuid)) {
+            throw new ModelValidationException('Slot Media cannot be deleted without an associated slot UUID.');
+        }
+
+        if (empty($this->content_uuid)) {
+            throw new ModelValidationException('Slot Media cannot be deleted without an associated content UUID.');
+        }
+
+        return $this->doDelete("/content/{$this->content_uuid}/slots/{$this->slot_uuid}/media");
     }
 
     /**
@@ -106,7 +98,9 @@ abstract class SlotMedia extends AbstractResourceModel
         return array_merge([
             'type',
             'title',
-            'thumb_uuid'
+            'thumb_uuid',
+            'slot_uuid',
+            'content_uuid'
         ], parent::getDefaultFields());
     }
 
@@ -123,6 +117,126 @@ abstract class SlotMedia extends AbstractResourceModel
      */
     public function loadMetaData()
     {
-        return $this->client->get("/content/{$this->content_uuid}/slots/{$this->uuid}");
+        return $this->context->get("/content/{$this->content_uuid}/slots/{$this->uuid}");
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return $this
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param string $title
+     *
+     * @return $this
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    /**
+     * @param string $content
+     *
+     * @return $this
+     */
+    public function setContent($content)
+    {
+        $this->content = $content;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getThumbUuid()
+    {
+        return $this->thumb_uuid;
+    }
+
+    /**
+     * @param string $thumb_uuid
+     *
+     * @return $this
+     */
+    public function setThumbUuid($thumb_uuid)
+    {
+        $this->thumb_uuid = $thumb_uuid;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSlotUuid()
+    {
+        return $this->slot_uuid;
+    }
+
+    /**
+     * @param string $slot_uuid
+     *
+     * @return $this
+     */
+    public function setSlotUuid($slot_uuid)
+    {
+        $this->slot_uuid = $slot_uuid;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContentUuid()
+    {
+        return $this->content_uuid;
+    }
+
+    /**
+     * @param string $content_uuid
+     *
+     * @return $this
+     */
+    public function setContentUuid($content_uuid)
+    {
+        $this->content_uuid = $content_uuid;
+
+        return $this;
     }
 }
