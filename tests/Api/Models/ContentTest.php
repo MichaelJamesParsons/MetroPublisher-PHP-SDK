@@ -25,7 +25,8 @@ class ContentTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $content->method('doSave')
+        $content->expects($this->once())
+            ->method('doSave')
             ->with($this->equalTo('/content/1'))
             ->willReturn(null);
 
@@ -40,7 +41,8 @@ class ContentTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $content->method('doDelete')
+        $content->expects($this->once())
+            ->method('doDelete')
             ->with($this->equalTo('/content/1'))
             ->willReturn(null);
 
