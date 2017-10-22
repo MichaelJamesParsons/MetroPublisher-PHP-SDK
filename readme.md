@@ -1,6 +1,8 @@
 
 # MetroPublisher SDK Beta
 
+[![Build Status](https://travis-ci.org/MichaelJamesParsons/MetroPublisher-PHP-SDK.svg?branch=version-0.x)](https://travis-ci.org/MichaelJamesParsons/MetroPublisher-PHP-SDK) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/634ce9c10a5b469bb8e3efc985454796)](https://www.codacy.com/app/mjay-parsons/MetroPublisher-PHP-API?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=MichaelJamesParsons/MetroPublisher-PHP-API&amp;utm_campaign=Badge_Grade)
+
 This is a fully featured SDK for the [MetroPublisher<sup>TM</sup> REST API](https://api.metropublisher.com/index.html). It takes care of the boilerplate HTTP client request/response logic for you so you can dive right into implementing the API into your app.
 
 ## Installation
