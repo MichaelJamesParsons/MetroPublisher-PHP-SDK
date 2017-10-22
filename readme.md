@@ -3,8 +3,6 @@
 
 This is a fully featured SDK for the [MetroPublisher<sup>TM</sup> REST API](https://api.metropublisher.com/index.html). It takes care of the boilerplate HTTP client request/response logic for you so you can dive right into implementing the API into your app.
 
-Complete documentation coming soon!
-
 ## Installation
 
 The recommended method of installation is through [composer](https://getcomposer.org).
@@ -24,20 +22,24 @@ If you are using composer, these dependencies should be installed automatically.
 <?php
 use MetroPublisher\MetroPublisher;
 use MetroPublisher\Api\Models\Article;
-use MetroPublisher\Api\Models\Content;
 
 //Create a new MetroPublisher API instance
-$metroPublisher = new MetroPublisher($publicKey, $secretKey);
+$metroPublisher = new MetroPublisher("{public key}", "{secret key}");
 
 //Create a new article
 $article = new Article($metroPublisher);
-$article->uuid('e6ebac9c-94cb-11e6-ae22-56b6b6499611')
-        ->urlname("lorem-ipsum")
-        ->title('Lorem Ipsum')
-        ->description('Parturient lacus a tempus.')
-        ->content('<p>Parturient lacus a tempus sed ultricies nibh.</p>')
-        ->issued(new DateTime('10/1/2016'))
-        ->state(Content::STATE_PUBLISHED);
+$article->setUuid('41b47ff8-3355-4f69-a867-7232165e6d29')
+    ->setUrlname('lorem-ipsum')
+    ->setTitle('Lorem Ipsum')
+    ->setMetaTitle('Lorem Ipsum')
+    ->setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit.')
+    ->setMetaDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit.')
+    ->setPrintDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit.')
+    ->setContent('<p>Quisque sed erat sed ex eleifend sollicitudin eu id ligula.</p>')
+    ->setFeatureImageUuid(null)
+    ->setTeaserImageUuid(null)
+    ->setIssued(new DateTime('now'))
+    ->setEvergreen(true);
 
 //Save the article
 $article->save();
@@ -83,18 +85,19 @@ use MetroPublisher\Api\Collections\ArticleCollection;
 $articleCollection = new ArticleCollection($metroPublisher);
 
 //Get group of articles
-$articles =  $articleCollection->findAll();
+$articles = $articleCollection->findAll();
     
 //Get next group of articles
 $moreArticles = $articleCollection->findAll(2);
 
 //Get a single article
 $singleArticle = $articleCollection->find('e6ebac9c-94cb-11e6-ae22-56b6b6499611');
-```   
+```
 
 ## Tests
+Unit tests are located in the `/tests` directory. Full coverage is in progress.
 
-Coming soon!
+    ./vendor/bin/phpunit
 
 ## Todo
 - [x] Implement HttpClient interface
