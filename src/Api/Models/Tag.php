@@ -36,6 +36,8 @@ class Tag extends AbstractResourceModel
     /** @var  string */
     protected $type;
 
+    protected $urlname;
+
     /**
      * A non-person tag.
      *
@@ -254,6 +256,9 @@ class Tag extends AbstractResourceModel
     public static function getDefaultFields()
     {
         return array_merge([
+            'uuid',
+            'created',
+            'modified',
             'last_name_or_title',
             'first_name',
             'description',

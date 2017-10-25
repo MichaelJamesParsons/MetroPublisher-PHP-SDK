@@ -28,6 +28,9 @@ abstract class AbstractResourceModel extends AbstractModel
     /** @var  array */
     protected $changedFields;
 
+    /** @var  string */
+    protected $urlname;
+
     /**
      * AbstractResourceModel constructor.
      *

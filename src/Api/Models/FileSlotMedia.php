@@ -31,6 +31,21 @@ class FileSlotMedia extends SlotMedia
         $this->type = SlotMedia::TYPE_FILE;
     }
 
+    public static function getDefaultFields()
+    {
+        return [
+            'uuid',
+            'title',
+            'type',
+            'content',
+            'thumb_uuid',
+            'slot_uuid',
+            'content_uuid',
+            'image_uuid',
+            'file_uuid'
+        ];
+    }
+
     /**
      * @inheritdoc
      */
