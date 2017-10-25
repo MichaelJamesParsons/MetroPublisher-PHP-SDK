@@ -33,6 +33,9 @@ class Tag extends AbstractResourceModel
     /** @var  string */
     protected $feature_image_uuid;
 
+    /** @var  string */
+    protected $type;
+
     /**
      * A non-person tag.
      *
@@ -407,6 +410,25 @@ class Tag extends AbstractResourceModel
     public function setFeatureImageUuid($feature_image_uuid)
     {
         $this->feature_image_uuid = $feature_image_uuid;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     * @return $this
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
 
         return $this;
     }

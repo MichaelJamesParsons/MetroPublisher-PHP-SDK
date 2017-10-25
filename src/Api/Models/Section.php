@@ -13,6 +13,9 @@ class Section extends AbstractResourceModel
     protected $title;
 
     /** @var  string */
+    protected $urlname;
+
+    /** @var  string */
     protected $parent_uuid;
 
     /** @var  boolean */
@@ -46,6 +49,42 @@ class Section extends AbstractResourceModel
     protected $show_prev_next;
 
     /**
+     * @inheritdoc
+     */
+    public static function getDefaultFields()
+    {
+        return array_merge([
+            'title',
+            'parent_uuid',
+            'auto_featured_stories',
+            'auto_featured_stories_num',
+            'externalurl',
+            'feature_image_url',
+            'hide_in_nav',
+            'lead_story_url',
+            'meta_description',
+            'meta_keywords',
+            'ord',
+            'show_prev_next'
+        ],
+        parent::getDefaultFields());
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function save() {
+        return $this->doSave("/sections/{$this->uuid}");
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function delete() {
+        return $this->doDelete("/sections/{$this->uuid}");
+    }
+
+    /**
      * @return array
      */
     protected function loadMetaData()
@@ -69,6 +108,25 @@ class Section extends AbstractResourceModel
     public function setTitle($title)
     {
         $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrlname()
+    {
+        return $this->urlname;
+    }
+
+    /**
+     * @param string $urlname
+     * @return $this
+     */
+    public function setUrlname($urlname)
+    {
+        $this->urlname = $urlname;
 
         return $this;
     }

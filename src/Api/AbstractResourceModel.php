@@ -217,4 +217,7 @@ abstract class AbstractResourceModel extends AbstractModel
      * @return array
      */
     protected abstract function loadMetaData();
+
+    protected abstract function save();
+    protected abstract function delete();
 }

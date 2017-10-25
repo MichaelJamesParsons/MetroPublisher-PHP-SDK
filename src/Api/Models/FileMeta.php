@@ -29,7 +29,21 @@ class FileMeta extends AbstractResourceModel
     /** @var  File */
     protected $file;
 
-    public static $ignorableFields = ['file'];
+    public static function getDefaultFields()
+    {
+        return [
+            'uuid',
+            'created',
+            'modified',
+            'title',
+            'description',
+            'filename',
+            'fileType',
+            'created',
+            'modified',
+            'credits'
+        ];
+    }
 
     /**
      * @return string
@@ -175,12 +189,23 @@ class FileMeta extends AbstractResourceModel
         return $this;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function save()
     {
         $return = parent::doSave("/files/{$this->uuid}");
         $this->uploadFile();
 
         return $return;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function delete()
+    {
+        return parent::doDelete("/files/{$this->uuid}");
     }
 
     public function uploadFile()

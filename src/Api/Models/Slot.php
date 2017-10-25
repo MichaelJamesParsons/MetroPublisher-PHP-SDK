@@ -5,6 +5,7 @@ use MetroPublisher\Api\AbstractResourceModel;
 use MetroPublisher\Api\Models\Exception\ModelValidationException;
 use MetroPublisher\Api\Models\Resolvers\SlotMediaResolver;
 use MetroPublisher\Common\Serializers\ModelDeserializer;
+use MetroPublisher\MetroPublisher;
 
 /**
  * Class Slot
@@ -26,6 +27,9 @@ class Slot extends AbstractResourceModel
 
     /** @var string */
     protected $content_url;
+
+    /** @var  SlotMedia[] */
+    protected $items;
 
     /**
      * Relevance of the slot, i.e. how prominently it should be displayed within the content.
@@ -55,6 +59,13 @@ class Slot extends AbstractResourceModel
      */
     const DISPLAY_CAROUSEL = 'carousel';
 
+    public function __construct(MetroPublisher $metroPublisher)
+    {
+        parent::__construct($metroPublisher);
+        $this->display = self::DISPLAY_GALLERY;
+        $this->relevance = self::RELEVANCE_INLINE;
+    }
+
     /**
      * @inheritdoc
      */
@@ -64,7 +75,17 @@ class Slot extends AbstractResourceModel
             throw new ModelValidationException("Cannot save slot with no content UUID set.");
         }
 
-        return $this->doSave("/content/{$this->content_uuid}/slots/{$this->uuid}");
+        $endpoint = "/content/{$this->content_uuid}/slots/{$this->uuid}";
+        $this->doSave("/content/{$this->content_uuid}/slots/{$this->uuid}");
+
+        $serializedMedia = [];
+        foreach($this->items as $media) {
+            $tmp = $this->serializer->serialize($media);
+            unset($tmp['file_uuid']);
+            $serializedMedia[] = $tmp;
+        }
+
+        return $this->context->put($endpoint . '/media', ['items' => $serializedMedia]);
     }
 
     /**
@@ -99,14 +120,17 @@ class Slot extends AbstractResourceModel
      */
     public static function getDefaultFields()
     {
-        return array_merge([
+        return [
+            'uuid',
+            'created',
+            'modified',
             'url',
             'content_uuid',
             'relevance',
             'display',
             'content_url',
             'content_uuid'
-        ], parent::getDefaultFields());
+        ];
     }
 
     /**
@@ -217,6 +241,17 @@ class Slot extends AbstractResourceModel
     public function setContentUrl($content_url)
     {
         $this->content_url = $content_url;
+
+        return $this;
+    }
+
+    /**
+     * @param SlotMedia $mediaSlot
+     * @return $this
+     */
+    public function addMedia(SlotMedia $mediaSlot)
+    {
+        $this->items[] = $mediaSlot;
 
         return $this;
     }
