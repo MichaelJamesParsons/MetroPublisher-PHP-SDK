@@ -94,7 +94,7 @@ class MetroPublisher
         $options     = (isset($arguments[2])) ? $arguments[2] : [];
         $disableAuth = (isset($arguments[3]) && $arguments[3]);
 
-        if (!$disableAuth) {
+        if (!$this->isAuthenticated() && !$disableAuth) {
             $this->connect();
         }
 
