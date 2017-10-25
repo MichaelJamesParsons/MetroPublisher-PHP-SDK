@@ -44,14 +44,15 @@ class EventCollection extends AbstractResourceCollection implements ResourceColl
      * @return \MetroPublisher\Api\Models\AbstractModel[]
      */
     public function getOccurrences(DateTime $start = null, DateTime $end = null, $page = 1) {
-        $occurrences = $this->context->get('/events', [
+        $occurrences = $this->context->get('/events/occurrences', [
             'period' => sprintf('%s_%s', $start->format('Y-m-d'), $end->format('Y-m-d')),
-            'page'   => $page
+            'page'   => $page,
+            'fields' => implode('-', EventOccurrence::getDefaultFields())
         ]);
 
         return ModelDeserializer::convertCollection(
             new ModelResolver(EventOccurrence::class),
-            $occurrences,
+            $occurrences['items'],
             [$this->context]
         );
     }
