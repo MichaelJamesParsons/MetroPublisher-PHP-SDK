@@ -64,6 +64,7 @@ class Slot extends AbstractResourceModel
         parent::__construct($metroPublisher);
         $this->display = self::DISPLAY_GALLERY;
         $this->relevance = self::RELEVANCE_INLINE;
+        $this->items = [];
     }
 
     /**
@@ -120,17 +121,14 @@ class Slot extends AbstractResourceModel
      */
     public static function getDefaultFields()
     {
-        return [
-            'uuid',
-            'created',
-            'modified',
+        return array_merge([
             'url',
             'content_uuid',
             'relevance',
             'display',
             'content_url',
             'content_uuid'
-        ];
+        ], parent::getDefaultFields());
     }
 
     /**

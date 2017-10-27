@@ -28,9 +28,6 @@ abstract class AbstractResourceModel extends AbstractModel
     /** @var  array */
     protected $changedFields;
 
-    /** @var  string */
-    protected $urlname;
-
     /**
      * AbstractResourceModel constructor.
      *
@@ -165,26 +162,6 @@ abstract class AbstractResourceModel extends AbstractModel
     }
 
     /**
-     * @return string
-     */
-    public function getUrlname()
-    {
-        return $this->urlname;
-    }
-
-    /**
-     * @param string $urlname
-     *
-     * @return $this
-     */
-    public function setUrlname($urlname)
-    {
-        $this->urlname = $urlname;
-
-        return $this;
-    }
-
-    /**
      * @return DateTime
      */
     public function getModified()
@@ -206,7 +183,6 @@ abstract class AbstractResourceModel extends AbstractModel
     public static function getDefaultFields() {
         return [
             'uuid',
-            'urlname',
             'created',
             'modified'
         ];

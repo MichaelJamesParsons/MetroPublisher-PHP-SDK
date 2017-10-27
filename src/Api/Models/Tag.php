@@ -36,6 +36,7 @@ class Tag extends AbstractResourceModel
     /** @var  string */
     protected $type;
 
+    /** @var  string */
     protected $urlname;
 
     /**
@@ -256,15 +257,13 @@ class Tag extends AbstractResourceModel
     public static function getDefaultFields()
     {
         return array_merge([
-            'uuid',
-            'created',
-            'modified',
             'last_name_or_title',
             'first_name',
             'description',
             'state',
             'synonyms',
             'content',
+            'urlname',
             'feature_image_uuid'
         ], parent::getDefaultFields());
     }
@@ -434,6 +433,25 @@ class Tag extends AbstractResourceModel
     public function setType($type)
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrlname()
+    {
+        return $this->urlname;
+    }
+
+    /**
+     * @param string $urlname
+     * @return $this
+     */
+    public function setUrlname($urlname)
+    {
+        $this->urlname = $urlname;
 
         return $this;
     }

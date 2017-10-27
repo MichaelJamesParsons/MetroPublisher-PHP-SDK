@@ -12,8 +12,8 @@ class EventOccurrenceTest extends TestCase
     public function testDefaultFields() {
         $expected = [
             'event_uuid',
-            'start_time',
-            'end_time'
+            'dtstart',
+            'dtend'
         ];
 
         $this->assertEquals($expected, EventOccurrence::getDefaultFields());

@@ -228,6 +228,20 @@ class Content extends AbstractResourceModel implements TaggableInterface
     /**
      * @inheritdoc
      */
+    public static function getDefaultFields() {
+        return array_merge([
+            'content_type',
+            'title',
+            'urlname',
+            'description',
+            'state',
+            'issued',
+        ], parent::getDefaultFields());
+    }
+
+    /**
+     * @inheritdoc
+     */
     public static function getMetaFields() {
         return [
             'content',
@@ -238,19 +252,6 @@ class Content extends AbstractResourceModel implements TaggableInterface
             'teaser_image_uuid',
             'feature_image_uuid'
         ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public static function getDefaultFields() {
-        return array_merge([
-            'content_type',
-            'title',
-            'description',
-            'state',
-            'issued',
-        ], parent::getDefaultFields());
     }
 
     /**
