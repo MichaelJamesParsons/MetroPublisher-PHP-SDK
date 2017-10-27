@@ -13,7 +13,7 @@ class TagCategoryCollection extends AbstractResourceCollection
     /**
      * @inheritdoc
      */
-    public function all($page = 1, array $options = []) {
+    public function findAll($page = 1, array $options = []) {
         return parent::all("/tags/categories", $page, $options);
     }
 
@@ -21,7 +21,7 @@ class TagCategoryCollection extends AbstractResourceCollection
      * @inheritdoc
      */
     public function find($uuid) {
-        return parent::find("/tags/categories/{$uuid}");
+        return parent::get("/tags/categories/{$uuid}");
     }
 
     /**

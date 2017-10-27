@@ -27,7 +27,7 @@ class EventCollection extends AbstractResourceCollection implements ResourceColl
      * @inheritdoc
      */
     public function find($uuid) {
-        return parent::find("/content/{$uuid}");
+        return parent::get("/content/{$uuid}");
     }
 
     /**
