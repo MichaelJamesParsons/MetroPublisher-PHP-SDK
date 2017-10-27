@@ -118,9 +118,9 @@ class TagTest extends TestCase
             'state',
             'synonyms',
             'content',
+            'urlname',
             'feature_image_uuid',
             'uuid',
-            'urlname',
             'created',
             'modified'
         ];
