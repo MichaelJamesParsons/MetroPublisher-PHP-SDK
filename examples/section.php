@@ -7,7 +7,7 @@ require "./config.php";
 $metroPublisher = new MetroPublisher(MP_API_KEY, MP_API_SECRET);
 $metroPublisher->getHttpClient()->setSslVerification(false);
 
-// Create a new article
+// Create a new section
 $section = new Section($metroPublisher);
 $section->setUuid('41b47ff8-3355-4f69-a867-7232165e6d29')
         ->setTitle('Lorem Ipsum')
