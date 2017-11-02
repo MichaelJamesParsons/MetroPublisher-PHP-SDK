@@ -67,7 +67,7 @@ class Event extends Content
         $this->rdates       = [];
         $this->exdates      = [];
     }
-    
+
     /**
      * @inheritdoc
      */

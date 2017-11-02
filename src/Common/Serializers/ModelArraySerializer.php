@@ -88,7 +88,7 @@ class ModelArraySerializer implements ModelSerializerInterface
     protected function convertDateTimeArray(array $dateTimeList) {
         $convertedDates = [];
         foreach($dateTimeList as $dateTime) {
-            $convertedDates[] = $dateTime->format('Y-m-d'); //$dateTime; // '2012-04-24T09:51:00.838444';// $dateTime->format(DateTime::ATOM);
+            $convertedDates[] = $dateTime->format('Y-m-d');
         }
 
         return $convertedDates;
