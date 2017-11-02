@@ -6,14 +6,30 @@ use PHPUnit\Framework\TestCase;
 class ContentTest extends TestCase
 {
     public function testDefaultFields() {
-        $expectedFields = ['content_type', 'title', 'description', 'state',
-                            'issued', 'uuid', 'urlname', 'created', 'modified'];
+        $expectedFields = [
+            'content_type',
+            'title',
+            'urlname',
+            'description',
+            'state',
+            'issued',
+            'uuid',
+            'created',
+            'modified'
+        ];
         $this->assertEquals($expectedFields, Content::getDefaultFields());
     }
 
     public function testMetaFields() {
-        $expectedFields = ['content', 'meta_title', 'meta_description', 'print_description',
-                            'evergreen', 'teaser_image_uuid', 'feature_image_uuid'];
+        $expectedFields = [
+            'content',
+            'meta_title',
+            'meta_description',
+            'print_description',
+            'evergreen',
+            'teaser_image_uuid',
+            'feature_image_uuid'
+        ];
 
         $this->assertEquals($expectedFields, Content::getMetaFields());
     }

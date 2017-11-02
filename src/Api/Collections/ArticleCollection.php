@@ -3,12 +3,13 @@ namespace MetroPublisher\Api\Collections;
 
 use MetroPublisher\Api\Models\AlbumReview;
 use MetroPublisher\Api\Models\Article;
+use MetroPublisher\Api\ResourceCollectionInterface;
 
 /**
  * Class ArticleCollection
  * @package MetroPublisher\Api\Collections
  */
-class ArticleCollection extends ContentCollection
+class ArticleCollection extends ContentCollection implements ResourceCollectionInterface
 {
     /**
      * @inheritdoc

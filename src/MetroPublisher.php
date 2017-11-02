@@ -94,7 +94,7 @@ class MetroPublisher
         $options     = (isset($arguments[2])) ? $arguments[2] : [];
         $disableAuth = (isset($arguments[3]) && $arguments[3]);
 
-        if (!$disableAuth) {
+        if (!$this->isAuthenticated() && !$disableAuth) {
             $this->connect();
         }
 
@@ -121,11 +121,11 @@ class MetroPublisher
             } else {
                 $options['json'] = array(null => null);
             }
-        } else {
+        } else if (!empty($fields)) {
             $options['form_params'] = $fields;
         }
 
-        $options = array_merge($options, $this->httpClient->getOptions());
+        $options = array_merge($this->httpClient->getOptions(), $options);
 
         try {
             if (substr($endpoint, 0, 1) === '/' && $endpoint !== '/') {

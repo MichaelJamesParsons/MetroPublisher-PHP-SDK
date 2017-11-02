@@ -12,10 +12,12 @@ use PHPUnit\Framework\TestCase;
 class SlotTest extends TestCase
 {
     public function testSave() {
+        $mockMetroPublisher = $this->createMock(MetroPublisher::class);
+
         /** @var \PHPUnit_Framework_MockObject_MockObject|Slot $mockSlot */
         $mockSlot = $this->getMockBuilder(Slot::class)
             ->setMethods(['doSave'])
-            ->disableOriginalConstructor()
+            ->setConstructorArgs([$mockMetroPublisher])
             ->getMock();
 
         $mockSlot->expects($this->once())
@@ -108,7 +110,6 @@ class SlotTest extends TestCase
             'content_url',
             'content_uuid',
             'uuid',
-            'urlname',
             'created',
             'modified'
         ];

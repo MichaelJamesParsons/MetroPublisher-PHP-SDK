@@ -64,10 +64,10 @@ class Event extends Content
     {
         parent::__construct($metroPublisher);
         $this->content_type = Content::CONTENT_TYPE_EVENT;
-        $this->rdates = [];
-        $this->exdates = [];
+        $this->rdates       = [];
+        $this->exdates      = [];
     }
-
+    
     /**
      * @inheritdoc
      */

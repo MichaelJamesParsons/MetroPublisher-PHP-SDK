@@ -22,7 +22,7 @@ class TagCollection extends AbstractResourceCollection implements ResourceCollec
      * @inheritdoc
      */
     public function find($uuid) {
-        return parent::find("/tags/{$uuid}");
+        return parent::get("/tags/{$uuid}");
     }
 
     /**

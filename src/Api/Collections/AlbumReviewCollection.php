@@ -2,12 +2,13 @@
 namespace MetroPublisher\Api\Collections;
 
 use MetroPublisher\Api\Models\AlbumReview;
+use MetroPublisher\Api\ResourceCollectionInterface;
 
 /**
  * Class AlbumReviewCollection
  * @package MetroPublisher\Api\Collections
  */
-class AlbumReviewCollection extends ContentCollection
+class AlbumReviewCollection extends ContentCollection implements ResourceCollectionInterface
 {
     /**
      * @inheritdoc

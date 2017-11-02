@@ -3,25 +3,29 @@ namespace MetroPublisher\Api\Collections;
 
 use MetroPublisher\Api\AbstractResourceCollection;
 use MetroPublisher\Api\Models\TagCategory;
+use MetroPublisher\Api\ResourceCollectionInterface;
+use MetroPublisher\Api\ResourceModelInterface;
 
 /**
  * Class TagCategoryCollection
  * @package MetroPublisher\Api\Collections
  */
-class TagCategoryCollection extends AbstractResourceCollection
+class TagCategoryCollection extends AbstractResourceCollection implements ResourceCollectionInterface
 {
     /**
      * @inheritdoc
      */
-    public function all($page = 1, array $options = []) {
+    public function findAll($page = 1, array $options = [])
+    {
         return parent::all("/tags/categories", $page, $options);
     }
 
     /**
      * @inheritdoc
      */
-    public function find($uuid) {
-        return parent::find("/tags/categories/{$uuid}");
+    public function find($uuid)
+    {
+        return parent::get("/tags/categories/{$uuid}");
     }
 
     /**
