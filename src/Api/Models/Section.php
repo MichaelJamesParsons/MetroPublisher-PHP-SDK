@@ -2,6 +2,7 @@
 namespace MetroPublisher\Api\Models;
 
 use MetroPublisher\Api\AbstractResourceModel;
+use MetroPublisher\Exception\MetroPublisherException;
 
 /**
  * Class Section
@@ -55,6 +56,7 @@ class Section extends AbstractResourceModel
     {
         return array_merge([
             'title',
+            'urlname',
             'parent_uuid',
             'auto_featured_stories',
             'auto_featured_stories_num',
@@ -79,9 +81,11 @@ class Section extends AbstractResourceModel
 
     /**
      * @inheritdoc
+     * @deprecated
      */
     public function delete() {
-        return $this->doDelete("/sections/{$this->uuid}");
+        // @todo - Find more elegant solution
+        throw new MetroPublisherException("Sections cannot be deleted.");
     }
 
     /**
