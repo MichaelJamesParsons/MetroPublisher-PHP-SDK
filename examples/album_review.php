@@ -10,23 +10,23 @@ $metroPublisher->getHttpClient()->setSslVerification(false);
 // Create a new Album Review
 $albumReview = new AlbumReview($metroPublisher);
 $albumReview->setUuid('55547ff8-3355-4f69-a867-7232165e6d29')
-            ->setUrlname('album-review')
-            ->setTitle('Album Review')
-            ->setMetaTitle('Lorem Ipsum')
-            ->setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit.')
-            ->setMetaDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit.')
-            ->setPrintDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit.')
-            ->setContent('<p>Quisque sed erat sed ex eleifend sollicitudin eu id ligula.</p>')
-            ->setFeatureImageUuid(null)
-            ->setTeaserImageUuid(null)
-            ->setIssued(new DateTime('now'))
-            ->setEvergreen(true)
-            ->setIssued(new DateTime('now'))
-            ->setAlbumTitle('Lorem ipsum')
-            ->setRating(4.5)
-            ->addAlbumBuyUrl('http://example.com', 'example')
-            ->addAlbumProviderUrl('{URL to Amazon or iTunes}')
-            ->save();
+    ->setUrlname('album-review')
+    ->setTitle('Album Review')
+    ->setMetaTitle('Lorem Ipsum')
+    ->setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit.')
+    ->setMetaDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit.')
+    ->setPrintDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit.')
+    ->setContent('<p>Quisque sed erat sed ex eleifend sollicitudin eu id ligula.</p>')
+    ->setFeatureImageUuid(null)
+    ->setTeaserImageUuid(null)
+    ->setIssued(new DateTime('now'))
+    ->setEvergreen(true)
+    ->setIssued(new DateTime('now'))
+    ->setAlbumTitle('Lorem ipsum')
+    ->setRating(4.5)
+    ->addAlbumBuyUrl('http://example.com', 'example')
+    ->addAlbumProviderUrl('{URL to Amazon or iTunes}')
+    ->save();
 
 // Delete the review
 $albumReview->delete();
