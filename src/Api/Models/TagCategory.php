@@ -32,7 +32,7 @@ class TagCategory extends AbstractResourceModel
      */
     public static function getDefaultFields()
     {
-        return array_merge(['title'], parent::getDefaultFields());
+        return array_merge(['title','urlname'], parent::getDefaultFields());
     }
 
     /**

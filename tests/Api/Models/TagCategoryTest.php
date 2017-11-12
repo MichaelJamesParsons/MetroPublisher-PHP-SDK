@@ -42,13 +42,13 @@ class TagCategoryTest extends TestCase
     }
 
     public function testDefaultFields() {
-        $expected = [
+        $expected = array_merge([
             'title',
-            'uuid',
             'urlname',
+            'uuid',
             'created',
             'modified'
-        ];
+        ]);
 
         $this->assertEquals($expected, TagCategory::getDefaultFields());
     }

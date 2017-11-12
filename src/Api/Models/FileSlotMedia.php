@@ -6,12 +6,19 @@ use MetroPublisher\MetroPublisher;
 /**
  * Class FileSlotMedia
  * @package MetroPublisher\Api\Models
- *
- * @property string $image_uuid - The UUID of an already uploaded image. Required if file_uuid is empty.
- * @property string $file_uuid  - The UUID of an already uploaded file. Required if image_uuid is empty.
  */
 class FileSlotMedia extends SlotMedia
 {
+    /**
+     * @var string The UUID of an already uploaded image. Required if file_uuid is empty.
+     */
+    protected $image_uuid;
+
+    /**
+     * @var string The UUID of an already uploaded file. Required if image_uuid is empty.
+     */
+    protected $file_uuid;
+
     /**
      * FileSlotMedia constructor.
      *
@@ -24,6 +31,21 @@ class FileSlotMedia extends SlotMedia
         $this->type = SlotMedia::TYPE_FILE;
     }
 
+    public static function getDefaultFields()
+    {
+        return [
+            'uuid',
+            'title',
+            'type',
+            'content',
+            'thumb_uuid',
+            'slot_uuid',
+            'content_uuid',
+            'image_uuid',
+            'file_uuid'
+        ];
+    }
+
     /**
      * @inheritdoc
      */
@@ -33,5 +55,43 @@ class FileSlotMedia extends SlotMedia
             'file_uuid',
             'image_uuid'
         ], parent::getMetaFields());
+    }
+
+    /**
+     * @return string
+     */
+    public function getImageUuid()
+    {
+        return $this->image_uuid;
+    }
+
+    /**
+     * @param string $image_uuid
+     * @return $this
+     */
+    public function setImageUuid($image_uuid)
+    {
+        $this->image_uuid = $image_uuid;
+    
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFileUuid()
+    {
+        return $this->file_uuid;
+    }
+
+    /**
+     * @param string $file_uuid
+     * @return $this
+     */
+    public function setFileUuid($file_uuid)
+    {
+        $this->file_uuid = $file_uuid;
+    
+        return $this;
     }
 }

@@ -55,7 +55,7 @@ abstract class AbstractResourceCollection extends AbstractApiResource
      *
      * @return AbstractResourceModel
      */
-    public function find($endpoint) {
+    protected function get($endpoint) {
         try {
             $model = $this->context->get($endpoint);
             return ModelDeserializer::convert(new ModelResolver($this->getModelClass()), $model, [$this->context]);

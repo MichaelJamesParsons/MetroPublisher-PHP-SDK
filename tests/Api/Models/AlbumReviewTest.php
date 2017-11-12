@@ -15,11 +15,11 @@ class AlbumReviewTest extends TestCase
         $expected = [
             'content_type',
             'title',
+            'urlname',
             'description',
             'state',
             'issued',
             'uuid',
-            'urlname',
             'created',
             'modified'
         ];

@@ -55,6 +55,9 @@ class Content extends AbstractResourceModel implements TaggableInterface
     /** @var  string */
     protected $feature_image_uuid;
 
+    /** @var  string */
+    protected $section_uuid;
+
     /** @var  SlotCollection */
     protected $slotCollection;
 
@@ -225,6 +228,20 @@ class Content extends AbstractResourceModel implements TaggableInterface
     /**
      * @inheritdoc
      */
+    public static function getDefaultFields() {
+        return array_merge([
+            'content_type',
+            'title',
+            'urlname',
+            'description',
+            'state',
+            'issued',
+        ], parent::getDefaultFields());
+    }
+
+    /**
+     * @inheritdoc
+     */
     public static function getMetaFields() {
         return [
             'content',
@@ -235,19 +252,6 @@ class Content extends AbstractResourceModel implements TaggableInterface
             'teaser_image_uuid',
             'feature_image_uuid'
         ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public static function getDefaultFields() {
-        return array_merge([
-            'content_type',
-            'title',
-            'description',
-            'state',
-            'issued',
-        ], parent::getDefaultFields());
     }
 
     /**
@@ -484,6 +488,25 @@ class Content extends AbstractResourceModel implements TaggableInterface
     public function setFeatureImageUuid($feature_image_uuid)
     {
         $this->feature_image_uuid = $feature_image_uuid;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSectionUuid()
+    {
+        return $this->section_uuid;
+    }
+
+    /**
+     * @param string $section_uuid
+     * @return $this
+     */
+    public function setSectionUuid($section_uuid)
+    {
+        $this->section_uuid = $section_uuid;
 
         return $this;
     }

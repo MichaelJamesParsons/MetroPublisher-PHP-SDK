@@ -8,15 +8,27 @@ use MetroPublisher\MetroPublisher;
 /**
  * Class SlotMedia
  * @package MetroPublisher\Api\Models
- *
- * @property string $type - The type of media. Describes the source of the media. Whether it be an external embed
- *                          or file (image, audio file, video file).
- * @property string $title
- * @property string $content - HTML content describing the media. The content is validated through a strict schema.
- *                             For more information, view the link below.
  */
 abstract class SlotMedia extends AbstractResourceModel
 {
+    /**
+     * The type of media. Describes the source of the media. Whether it be an
+     * external embed or file (image, audio file, video file).
+     *
+     * @var  string
+     */
+    protected $type;
+
+    /** @var  string */
+    protected $title;
+
+    /**
+     * HTML content describing the media. The content is validated through a strict schema.
+     *
+     * @var  string
+     */
+    protected $content;
+
     /** @var  string */
     protected $thumb_uuid;
 

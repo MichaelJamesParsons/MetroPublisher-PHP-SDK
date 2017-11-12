@@ -126,7 +126,6 @@ class SlotMediaTest extends TestCase
             'slot_uuid',
             'content_uuid',
             'uuid',
-            'urlname',
             'created',
             'modified'
         ];
