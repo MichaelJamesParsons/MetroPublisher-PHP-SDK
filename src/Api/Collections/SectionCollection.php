@@ -24,6 +24,14 @@ class SectionCollection extends AbstractResourceCollection implements ResourceCo
         return parent::all('/sections', $page, $options);
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function find($uuid)
+    {
+        return parent::all("/sections/{$uuid}");
+    }
+
     protected function getModelClass()
     {
         return Section::class;

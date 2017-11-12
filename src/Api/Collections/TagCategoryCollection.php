@@ -23,8 +23,9 @@ class TagCategoryCollection extends AbstractResourceCollection implements Resour
     /**
      * @inheritdoc
      */
-    public function find($uuid) {
-        return parent::find("/tags/categories/{$uuid}");
+    public function find($uuid)
+    {
+        return parent::get("/tags/categories/{$uuid}");
     }
 
     /**

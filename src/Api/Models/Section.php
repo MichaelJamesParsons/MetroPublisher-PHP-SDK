@@ -2,6 +2,7 @@
 namespace MetroPublisher\Api\Models;
 
 use MetroPublisher\Api\AbstractResourceModel;
+use MetroPublisher\Exception\MetroPublisherException;
 
 /**
  * Class Section
@@ -17,6 +18,9 @@ class Section extends AbstractResourceModel
 
     /** @var  string */
     protected $parent_uuid;
+
+    /** @var  string */
+    protected $parentid;
 
     /** @var  boolean */
     protected $auto_featured_stories;
@@ -53,8 +57,21 @@ class Section extends AbstractResourceModel
      */
     public static function getDefaultFields()
     {
+        return [
+            'uuid',
+            'title',
+            'urlname',
+            'ord',
+            'hide_in_nav',
+            'parentid'
+        ];
+    }
+
+    public static function getMetaFields()
+    {
         return array_merge([
             'title',
+            'urlname',
             'parent_uuid',
             'auto_featured_stories',
             'auto_featured_stories_num',
@@ -66,8 +83,7 @@ class Section extends AbstractResourceModel
             'meta_keywords',
             'ord',
             'show_prev_next'
-        ],
-        parent::getDefaultFields());
+        ], parent::getMetaFields());
     }
 
     /**
@@ -79,9 +95,11 @@ class Section extends AbstractResourceModel
 
     /**
      * @inheritdoc
+     * @deprecated
      */
     public function delete() {
-        return $this->doDelete("/sections/{$this->uuid}");
+        // @todo - Find more elegant solution
+        throw new MetroPublisherException("Sections cannot be deleted.");
     }
 
     /**
@@ -136,7 +154,13 @@ class Section extends AbstractResourceModel
      */
     public function getParentUuid()
     {
-        return $this->parent_uuid;
+        /*
+         * @todo - Temporary hack until a more viable solution is implemented.
+         *
+         * The API's naming conventions are inconsistent. When saving a section, the parent is referenced
+         * as "parent_uuid". When retrieving the section, the parent is referenced as "parentid".
+         */
+        return (empty($this->parent_uuid && !empty($this->parentid))) ? $this->parentid : $this->parent_uuid;
     }
 
     /**

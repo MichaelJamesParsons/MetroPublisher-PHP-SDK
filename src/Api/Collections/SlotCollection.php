@@ -33,7 +33,7 @@ class SlotCollection extends AbstractResourceCollection implements ResourceColle
     }
 
     public function find($slotUuid) {
-        return parent::find(
+        return parent::get(
             sprintf("/content/%s/slots/%s",
                 $this->content->getUuid(),
                 $slotUuid)

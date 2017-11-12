@@ -15,9 +15,10 @@ class LocationTest extends TestCase
             'description',
             'coords',
             'state',
+            'state',
             'thumb_uuid',
             'street',
-            'streetnumber',
+            'street_number',
             'pcode',
             'geoname_id',
             'phone',
@@ -27,9 +28,15 @@ class LocationTest extends TestCase
             'price_index',
             'opening_hours',
             'content',
+            'location_types',
             'closed',
-            'print_description',
             'sort_title',
+            'print_description',
+            'fb_headline',
+            'fb_url',
+            'fb_show_faces',
+            'fb_show_stream',
+            'twitter_username',
             'is_listing'
         ];
 

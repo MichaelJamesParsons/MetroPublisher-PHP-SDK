@@ -35,7 +35,7 @@ class ContentCollection extends AbstractResourceCollection implements ResourceCo
      * @return Content|AbstractResourceModel
      */
     public function find($uuid) {
-        return parent::find("/content/{$uuid}");
+        return parent::get("/content/{$uuid}");
     }
 
     /**
