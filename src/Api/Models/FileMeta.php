@@ -210,16 +210,13 @@ class FileMeta extends AbstractResourceModel
 
     public function uploadFile()
     {
-        $response = $this->context->post(
-            "/files/{$this->uuid}",
-            [],
-            [
-                "headers" => [
-                    'Content-Type' => 'image/' . $this->fileType
-                ],
-                'body' => file_get_contents($this->file->getStoredPath())
-            ]
-        );
+        $fileType = ($this->fileType === 'image/jpg') ? 'image/jpeg' : $this->fileType;
+        $response = $this->context->post("/files/{$this->uuid}", [], [
+            "headers" => [
+                'Content-Type' => $fileType
+            ],
+            'body' => file_get_contents($this->file->getStoredPath())
+        ]);
 
         if($response['error']) {
             throw new \Exception($response['error_description']);
