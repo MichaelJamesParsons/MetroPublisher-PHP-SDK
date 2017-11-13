@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+<?php
+=======
 <?php
 use MetroPublisher\Api\Models\Meta\RRule;
 use MetroPublisher\MetroPublisher;
@@ -62,3 +65,4 @@ $event->save();
 
 // Delete the event
 $event->delete();
+>>>>>>> 6c42db5b7a240761d5a5c5ab2ffa45f71f68ed70

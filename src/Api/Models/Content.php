@@ -250,7 +250,8 @@ class Content extends AbstractResourceModel implements TaggableInterface
             'print_description',
             'evergreen',
             'teaser_image_uuid',
-            'feature_image_uuid'
+            'feature_image_uuid',
+            'section_uuid'
         ];
     }
 

@@ -29,7 +29,7 @@ class SectionCollection extends AbstractResourceCollection implements ResourceCo
      */
     public function find($uuid)
     {
-        return parent::all("/sections/{$uuid}");
+        return parent::get("/sections/{$uuid}");
     }
 
     protected function getModelClass()
