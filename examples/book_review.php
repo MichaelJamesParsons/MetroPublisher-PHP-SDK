@@ -7,7 +7,7 @@ require "./config.php";
 $metroPublisher = new MetroPublisher(MP_API_KEY, MP_API_SECRET);
 $metroPublisher->getHttpClient()->setSslVerification(false);
 
-// Create a new Book Review
+// Create
 $bookReview = new BookReview($metroPublisher);
 $bookReview->setUuid('55547ff8-3355-4f69-a867-7232165e6d29')
             ->setUrlname('book-review')
@@ -27,8 +27,10 @@ $bookReview->setUuid('55547ff8-3355-4f69-a867-7232165e6d29')
             ->setBookImageUuid(null)
             ->setBookIssued(new DateTime('now'))
             ->addBookBuyUrl('http://example.com', 'example')
-            ->addBookProviderUrl('{URL to Amazon or iTunes}')
-            ->save();
+            ->addBookProviderUrl('{URL to Amazon or iTunes}');
 
-// Delete the review
+// Save
+$bookReview->save();
+
+// Delete
 $bookReview->delete();
