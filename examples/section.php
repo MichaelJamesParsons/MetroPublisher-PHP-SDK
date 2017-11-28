@@ -27,7 +27,6 @@ $section->setUuid('41b47ff8-3355-4f69-a867-7232165e6d29')
 // Save
 $section->save();
 
-
 /*
  * Delete the section?
  * MetroPublisher's API does not support deleting a section.
