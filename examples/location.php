@@ -52,4 +52,4 @@ $location->setTwitterUsername('metropublisher')
 $location->save();
 
 // Delete
-$bookReview->delete();
+$locationReview->delete();
