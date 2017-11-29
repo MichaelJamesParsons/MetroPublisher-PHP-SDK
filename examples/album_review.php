@@ -7,7 +7,7 @@ require "./config.php";
 $metroPublisher = new MetroPublisher(MP_API_KEY, MP_API_SECRET);
 $metroPublisher->getHttpClient()->setSslVerification(false);
 
-// Create a new Album Review
+// Create
 $albumReview = new AlbumReview($metroPublisher);
 $albumReview->setUuid('55547ff8-3355-4f69-a867-7232165e6d29')
     ->setUrlname('album-review')
@@ -25,8 +25,10 @@ $albumReview->setUuid('55547ff8-3355-4f69-a867-7232165e6d29')
     ->setAlbumTitle('Lorem ipsum')
     ->setRating(4.5)
     ->addAlbumBuyUrl('http://example.com', 'example')
-    ->addAlbumProviderUrl('{URL to Amazon or iTunes}')
-    ->save();
+    ->addAlbumProviderUrl('{URL to Amazon or iTunes}');
 
-// Delete the review
+// Save
+$albumReview->save();
+
+// Delete
 $albumReview->delete();

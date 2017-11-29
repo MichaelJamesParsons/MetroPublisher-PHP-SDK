@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-<?php
-=======
 <?php
 use MetroPublisher\Api\Models\Meta\RRule;
 use MetroPublisher\MetroPublisher;
@@ -29,7 +26,7 @@ $rrule->setByHour(null)
     ->setBySetPos(null)
     ->setWeekStart(RRule::DAY_SUNDAY);
 
-// Create a new event
+// Create
 $event = new Event($metroPublisher);
 $event->setUuid('55547ff8-3355-4f69-a867-7232165e6d29')
       ->setUrlname('lorem-ipsum-event')
@@ -60,9 +57,8 @@ $event->setLocationUuid(null)
       ->setIcalUid('123')
       ->setSortTitle(null);
 
-// Save the event
+// Save
 $event->save();
 
-// Delete the event
+// Delete
 $event->delete();
->>>>>>> 6c42db5b7a240761d5a5c5ab2ffa45f71f68ed70

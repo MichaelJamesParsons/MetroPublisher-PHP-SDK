@@ -7,7 +7,7 @@ require "./config.php";
 $metroPublisher = new MetroPublisher(MP_API_KEY, MP_API_SECRET);
 $metroPublisher->getHttpClient()->setSslVerification(false);
 
-// Create a new article
+// Create
 $article = new Article($metroPublisher);
 $article->setUuid('41b47ff8-3355-4f69-a867-7232165e6d29')
     ->setUrlname('lorem-ipsum')
@@ -20,8 +20,10 @@ $article->setUuid('41b47ff8-3355-4f69-a867-7232165e6d29')
     ->setFeatureImageUuid(null)
     ->setTeaserImageUuid(null)
     ->setIssued(new DateTime('now'))
-    ->setEvergreen(true)
-    ->save();
+    ->setEvergreen(true);
 
-// Delete the article
+// Save
+$article->save();
+
+// Delete
 $article->delete();

@@ -13,6 +13,9 @@ class Location extends AbstractResourceModel
     protected $title;
 
     /** @var  string */
+    protected $urlname;
+
+    /** @var  string */
     protected $description;
 
     /** @var  string[] */
@@ -56,9 +59,6 @@ class Location extends AbstractResourceModel
 
     /** @var  string */
     protected $content;
-
-    /** @var string **/
-    protected $location_types;
 
     /** @var boolean **/
     protected $closed;
@@ -111,11 +111,20 @@ class Location extends AbstractResourceModel
     /** @var  string */
     protected $contact_email;
 
-    /** @var  string */
+    /** @var  \DateTime */
     protected $listing_start;
 
     /** @var  \DateTime */
     protected $listing_expires;
+
+    const STATE_DRAFT     = 'draft';
+    const STATE_PUBLISHED = 'published';
+
+    const PRICE_INDEX_FREE = 'free';
+    const PRICE_INDEX_INEXPENSIVE = 'inexpensive';
+    const PRICE_INDEX_MODERATE = 'moderate';
+    const PRICE_INDEX_EXPENSIVE = 'expensive';
+    const PRICE_INDEX_VERY_EXPENSIVE = 'very_expensive';
 
     /**
      * @inheritdoc
@@ -165,7 +174,6 @@ class Location extends AbstractResourceModel
             'price_index',
             'opening_hours',
             'content',
-            'location_types',
             'closed',
             'sort_title',
             'print_description',
@@ -196,10 +204,34 @@ class Location extends AbstractResourceModel
 
     /**
      * @param string $title
+     *
+     * @return $this
      */
     public function setTitle($title)
     {
         $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrlname()
+    {
+        return $this->urlname;
+    }
+
+    /**
+     * @param string $urlname
+     *
+     * @return $this
+     */
+    public function setUrlname($urlname)
+    {
+        $this->urlname = $urlname;
+
+        return $this;
     }
 
     /**
@@ -212,10 +244,14 @@ class Location extends AbstractResourceModel
 
     /**
      * @param string $description
+     *
+     * @return $this
      */
     public function setDescription($description)
     {
         $this->description = $description;
+
+        return $this;
     }
 
     /**
@@ -227,11 +263,15 @@ class Location extends AbstractResourceModel
     }
 
     /**
-     * @param string[] $coords
+     * @param int[] $coords
+     *
+     * @return $this
      */
     public function setCoords($coords)
     {
         $this->coords = $coords;
+
+        return $this;
     }
 
     /**
@@ -244,10 +284,14 @@ class Location extends AbstractResourceModel
 
     /**
      * @param string $state
+     *
+     * @return $this
      */
     public function setState($state)
     {
         $this->state = $state;
+
+        return $this;
     }
 
     /**
@@ -260,10 +304,14 @@ class Location extends AbstractResourceModel
 
     /**
      * @param string $thumb_uuid
+     *
+     * @return $this
      */
     public function setThumbUuid($thumb_uuid)
     {
         $this->thumb_uuid = $thumb_uuid;
+
+        return $this;
     }
 
     /**
@@ -276,10 +324,14 @@ class Location extends AbstractResourceModel
 
     /**
      * @param string $street
+     *
+     * @return $this
      */
     public function setStreet($street)
     {
         $this->street = $street;
+
+        return $this;
     }
 
     /**
@@ -292,10 +344,14 @@ class Location extends AbstractResourceModel
 
     /**
      * @param string $street_number
+     *
+     * @return $this
      */
     public function setStreetNumber($street_number)
     {
         $this->street_number = $street_number;
+
+        return $this;
     }
 
     /**
@@ -308,10 +364,14 @@ class Location extends AbstractResourceModel
 
     /**
      * @param string $pcode
+     *
+     * @return $this
      */
     public function setPcode($pcode)
     {
         $this->pcode = $pcode;
+
+        return $this;
     }
 
     /**
@@ -324,10 +384,14 @@ class Location extends AbstractResourceModel
 
     /**
      * @param string $geoname_id
+     *
+     * @return $this
      */
     public function setGeonameId($geoname_id)
     {
         $this->geoname_id = $geoname_id;
+
+        return $this;
     }
 
     /**
@@ -340,10 +404,14 @@ class Location extends AbstractResourceModel
 
     /**
      * @param string $phone
+     *
+     * @return $this
      */
     public function setPhone($phone)
     {
         $this->phone = $phone;
+
+        return $this;
     }
 
     /**
@@ -356,10 +424,14 @@ class Location extends AbstractResourceModel
 
     /**
      * @param string $fax
+     *
+     * @return $this
      */
     public function setFax($fax)
     {
         $this->fax = $fax;
+
+        return $this;
     }
 
     /**
@@ -372,10 +444,14 @@ class Location extends AbstractResourceModel
 
     /**
      * @param string $email
+     *
+     * @return $this
      */
     public function setEmail($email)
     {
         $this->email = $email;
+
+        return $this;
     }
 
     /**
@@ -388,10 +464,14 @@ class Location extends AbstractResourceModel
 
     /**
      * @param string $website
+     *
+     * @return $this
      */
     public function setWebsite($website)
     {
         $this->website = $website;
+
+        return $this;
     }
 
     /**
@@ -404,10 +484,14 @@ class Location extends AbstractResourceModel
 
     /**
      * @param string $price_index
+     *
+     * @return $this
      */
     public function setPriceIndex($price_index)
     {
         $this->price_index = $price_index;
+
+        return $this;
     }
 
     /**
@@ -420,10 +504,14 @@ class Location extends AbstractResourceModel
 
     /**
      * @param string $opening_hours
+     *
+     * @return $this
      */
     public function setOpeningHours($opening_hours)
     {
         $this->opening_hours = $opening_hours;
+
+        return $this;
     }
 
     /**
@@ -436,26 +524,14 @@ class Location extends AbstractResourceModel
 
     /**
      * @param string $content
+     *
+     * @return $this
      */
     public function setContent($content)
     {
         $this->content = $content;
-    }
 
-    /**
-     * @return string
-     */
-    public function getLocationTypes()
-    {
-        return $this->location_types;
-    }
-
-    /**
-     * @param string $location_types
-     */
-    public function setLocationTypes($location_types)
-    {
-        $this->location_types = $location_types;
+        return $this;
     }
 
     /**
@@ -468,10 +544,14 @@ class Location extends AbstractResourceModel
 
     /**
      * @param bool $closed
+     *
+     * @return $this
      */
     public function setClosed($closed)
     {
         $this->closed = $closed;
+
+        return $this;
     }
 
     /**
@@ -484,10 +564,14 @@ class Location extends AbstractResourceModel
 
     /**
      * @param string $sort_title
+     *
+     * @return $this
      */
     public function setSortTitle($sort_title)
     {
         $this->sort_title = $sort_title;
+
+        return $this;
     }
 
     /**
@@ -500,10 +584,14 @@ class Location extends AbstractResourceModel
 
     /**
      * @param string $print_description
+     *
+     * @return $this
      */
     public function setPrintDescription($print_description)
     {
         $this->print_description = $print_description;
+
+        return $this;
     }
 
     /**
@@ -516,10 +604,14 @@ class Location extends AbstractResourceModel
 
     /**
      * @param string $fb_headline
+     *
+     * @return $this
      */
     public function setFbHeadline($fb_headline)
     {
         $this->fb_headline = $fb_headline;
+
+        return $this;
     }
 
     /**
@@ -532,10 +624,14 @@ class Location extends AbstractResourceModel
 
     /**
      * @param string $fb_url
+     *
+     * @return $this
      */
     public function setFbUrl($fb_url)
     {
         $this->fb_url = $fb_url;
+
+        return $this;
     }
 
     /**
@@ -548,10 +644,14 @@ class Location extends AbstractResourceModel
 
     /**
      * @param bool $fb_show_faces
+     *
+     * @return $this
      */
     public function setFbShowFaces($fb_show_faces)
     {
         $this->fb_show_faces = $fb_show_faces;
+
+        return $this;
     }
 
     /**
@@ -564,10 +664,14 @@ class Location extends AbstractResourceModel
 
     /**
      * @param bool $fb_show_stream
+     *
+     * @return $this
      */
     public function setFbShowStream($fb_show_stream)
     {
         $this->fb_show_stream = $fb_show_stream;
+
+        return $this;
     }
 
     /**
@@ -580,10 +684,14 @@ class Location extends AbstractResourceModel
 
     /**
      * @param string $twitter_username
+     *
+     * @return $this
      */
     public function setTwitterUsername($twitter_username)
     {
         $this->twitter_username = $twitter_username;
+
+        return $this;
     }
 
     /**
@@ -596,10 +704,14 @@ class Location extends AbstractResourceModel
 
     /**
      * @param bool $is_listing
+     *
+     * @return $this
      */
     public function setIsListing($is_listing)
     {
         $this->is_listing = $is_listing;
+
+        return $this;
     }
 
     /**
@@ -612,10 +724,14 @@ class Location extends AbstractResourceModel
 
     /**
      * @param string $coupon_img_uuid
+     *
+     * @return $this
      */
     public function setCouponImgUuid($coupon_img_uuid)
     {
         $this->coupon_img_uuid = $coupon_img_uuid;
+
+        return $this;
     }
 
     /**
@@ -628,10 +744,14 @@ class Location extends AbstractResourceModel
 
     /**
      * @param string $coupon_title
+     *
+     * @return $this
      */
     public function setCouponTitle($coupon_title)
     {
         $this->coupon_title = $coupon_title;
+
+        return $this;
     }
 
     /**
@@ -654,7 +774,7 @@ class Location extends AbstractResourceModel
     }
 
     /**
-     * @return string
+     * @return \DateTime
      */
     public function getCouponStart()
     {
@@ -662,7 +782,7 @@ class Location extends AbstractResourceModel
     }
 
     /**
-     * @param string $coupon_start
+     * @param \DateTime $coupon_start
      * @return $this
      */
     public function setCouponStart($coupon_start)
@@ -673,7 +793,7 @@ class Location extends AbstractResourceModel
     }
 
     /**
-     * @return string
+     * @return \DateTime
      */
     public function getCouponExpires()
     {
@@ -681,7 +801,7 @@ class Location extends AbstractResourceModel
     }
 
     /**
-     * @param string $coupon_expires
+     * @param \DateTime $coupon_expires
      * @return $this
      */
     public function setCouponExpires($coupon_expires)
@@ -749,7 +869,7 @@ class Location extends AbstractResourceModel
     }
 
     /**
-     * @return string
+     * @return \DateTime
      */
     public function getListingStart()
     {
@@ -757,7 +877,7 @@ class Location extends AbstractResourceModel
     }
 
     /**
-     * @param string $listing_start
+     * @param \DateTime $listing_start
      * @return $this
      */
     public function setListingStart($listing_start)
@@ -768,7 +888,7 @@ class Location extends AbstractResourceModel
     }
 
     /**
-     * @return string
+     * @return \DateTime
      */
     public function getListingExpires()
     {
@@ -776,7 +896,7 @@ class Location extends AbstractResourceModel
     }
 
     /**
-     * @param string $listing_expires
+     * @param \DateTime $listing_expires
      * @return $this
      */
     public function setListingExpires($listing_expires)
