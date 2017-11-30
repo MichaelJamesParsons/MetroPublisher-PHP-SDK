@@ -11,6 +11,9 @@ use MetroPublisher\MetroPublisher;
  */
 class LocationReview extends AbstractReview
 {
+    /** @var string */
+    protected $location_uuid;
+
     /**
      * LocationReview constructor.
      *
@@ -28,5 +31,25 @@ class LocationReview extends AbstractReview
     public static function getMetaFields()
     {
         return array_merge(['location_uuid'], parent::getMetaFields());
+    }
+
+    /**
+     * @return string
+     */
+    public function getLocationUuid()
+    {
+        return $this->location_uuid;
+    }
+
+    /**
+     * @param string $location_uuid
+     *
+     * @return LocationReview
+     */
+    public function setLocationUuid($location_uuid)
+    {
+        $this->location_uuid = $location_uuid;
+
+        return $this;
     }
 }
