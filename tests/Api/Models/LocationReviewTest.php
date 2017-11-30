@@ -19,7 +19,8 @@ class LocationReviewTest extends TestCase
             'print_description',
             'evergreen',
             'teaser_image_uuid',
-            'feature_image_uuid'
+            'feature_image_uuid',
+            'section_uuid'
         ];
 
         $this->assertEquals($expected, LocationReview::getMetaFields());

@@ -28,7 +28,6 @@ class LocationTest extends TestCase
             'price_index',
             'opening_hours',
             'content',
-            'location_types',
             'closed',
             'sort_title',
             'print_description',
@@ -37,7 +36,17 @@ class LocationTest extends TestCase
             'fb_show_faces',
             'fb_show_stream',
             'twitter_username',
-            'is_listing'
+            'is_listing',
+            'coupon_img_uuid',
+            'coupon_title',
+            'coupon_description',
+            'coupon_start',
+            'coupon_expires',
+            'sponsored',
+            'contact_person',
+            'contact_email',
+            'listing_start',
+            'listing_expires'
         ];
 
         $this->assertEquals($expected, Location::getMetaFields());
