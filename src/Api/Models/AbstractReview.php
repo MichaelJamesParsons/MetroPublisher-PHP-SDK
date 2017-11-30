@@ -35,7 +35,7 @@ abstract class AbstractReview extends Content
      */
     public function setRating($rating)
     {
-        if ($rating !== 0 && ($rating < 0 || $rating > 5 || $rating % .5 > 0)) {
+        if ($rating !== 0 && ($rating < 0 || $rating > 5 || ($rating / .5) % 1 !== 0)) {
             throw new MetroPublisherException('Rating must be 0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, or 5. ');
         }
 
