@@ -182,7 +182,17 @@ class Location extends AbstractResourceModel
             'fb_show_faces',
             'fb_show_stream',
             'twitter_username',
-            'is_listing'
+            'is_listing',
+            'coupon_img_uuid',
+            'coupon_title',
+            'coupon_description',
+            'coupon_start',
+            'coupon_expires',
+            'sponsored',
+            'contact_person',
+            'contact_email',
+            'listing_start',
+            'listing_expires'
         ], parent::getMetaFields());
     }
 
