@@ -1,4 +1,5 @@
 <?php
+
 namespace MetroPublisher\Api\Models;
 
 use MetroPublisher\Api\AbstractResourceModel;
@@ -13,107 +14,49 @@ use MetroPublisher\MetroPublisher;
  */
 class Slot extends AbstractResourceModel
 {
-    /** @var string */
-    protected $content_uuid;
-
-    /** @var string */
-    protected $relevance;
-
-    /** @var string */
-    protected $display;
-
-    /** @var string */
-    protected $url;
-
-    /** @var string */
-    protected $content_url;
-
-    /** @var  SlotMedia[] */
-    protected $items;
-
     /**
      * Relevance of the slot, i.e. how prominently it should be displayed within the content.
      *
      * @link https://api.metropublisher.com/resources/content.html#resource-put-content-slot-put-parameters
      */
     const RELEVANCE_INLINE = 'inline';
-
     /**
      * Relevance of the slot, i.e. how prominently it should be displayed within the content.
      *
      * @link https://api.metropublisher.com/resources/content.html#resource-put-content-slot-put-parameters
      */
     const RELEVANCE_ASIDE = 'aside';
-
     /**
      * Display the slot as a gallery.
      *
      * @link https://api.metropublisher.com/resources/content.html#resource-put-content-slot-put-parameters
      */
     const DISPLAY_GALLERY = 'gallery';
-
     /**
      * Display the gallery as a carousel.
      *
      * @link https://api.metropublisher.com/resources/content.html#resource-put-content-slot-put-parameters
      */
     const DISPLAY_CAROUSEL = 'carousel';
+    /** @var string */
+    protected $content_uuid;
+    /** @var string */
+    protected $relevance;
+    /** @var string */
+    protected $display;
+    /** @var string */
+    protected $url;
+    /** @var string */
+    protected $content_url;
+    /** @var  SlotMedia[] */
+    protected $items;
 
     public function __construct(MetroPublisher $metroPublisher)
     {
         parent::__construct($metroPublisher);
-        $this->display = self::DISPLAY_GALLERY;
+        $this->display   = self::DISPLAY_GALLERY;
         $this->relevance = self::RELEVANCE_INLINE;
-        $this->items = [];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function save()
-    {
-        if(empty($this->content_uuid)) {
-            throw new ModelValidationException("Cannot save slot with no content UUID set.");
-        }
-
-        $endpoint = "/content/{$this->content_uuid}/slots/{$this->uuid}";
-        $this->doSave("/content/{$this->content_uuid}/slots/{$this->uuid}");
-
-        $serializedMedia = [];
-        foreach($this->items as $media) {
-            $tmp = $this->serializer->serialize($media);
-            unset($tmp['file_uuid']);
-            $serializedMedia[] = $tmp;
-        }
-
-        return $this->context->put($endpoint . '/media', ['items' => $serializedMedia]);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function delete()
-    {
-        if(empty($this->content_uuid)) {
-            throw new ModelValidationException("Cannot save slot with no content UUID set.");
-        }
-
-        return $this->doDelete("/content/{$this->content_uuid}/slots/{$this->uuid}");
-    }
-
-    /**
-     * Fetch the the slot's media objects.
-     *
-     * @link https://api.metropublisher.com/resources/content.html#content_slot_media_get
-     *
-     * @return SlotMedia[]
-     */
-    public function getMedia() {
-        $response = $this->context->get("/content/{$this->content_uuid}/slots/{$this->uuid}/media");
-
-        /** @var SlotMedia[] $media */
-        $media = ModelDeserializer::convertCollection(new SlotMediaResolver(), $response);
-        return $media;
+        $this->items     = [];
     }
 
     /**
@@ -134,13 +77,52 @@ class Slot extends AbstractResourceModel
     /**
      * @inheritdoc
      */
-    protected function loadMetaData()
+    public function save()
     {
-        if(empty($this->content_uuid)) {
-            throw new ModelValidationException("Cannot load slot meta fields with no content UUID set.");
+        if (empty($this->content_uuid)) {
+            throw new ModelValidationException("Cannot save slot with no content UUID set.");
         }
 
-        return $this->context->get("/content/{$this->content_uuid}/slots/{$this->uuid}");
+        $endpoint = "/content/{$this->content_uuid}/slots/{$this->uuid}";
+        $this->doSave("/content/{$this->content_uuid}/slots/{$this->uuid}");
+
+        $serializedMedia = [];
+        foreach ($this->items as $media) {
+            $tmp = $this->serializer->serialize($media);
+            unset($tmp['file_uuid']);
+            $serializedMedia[] = $tmp;
+        }
+
+        return $this->context->put($endpoint . '/media', ['items' => $serializedMedia]);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function delete()
+    {
+        if (empty($this->content_uuid)) {
+            throw new ModelValidationException("Cannot save slot with no content UUID set.");
+        }
+
+        return $this->doDelete("/content/{$this->content_uuid}/slots/{$this->uuid}");
+    }
+
+    /**
+     * Fetch the the slot's media objects.
+     *
+     * @link https://api.metropublisher.com/resources/content.html#content_slot_media_get
+     *
+     * @return SlotMedia[]
+     */
+    public function getMedia()
+    {
+        $response = $this->context->get("/content/{$this->content_uuid}/slots/{$this->uuid}/media");
+
+        /** @var SlotMedia[] $media */
+        $media = ModelDeserializer::convertCollection(new SlotMediaResolver(), $response);
+
+        return $media;
     }
 
     /**
@@ -245,6 +227,7 @@ class Slot extends AbstractResourceModel
 
     /**
      * @param SlotMedia $mediaSlot
+     *
      * @return $this
      */
     public function addMedia(SlotMedia $mediaSlot)
@@ -252,5 +235,17 @@ class Slot extends AbstractResourceModel
         $this->items[] = $mediaSlot;
 
         return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function loadMetaData()
+    {
+        if (empty($this->content_uuid)) {
+            throw new ModelValidationException("Cannot load slot meta fields with no content UUID set.");
+        }
+
+        return $this->context->get("/content/{$this->content_uuid}/slots/{$this->uuid}");
     }
 }

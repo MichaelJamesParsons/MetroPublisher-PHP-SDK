@@ -1,4 +1,5 @@
 <?php
+
 namespace MetroPublisher\Api\Models;
 
 /**
@@ -23,11 +24,13 @@ class File
 
     /**
      * @param string $sourceUrl
+     *
      * @return $this
      */
     public function setSourceUrl($sourceUrl)
     {
         $this->sourceUrl = $sourceUrl;
+
         return $this;
     }
 
@@ -41,6 +44,7 @@ class File
 
     /**
      * @param string $storedPath
+     *
      * @return $this
      */
     public function setStoredPath($storedPath)

@@ -1,4 +1,5 @@
 <?php
+
 namespace MetroPublisher\Api\Models;
 
 use PHPUnit\Framework\TestCase;
@@ -9,7 +10,8 @@ use PHPUnit\Framework\TestCase;
  */
 class EventOccurrenceTest extends TestCase
 {
-    public function testDefaultFields() {
+    public function testDefaultFields()
+    {
         $expected = [
             'event_uuid',
             'dtstart',

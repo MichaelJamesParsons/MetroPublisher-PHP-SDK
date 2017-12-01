@@ -1,7 +1,8 @@
 <?php
+
 namespace MetroPublisher\Http\Exception;
 
-use \Exception;
+use Exception;
 
 /**
  * Class BadParametersException

@@ -1,4 +1,5 @@
 <?php
+
 namespace MetroPublisher\Api\Models;
 
 use PHPUnit\Framework\TestCase;
@@ -9,7 +10,8 @@ use PHPUnit\Framework\TestCase;
  */
 class LocationTest extends TestCase
 {
-    public function testMetaFields() {
+    public function testMetaFields()
+    {
         $expected = [
             'title',
             'description',
@@ -28,7 +30,6 @@ class LocationTest extends TestCase
             'price_index',
             'opening_hours',
             'content',
-            'location_types',
             'closed',
             'sort_title',
             'print_description',
@@ -37,18 +38,29 @@ class LocationTest extends TestCase
             'fb_show_faces',
             'fb_show_stream',
             'twitter_username',
-            'is_listing'
+            'is_listing',
+            'coupon_img_uuid',
+            'coupon_title',
+            'coupon_description',
+            'coupon_start',
+            'coupon_expires',
+            'sponsored',
+            'contact_person',
+            'contact_email',
+            'listing_start',
+            'listing_expires'
         ];
 
         $this->assertEquals($expected, Location::getMetaFields());
     }
 
-    public function testSave() {
+    public function testSave()
+    {
         /** @var \PHPUnit_Framework_MockObject_MockObject|Location $mockLocation */
         $mockLocation = $this->getMockBuilder(Location::class)
-            ->setMethods(['doSave'])
-            ->disableOriginalConstructor()
-            ->getMock();
+                             ->setMethods(['doSave'])
+                             ->disableOriginalConstructor()
+                             ->getMock();
 
         $mockLocation->expects($this->once())
                      ->method('doSave')
@@ -59,7 +71,8 @@ class LocationTest extends TestCase
         $mockLocation->save();
     }
 
-    public function testDelete() {
+    public function testDelete()
+    {
         /** @var \PHPUnit_Framework_MockObject_MockObject|Location $mockLocation */
         $mockLocation = $this->getMockBuilder(Location::class)
                              ->setMethods(['doDelete'])

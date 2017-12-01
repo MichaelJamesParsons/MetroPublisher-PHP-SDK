@@ -1,4 +1,5 @@
 <?php
+
 namespace MetroPublisher\Api\Models;
 
 use PHPUnit\Framework\TestCase;
@@ -9,7 +10,8 @@ use PHPUnit\Framework\TestCase;
  */
 class EventTest extends TestCase
 {
-    public function testMetaFields() {
+    public function testMetaFields()
+    {
         $expected = [
             'location_uuid',
             'location_alt',
@@ -32,7 +34,8 @@ class EventTest extends TestCase
             'print_description',
             'evergreen',
             'teaser_image_uuid',
-            'feature_image_uuid'
+            'feature_image_uuid',
+            'section_uuid'
         ];
 
         $this->assertEquals($expected, Event::getMetaFields());

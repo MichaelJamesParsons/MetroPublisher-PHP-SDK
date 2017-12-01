@@ -1,4 +1,5 @@
 <?php
+
 namespace MetroPublisher\Api\Models;
 
 use MetroPublisher\MetroPublisher;
@@ -10,7 +11,8 @@ use PHPUnit\Framework\TestCase;
  */
 class TagTest extends TestCase
 {
-    public function testSave() {
+    public function testSave()
+    {
         /** @var \PHPUnit_Framework_MockObject_MockObject|Tag $mockSlot */
         $mockSlot = $this->getMockBuilder(Tag::class)
                          ->setMethods(['doSave'])
@@ -26,7 +28,8 @@ class TagTest extends TestCase
                  ->save();
     }
 
-    public function testDelete() {
+    public function testDelete()
+    {
         /** @var \PHPUnit_Framework_MockObject_MockObject|Tag $mockSlot */
         $mockSlot = $this->getMockBuilder(Tag::class)
                          ->setMethods(['doDelete'])
@@ -42,7 +45,8 @@ class TagTest extends TestCase
                  ->delete();
     }
 
-    public function testGetCategories() {
+    public function testGetCategories()
+    {
         /** @var \PHPUnit_Framework_MockObject_MockObject|MetroPublisher $mockMetroPublisher */
         $mockMetroPublisher = $this->getMockBuilder(MetroPublisher::class)
                                    ->setConstructorArgs([null, null])
@@ -59,7 +63,8 @@ class TagTest extends TestCase
             ->getCategories();
     }
 
-    public function testGetPathHistory() {
+    public function testGetPathHistory()
+    {
         /** @var \PHPUnit_Framework_MockObject_MockObject|MetroPublisher $mockMetroPublisher */
         $mockMetroPublisher = $this->getMockBuilder(MetroPublisher::class)
                                    ->setConstructorArgs([null, null])
@@ -76,7 +81,8 @@ class TagTest extends TestCase
             ->getPathHistory();
     }
 
-    public function testSetPathHistory() {
+    public function testSetPathHistory()
+    {
         /** @var \PHPUnit_Framework_MockObject_MockObject|MetroPublisher $mockMetroPublisher */
         $mockMetroPublisher = $this->getMockBuilder(MetroPublisher::class)
                                    ->setConstructorArgs([null, null])
@@ -93,7 +99,8 @@ class TagTest extends TestCase
             ->setPathHistory([]);
     }
 
-    public function testAddPathHistory() {
+    public function testAddPathHistory()
+    {
         /** @var \PHPUnit_Framework_MockObject_MockObject|MetroPublisher $mockMetroPublisher */
         $mockMetroPublisher = $this->getMockBuilder(MetroPublisher::class)
                                    ->setConstructorArgs([null, null])
@@ -110,7 +117,8 @@ class TagTest extends TestCase
             ->addPathHistory(new PathHistory($mockMetroPublisher, 'http://example.com'));
     }
 
-    public function testDefaultFields() {
+    public function testDefaultFields()
+    {
         $expected = [
             'last_name_or_title',
             'first_name',

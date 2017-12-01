@@ -1,10 +1,11 @@
 <?php
+
 namespace MetroPublisher\Api\Collections;
 
 use DateTime;
+use MetroPublisher\Api\AbstractResourceCollection;
 use MetroPublisher\Api\Models\Event;
 use MetroPublisher\Api\Models\EventOccurrence;
-use MetroPublisher\Api\AbstractResourceCollection;
 use MetroPublisher\Api\Models\Resolvers\ModelResolver;
 use MetroPublisher\Api\ResourceCollectionInterface;
 use MetroPublisher\Common\Serializers\ModelDeserializer;
@@ -26,7 +27,8 @@ class EventCollection extends AbstractResourceCollection implements ResourceColl
     /**
      * @inheritdoc
      */
-    public function find($uuid) {
+    public function find($uuid)
+    {
         return parent::get("/content/{$uuid}");
     }
 
@@ -43,7 +45,8 @@ class EventCollection extends AbstractResourceCollection implements ResourceColl
      *
      * @return \MetroPublisher\Api\Models\AbstractModel[]
      */
-    public function getOccurrences(DateTime $start = null, DateTime $end = null, $page = 1) {
+    public function getOccurrences(DateTime $start = null, DateTime $end = null, $page = 1)
+    {
         $occurrences = $this->context->get('/events/occurrences', [
             'period' => sprintf('%s_%s', $start->format('Y-m-d'), $end->format('Y-m-d')),
             'page'   => $page,

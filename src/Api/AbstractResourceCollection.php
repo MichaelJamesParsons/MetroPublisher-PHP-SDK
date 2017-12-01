@@ -1,7 +1,7 @@
 <?php
+
 namespace MetroPublisher\Api;
 
-use MetroPublisher\Api\Models\AbstractModel;
 use MetroPublisher\Api\Models\Resolvers\ModelResolver;
 use MetroPublisher\Common\Serializers\ModelDeserializer;
 use MetroPublisher\Http\Exception\ResourceNotFoundException;
@@ -34,12 +34,13 @@ abstract class AbstractResourceCollection extends AbstractApiResource
      *
      * @return array
      */
-    protected function all($endpoint, $page = 1, array $options = []) {
+    protected function all($endpoint, $page = 1, array $options = [])
+    {
         $fields = $this->getModelDefaultFields();
 
         $options['fields'] = implode('-', $fields);
         $options['page']   = $page;
-        $response = $this->context->get($endpoint, $options);
+        $response          = $this->context->get($endpoint, $options);
 
         return ModelDeserializer::convertCollection(
             new ModelResolver($this->getModelClass()),
@@ -55,20 +56,24 @@ abstract class AbstractResourceCollection extends AbstractApiResource
      *
      * @return AbstractResourceModel
      */
-    protected function get($endpoint) {
+    protected function get($endpoint)
+    {
         try {
             $model = $this->context->get($endpoint);
+
             return ModelDeserializer::convert(new ModelResolver($this->getModelClass()), $model, [$this->context]);
-        } catch(ResourceNotFoundException $e) {
+        } catch (ResourceNotFoundException $e) {
             return null;
         }
     }
 
-    protected function getModelDefaultFields() {
+    protected function getModelDefaultFields()
+    {
         return call_user_func(sprintf('%s::%s', $this->getModelClass(), 'getDefaultFields'));
     }
 
-    protected function getModelFieldNames() {
+    protected function getModelFieldNames()
+    {
         return call_user_func(sprintf('%s::%s', $this->getModelClass(), 'getFieldNames'));
     }
 

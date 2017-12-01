@@ -1,6 +1,7 @@
 <?php
-use MetroPublisher\MetroPublisher;
+
 use MetroPublisher\Api\Models\AlbumReview;
+use MetroPublisher\MetroPublisher;
 
 require "./config.php";
 

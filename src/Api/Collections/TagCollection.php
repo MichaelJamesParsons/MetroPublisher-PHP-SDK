@@ -1,4 +1,5 @@
 <?php
+
 namespace MetroPublisher\Api\Collections;
 
 use MetroPublisher\Api\AbstractResourceCollection;
@@ -14,14 +15,16 @@ class TagCollection extends AbstractResourceCollection implements ResourceCollec
     /**
      * @inheritdoc
      */
-    public function findAll($page = 1, array $options = []) {
+    public function findAll($page = 1, array $options = [])
+    {
         return parent::all("/tags", $page, $options);
     }
 
     /**
      * @inheritdoc
      */
-    public function find($uuid) {
+    public function find($uuid)
+    {
         return parent::get("/tags/{$uuid}");
     }
 

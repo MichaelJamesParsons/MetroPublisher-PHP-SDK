@@ -1,4 +1,5 @@
 <?php
+
 namespace MetroPublisher\Api\Collections;
 
 use MetroPublisher\Api\Models\AlbumReview;
@@ -19,6 +20,7 @@ class ArticleCollection extends ContentCollection implements ResourceCollectionI
     public function findAll($page = 1, array $options = [])
     {
         $options['ctypes'] = ContentCollection::TYPE_ARTICLES;
+
         return parent::findAll($page, $options);
     }
 

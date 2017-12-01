@@ -1,4 +1,5 @@
 <?php
+
 namespace MetroPublisher\Api\Models;
 
 use MetroPublisher\Api\AbstractResourceModel;
@@ -59,13 +60,13 @@ class Tag extends AbstractResourceModel
     /**
      * This tag is approved and will appear on the public site.
      */
-    const STATE_APPROVED    = 'approved';
+    const STATE_APPROVED = 'approved';
 
     /**
      * This tag is an internal tag and will not be visible on the
      * public site.
      */
-    const STATE_INTERNAL    = 'internal';
+    const STATE_INTERNAL = 'internal';
 
     /**
      * This tag is provisional and pending approval. It will not be
@@ -172,7 +173,8 @@ class Tag extends AbstractResourceModel
      *
      * @return TagCategory[]
      */
-    public function getCategories() {
+    public function getCategories()
+    {
         $response = $this->context->get("/tags/{$this->uuid}/categories");
 
         /** @var TagCategory[] $categories */
@@ -191,12 +193,14 @@ class Tag extends AbstractResourceModel
      * @return array
      * @throws ModelValidationException
      */
-    public function getPathHistory() {
+    public function getPathHistory()
+    {
         if (empty($this->uuid)) {
             throw new ModelValidationException('Tag must have a UUID set to get path history.');
         }
 
         $response = $this->context->get("/tags/{$this->uuid}/path_history");
+
         return ModelDeserializer::convertCollection(new ModelResolver($response), $response, [$this->context]);
     }
 
@@ -219,13 +223,14 @@ class Tag extends AbstractResourceModel
      * @return array
      * @throws ModelValidationException
      */
-    public function setPathHistory(array $pathHistories) {
+    public function setPathHistory(array $pathHistories)
+    {
         if (empty($this->uuid)) {
             throw new ModelValidationException('Tag must have a UUID set to set path history.');
         }
 
         $response = $this->context->put("/tags/{$this->uuid}/path_history",
-            [ 'items' => $pathHistories ]
+            ['items' => $pathHistories]
         );
 
         return ModelDeserializer::convertCollection(new ModelResolver(PathHistory::class), $response, [$this->context]);
@@ -241,13 +246,14 @@ class Tag extends AbstractResourceModel
      * @return array
      * @throws ModelValidationException
      */
-    public function addPathHistory(PathHistory $pathHistory) {
+    public function addPathHistory(PathHistory $pathHistory)
+    {
         if (empty($this->uuid)) {
             throw new ModelValidationException('Tag must have a UUID set to add path history.');
         }
 
         return $this->context->post("/tags/{$this->uuid}/path_history",
-            [ 'path' => $pathHistory->getPath() ]
+            ['path' => $pathHistory->getPath()]
         );
     }
 
@@ -428,6 +434,7 @@ class Tag extends AbstractResourceModel
 
     /**
      * @param string $type
+     *
      * @return $this
      */
     public function setType($type)
@@ -447,6 +454,7 @@ class Tag extends AbstractResourceModel
 
     /**
      * @param string $urlname
+     *
      * @return $this
      */
     public function setUrlname($urlname)

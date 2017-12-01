@@ -1,4 +1,5 @@
 <?php
+
 namespace MetroPublisher\Api\Collections;
 
 use MetroPublisher\Api\AbstractResourceCollection;
@@ -15,8 +16,9 @@ class SectionCollection extends AbstractResourceCollection implements ResourceCo
     /**
      * Retrieves all of a resource model's records.
      *
-     * @param int $page
+     * @param int   $page
      * @param array $options
+     *
      * @return ResourceModelInterface[]
      */
     public function findAll($page = 1, array $options = [])

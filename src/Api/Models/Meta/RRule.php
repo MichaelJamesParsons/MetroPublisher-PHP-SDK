@@ -1,4 +1,5 @@
 <?php
+
 namespace MetroPublisher\Api\Models\Meta;
 
 /**
@@ -9,19 +10,19 @@ class RRule
 {
     const FREQ_SECONDLY = 'SECONDLY';
     const FREQ_MINUTELY = 'MINUTELY';
-    const FREQ_HOURLY   = 'HOURLY';
-    const FREQ_DAILY    = 'DAILY';
-    const FREQ_WEEKLY   = 'WEEKLY';
-    const FREQ_MONTHLY  = 'MONTHLY';
-    const FREQ_YEARLY   = 'YEARLY';
+    const FREQ_HOURLY = 'HOURLY';
+    const FREQ_DAILY = 'DAILY';
+    const FREQ_WEEKLY = 'WEEKLY';
+    const FREQ_MONTHLY = 'MONTHLY';
+    const FREQ_YEARLY = 'YEARLY';
 
-    const DAY_SUNDAY    = 'SU';
-    const DAY_MONDAY    = 'MO';
-    const DAY_TUESDAY   = 'TU';
+    const DAY_SUNDAY = 'SU';
+    const DAY_MONDAY = 'MO';
+    const DAY_TUESDAY = 'TU';
     const DAY_WEDNESDAY = 'WE';
-    const DAY_THURSDAY  = 'TH';
-    const DAY_FRIDAY    = 'FR';
-    const DAY_SATURDAY  = 'SA';
+    const DAY_THURSDAY = 'TH';
+    const DAY_FRIDAY = 'FR';
+    const DAY_SATURDAY = 'SA';
 
 
     /** @var  string */
@@ -82,6 +83,7 @@ class RRule
 
     /**
      * @param string $freq
+     *
      * @return $this
      */
     public function setFreq($freq)
@@ -101,11 +103,13 @@ class RRule
 
     /**
      * @param \DateTime $until
+     *
      * @return $this
      */
     public function setUntil($until)
     {
         $this->until = $until;
+
         return $this;
     }
 
@@ -119,6 +123,7 @@ class RRule
 
     /**
      * @param string $count
+     *
      * @return $this
      */
     public function setCount($count)
@@ -138,6 +143,7 @@ class RRule
 
     /**
      * @param string $interval
+     *
      * @return $this
      */
     public function setInterval($interval)
@@ -157,6 +163,7 @@ class RRule
 
     /**
      * @param string $bySecond
+     *
      * @return $this
      */
     public function setBySecond($bySecond)
@@ -176,6 +183,7 @@ class RRule
 
     /**
      * @param string $byMinute
+     *
      * @return $this
      */
     public function setByMinute($byMinute)
@@ -195,6 +203,7 @@ class RRule
 
     /**
      * @param string $byHour
+     *
      * @return $this
      */
     public function setByHour($byHour)
@@ -234,11 +243,13 @@ class RRule
 
     /**
      * @param string $byMonth
+     *
      * @return $this
      */
     public function setByMonth($byMonth)
     {
         $this->byMonth = $byMonth;
+
         return $this;
     }
 
@@ -252,6 +263,7 @@ class RRule
 
     /**
      * @param string $byMonthDay
+     *
      * @return $this
      */
     public function setByMonthDay($byMonthDay)
@@ -271,6 +283,7 @@ class RRule
 
     /**
      * @param string $byYearDay
+     *
      * @return $this
      */
     public function setByYearDay($byYearDay)
@@ -290,6 +303,7 @@ class RRule
 
     /**
      * @param string $byWeekNo
+     *
      * @return $this
      */
     public function setByWeekNo($byWeekNo)
@@ -309,6 +323,7 @@ class RRule
 
     /**
      * @param string $bySetPos
+     *
      * @return $this
      */
     public function setBySetPos($bySetPos)
@@ -328,6 +343,7 @@ class RRule
 
     /**
      * @param string $weekStart
+     *
      * @return $this
      */
     public function setWeekStart($weekStart)
@@ -347,6 +363,7 @@ class RRule
 
     /**
      * @param \DateTime $recurrenceDates
+     *
      * @return $this
      */
     public function setRecurrenceDates($recurrenceDates)
@@ -366,6 +383,7 @@ class RRule
 
     /**
      * @param \DateTime[] $excludeDates
+     *
      * @return $this
      */
     public function setExcludeDates($excludeDates)

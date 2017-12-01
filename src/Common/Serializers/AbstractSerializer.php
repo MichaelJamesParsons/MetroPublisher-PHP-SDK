@@ -1,4 +1,5 @@
 <?php
+
 namespace MetroPublisher\Common\Serializers;
 
 use MetroPublisher\Common\AnnotationParser;
@@ -17,16 +18,17 @@ abstract class AbstractSerializer
      *
      * @return array
      */
-    public static function getObjectPropertyMapping(ReflectionClass $class) {
-        $parser = AnnotationParser::getInstance();
+    public static function getObjectPropertyMapping(ReflectionClass $class)
+    {
+        $parser               = AnnotationParser::getInstance();
         $reflectionProperties = ReflectionUtils::getClassProperties($class);
-        $propertiesMapping = [];
+        $propertiesMapping    = [];
 
         /** @var ReflectionProperty $property */
-        foreach($reflectionProperties as $property) {
+        foreach ($reflectionProperties as $property) {
             $annotations = $parser->getPropertyAnnotation($property)->getTagsByName("var");
 
-            if(count($annotations) == 1) {
+            if (count($annotations) == 1) {
                 $propertiesMapping[$property->getName()] = (string)$annotations[0]->getType();
             }
         }

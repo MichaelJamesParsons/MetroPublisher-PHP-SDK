@@ -1,4 +1,5 @@
 <?php
+
 namespace MetroPublisher\Api\Models;
 
 use MetroPublisher\Api\Models\Exception\ModelValidationException;
@@ -10,7 +11,8 @@ use PHPUnit\Framework\TestCase;
  */
 class SlotMediaTest extends TestCase
 {
-    public function testSave() {
+    public function testSave()
+    {
         /** @var \PHPUnit_Framework_MockObject_MockObject|SlotMedia $mockSlot */
         $mockSlot = $this->getMockBuilder(SlotMedia::class)
                          ->setMethods(['doSave'])
@@ -28,7 +30,8 @@ class SlotMediaTest extends TestCase
                  ->save();
     }
 
-    public function testSaveWithoutSlotUuid() {
+    public function testSaveWithoutSlotUuid()
+    {
         $this->expectException(ModelValidationException::class);
 
         /** @var \PHPUnit_Framework_MockObject_MockObject|SlotMedia $mockSlot */
@@ -46,7 +49,8 @@ class SlotMediaTest extends TestCase
                  ->save();
     }
 
-    public function testSaveWithoutContentUuid() {
+    public function testSaveWithoutContentUuid()
+    {
         $this->expectException(ModelValidationException::class);
 
         /** @var \PHPUnit_Framework_MockObject_MockObject|SlotMedia $mockSlot */
@@ -64,7 +68,8 @@ class SlotMediaTest extends TestCase
                  ->save();
     }
 
-    public function testDelete() {
+    public function testDelete()
+    {
         /** @var \PHPUnit_Framework_MockObject_MockObject|SlotMedia $mockSlot */
         $mockSlot = $this->getMockBuilder(SlotMedia::class)
                          ->setMethods(['doDelete'])
@@ -82,7 +87,8 @@ class SlotMediaTest extends TestCase
                  ->delete();
     }
 
-    public function testDeleteWithoutSlotUuid() {
+    public function testDeleteWithoutSlotUuid()
+    {
         $this->expectException(ModelValidationException::class);
 
         /** @var \PHPUnit_Framework_MockObject_MockObject|SlotMedia $mockSlot */
@@ -100,7 +106,8 @@ class SlotMediaTest extends TestCase
                  ->delete();
     }
 
-    public function testDeleteWithoutContentUuid() {
+    public function testDeleteWithoutContentUuid()
+    {
         $this->expectException(ModelValidationException::class);
 
         /** @var \PHPUnit_Framework_MockObject_MockObject|SlotMedia $mockSlot */
@@ -118,7 +125,8 @@ class SlotMediaTest extends TestCase
                  ->delete();
     }
 
-    public function testDefaultFields() {
+    public function testDefaultFields()
+    {
         $expected = [
             'type',
             'title',
@@ -133,7 +141,8 @@ class SlotMediaTest extends TestCase
         $this->assertEquals($expected, SlotMedia::getDefaultFields());
     }
 
-    public function testMetaFields() {
+    public function testMetaFields()
+    {
         $expected = ['content'];
         $this->assertEquals($expected, SlotMedia::getMetaFields());
     }

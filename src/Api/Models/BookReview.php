@@ -1,4 +1,5 @@
 <?php
+
 namespace MetroPublisher\Api\Models;
 
 use DateTime;
@@ -36,8 +37,8 @@ class BookReview extends AbstractReview
     public function __construct(MetroPublisher $metroPublisher)
     {
         parent::__construct($metroPublisher);
-        $this->content_type = Content::CONTENT_TYPE_REVIEW_BOOK;
-        $this->book_buy_urls = [];
+        $this->content_type       = Content::CONTENT_TYPE_REVIEW_BOOK;
+        $this->book_buy_urls      = [];
         $this->book_provider_urls = [];
     }
 
@@ -146,8 +147,9 @@ class BookReview extends AbstractReview
      *
      * @return $this
      */
-    public function addBookProviderUrl($url) {
-        if(!in_array($url, $this->book_provider_urls)) {
+    public function addBookProviderUrl($url)
+    {
+        if (!in_array($url, $this->book_provider_urls)) {
             $this->book_provider_urls[] = $url;
         }
 
@@ -180,7 +182,8 @@ class BookReview extends AbstractReview
      *
      * @return $this
      */
-    public function addBookBuyUrl($url, $linkText) {
+    public function addBookBuyUrl($url, $linkText)
+    {
         foreach ($this->book_buy_urls as $dict) {
             if ($dict['url'] === $url && $dict['link_text'] === $linkText) {
                 return $this;
@@ -188,8 +191,8 @@ class BookReview extends AbstractReview
         }
 
         $this->book_buy_urls[] = [
-            'url' => $url,
-            'link_text'  => $linkText
+            'url'       => $url,
+            'link_text' => $linkText
         ];
 
         return $this;

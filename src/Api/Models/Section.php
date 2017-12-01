@@ -1,4 +1,5 @@
 <?php
+
 namespace MetroPublisher\Api\Models;
 
 use MetroPublisher\Api\AbstractResourceModel;
@@ -89,7 +90,8 @@ class Section extends AbstractResourceModel
     /**
      * @inheritdoc
      */
-    public function save() {
+    public function save()
+    {
         return $this->doSave("/sections/{$this->uuid}");
     }
 
@@ -97,7 +99,8 @@ class Section extends AbstractResourceModel
      * @inheritdoc
      * @deprecated
      */
-    public function delete() {
+    public function delete()
+    {
         // @todo - Find more elegant solution
         throw new MetroPublisherException("Sections cannot be deleted.");
     }
@@ -121,6 +124,7 @@ class Section extends AbstractResourceModel
 
     /**
      * @param string $title
+     *
      * @return $this
      */
     public function setTitle($title)
@@ -140,6 +144,7 @@ class Section extends AbstractResourceModel
 
     /**
      * @param string $urlname
+     *
      * @return $this
      */
     public function setUrlname($urlname)
@@ -165,6 +170,7 @@ class Section extends AbstractResourceModel
 
     /**
      * @param string $parent_uuid
+     *
      * @return $this
      */
     public function setParentUuid($parent_uuid)
@@ -184,6 +190,7 @@ class Section extends AbstractResourceModel
 
     /**
      * @param bool $auto_featured_stories
+     *
      * @return $this
      */
     public function setAutoFeaturedStories($auto_featured_stories)
@@ -203,6 +210,7 @@ class Section extends AbstractResourceModel
 
     /**
      * @param int $auto_featured_stories_num
+     *
      * @return $this
      */
     public function setAutoFeaturedStoriesNum($auto_featured_stories_num)
@@ -222,6 +230,7 @@ class Section extends AbstractResourceModel
 
     /**
      * @param string $externalurl
+     *
      * @return $this
      */
     public function setExternalurl($externalurl)
@@ -241,6 +250,7 @@ class Section extends AbstractResourceModel
 
     /**
      * @param string $feature_image_url
+     *
      * @return $this
      */
     public function setFeatureImageUrl($feature_image_url)
@@ -260,6 +270,7 @@ class Section extends AbstractResourceModel
 
     /**
      * @param bool $hide_in_nav
+     *
      * @return $this
      */
     public function setHideInNav($hide_in_nav)
@@ -279,6 +290,7 @@ class Section extends AbstractResourceModel
 
     /**
      * @param string $lead_story_url
+     *
      * @return $this
      */
     public function setLeadStoryUrl($lead_story_url)
@@ -298,6 +310,7 @@ class Section extends AbstractResourceModel
 
     /**
      * @param string $meta_description
+     *
      * @return $this
      */
     public function setMetaDescription($meta_description)
@@ -317,6 +330,7 @@ class Section extends AbstractResourceModel
 
     /**
      * @param string $meta_keywords
+     *
      * @return $this
      */
     public function setMetaKeywords($meta_keywords)
@@ -336,6 +350,7 @@ class Section extends AbstractResourceModel
 
     /**
      * @param int $ord
+     *
      * @return $this
      */
     public function setOrd($ord)
@@ -355,6 +370,7 @@ class Section extends AbstractResourceModel
 
     /**
      * @param bool $show_prev_next
+     *
      * @return $this
      */
     public function setShowPrevNext($show_prev_next)

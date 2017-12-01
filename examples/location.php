@@ -38,10 +38,10 @@ $location->setUuid('55547ff8-3355-4f69-a867-7232165e6d29')
 $location->setTwitterUsername('metropublisher')
     ->setIsListing(true)
     ->setCouponImgUuid(null)
-    ->setCouponTitle('Lorem Ipsum Coupon')
-    ->setCouponDescription('Lorem ipsum dolor sit amet.')
-    ->setCouponStart(new DateTime('now'))
-    ->setCouponExpires(new DateTime('now'))
+    ->setCouponTitle(null)
+    ->setCouponDescription(null)
+    ->setCouponStart(null)
+    ->setCouponExpires(null)
     ->setSponsored(true)
     ->setContactPerson('John Doe')
     ->setContactEmail('test@test.com')
@@ -52,4 +52,4 @@ $location->setTwitterUsername('metropublisher')
 $location->save();
 
 // Delete
-$locationReview->delete();
+$location->delete();

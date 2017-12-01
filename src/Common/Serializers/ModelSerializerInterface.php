@@ -1,4 +1,5 @@
 <?php
+
 namespace MetroPublisher\Common\Serializers;
 
 use MetroPublisher\Api\Models\AbstractModel;

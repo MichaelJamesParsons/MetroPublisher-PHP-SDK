@@ -1,4 +1,5 @@
 <?php
+
 namespace MetroPublisher\Common\Serializers;
 
 use MetroPublisher\Api\AbstractResourceModel;
@@ -20,21 +21,23 @@ class ModelDeserializer extends AbstractSerializer
      *
      * @return AbstractModel|AbstractResourceModel
      */
-    public static function convert(ModelTypeResolverInterface $resolver, array $values, array $instanceArgs = []) {
+    public static function convert(ModelTypeResolverInterface $resolver, array $values, array $instanceArgs = [])
+    {
         /** @var AbstractModel $modelType */
         $modelType = $resolver->resolve($values);
-        $keys = array_keys($values);
+        $keys      = array_keys($values);
 
-        if(is_numeric($keys[0])) {
+        if (is_numeric($keys[0])) {
             $fieldsMap = $modelType::getDefaultFields();
-            $tmp = $values;
-            $values = [];
-            foreach($tmp as $key => $value) {
+            $tmp       = $values;
+            $values    = [];
+            foreach ($tmp as $key => $value) {
                 $values[$fieldsMap[$key]] = $value;
             }
         }
 
         $instance = ReflectionUtils::getInstance($modelType, $instanceArgs);
+
         return self::createInstance($instance, $values);
     }
 
@@ -44,7 +47,8 @@ class ModelDeserializer extends AbstractSerializer
      *
      * @return AbstractModel
      */
-    public static function mergeValuesWithInstance(AbstractModel $instance, array $values) {
+    public static function mergeValuesWithInstance(AbstractModel $instance, array $values)
+    {
         return self::createInstance($instance, $values);
     }
 
@@ -55,9 +59,13 @@ class ModelDeserializer extends AbstractSerializer
      *
      * @return \MetroPublisher\Api\Models\AbstractModel[]
      */
-    public static function convertCollection(ModelTypeResolverInterface $resolver, array $values, array $instanceArgs = []) {
+    public static function convertCollection(
+        ModelTypeResolverInterface $resolver,
+        array $values,
+        array $instanceArgs = []
+    ) {
         $collection = [];
-        foreach($values as $model) {
+        foreach ($values as $model) {
             $collection[] = self::convert($resolver, $model, $instanceArgs);
         }
 
@@ -73,7 +81,8 @@ class ModelDeserializer extends AbstractSerializer
     protected static function createInstance($instance, array $values)
     {
         $reflection = ReflectionUtils::getReflectionObject($instance);
-        $mapping  = self::getObjectPropertyMapping($reflection);
+        $mapping    = self::getObjectPropertyMapping($reflection);
+
         return self::fillObjectProperties($instance, $reflection, $mapping, $values);
     }
 
@@ -87,8 +96,8 @@ class ModelDeserializer extends AbstractSerializer
      */
     protected static function fillObjectProperties($instance, $reflection, array $mapping, array $properties)
     {
-        foreach($properties as $propertyName => $value) {
-            if(array_key_exists($propertyName, $mapping)) {
+        foreach ($properties as $propertyName => $value) {
+            if (array_key_exists($propertyName, $mapping)) {
                 $reflectedProperty = $reflection->getProperty($propertyName);
                 $reflectedProperty->setAccessible(true);
 

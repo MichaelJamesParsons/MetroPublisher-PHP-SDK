@@ -1,10 +1,10 @@
 <?php
+
 namespace MetroPublisher\Api\Collections;
 
 use MetroPublisher\Api\AbstractResourceCollection;
 use MetroPublisher\Api\Models\TagCategory;
 use MetroPublisher\Api\ResourceCollectionInterface;
-use MetroPublisher\Api\ResourceModelInterface;
 
 /**
  * Class TagCategoryCollection

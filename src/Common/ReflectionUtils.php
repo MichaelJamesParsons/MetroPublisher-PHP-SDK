@@ -1,4 +1,5 @@
 <?php
+
 namespace MetroPublisher\Common;
 
 use ReflectionClass;
@@ -9,11 +10,13 @@ use ReflectionClass;
  */
 class ReflectionUtils
 {
-    public static function getReflectionObject($object) {
+    public static function getReflectionObject($object)
+    {
         return new \ReflectionObject($object);
     }
 
-    public static function getReflectionClass($class) {
+    public static function getReflectionClass($class)
+    {
         return new ReflectionClass($class);
     }
 
@@ -23,8 +26,10 @@ class ReflectionUtils
      *
      * @return object
      */
-    public static function getInstance($class, array $args = []) {
+    public static function getInstance($class, array $args = [])
+    {
         $reflection = new ReflectionClass($class);
+
         return $reflection->newInstanceArgs($args);
     }
 
@@ -33,7 +38,8 @@ class ReflectionUtils
      *
      * @return \ReflectionProperty[]
      */
-    public static function getClassProperties(ReflectionClass $class) {
+    public static function getClassProperties(ReflectionClass $class)
+    {
         return $class->getProperties();
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace MetroPublisher\Api\Models;
 
 use DateTime;
@@ -108,7 +109,7 @@ class Event extends Content
     public function setLocationUuid($location_uuid)
     {
         $this->location_uuid = $location_uuid;
-        
+
         return $this;
     }
 
@@ -128,7 +129,7 @@ class Event extends Content
     public function setLocationAlt($location_alt)
     {
         $this->location_alt = $location_alt;
-        
+
         return $this;
     }
 
@@ -148,7 +149,7 @@ class Event extends Content
     public function setDtstart($dtstart)
     {
         $this->dtstart = $dtstart;
-        
+
         return $this;
     }
 
@@ -168,7 +169,7 @@ class Event extends Content
     public function setDtend($dtend)
     {
         $this->dtend = $dtend;
-        
+
         return $this;
     }
 
@@ -188,7 +189,7 @@ class Event extends Content
     public function setWebsite($website)
     {
         $this->website = $website;
-        
+
         return $this;
     }
 
@@ -208,7 +209,7 @@ class Event extends Content
     public function setPrices($prices)
     {
         $this->prices = $prices;
-        
+
         return $this;
     }
 
@@ -228,7 +229,7 @@ class Event extends Content
     public function setUserEmail($user_email)
     {
         $this->user_email = $user_email;
-        
+
         return $this;
     }
 
@@ -248,7 +249,7 @@ class Event extends Content
     public function setEmail($email)
     {
         $this->email = $email;
-        
+
         return $this;
     }
 
@@ -268,7 +269,7 @@ class Event extends Content
     public function setPhone($phone)
     {
         $this->phone = $phone;
-        
+
         return $this;
     }
 
@@ -288,7 +289,7 @@ class Event extends Content
     public function setRrule($rrule)
     {
         $this->rrule = $rrule;
-        
+
         return $this;
     }
 
@@ -308,7 +309,7 @@ class Event extends Content
     public function setRdates($rdates)
     {
         $this->rdates = $rdates;
-        
+
         return $this;
     }
 
@@ -328,7 +329,7 @@ class Event extends Content
     public function setExdates($exdates)
     {
         $this->exdates = $exdates;
-        
+
         return $this;
     }
 
@@ -348,7 +349,7 @@ class Event extends Content
     public function setRecurrenceId($recurrence_id)
     {
         $this->recurrence_id = $recurrence_id;
-        
+
         return $this;
     }
 
@@ -368,7 +369,7 @@ class Event extends Content
     public function setIcalUid($ical_uid)
     {
         $this->ical_uid = $ical_uid;
-        
+
         return $this;
     }
 
@@ -388,7 +389,7 @@ class Event extends Content
     public function setSortTitle($sort_title)
     {
         $this->sort_title = $sort_title;
-        
+
         return $this;
     }
 }

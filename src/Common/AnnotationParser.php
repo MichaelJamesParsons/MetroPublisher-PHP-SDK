@@ -1,4 +1,5 @@
 <?php
+
 namespace MetroPublisher\Common;
 
 use phpDocumentor\Reflection\DocBlockFactory;
@@ -16,18 +17,24 @@ class AnnotationParser
     /** @var DocBlockFactory */
     private $factory;
 
-    protected function __construct() {
+    protected function __construct()
+    {
         $this->factory = DocBlockFactory::createInstance();
     }
 
-    private function __clone() {}
+    private function __clone()
+    {
+    }
 
     /** @noinspection SpellCheckingInspection */
     /** @noinspection PhpUnusedPrivateMethodInspection */
-    private function __wakeup() {}
+    private function __wakeup()
+    {
+    }
 
-    public static function getInstance() {
-        if(is_null(self::$instance)) {
+    public static function getInstance()
+    {
+        if (is_null(self::$instance)) {
             self::$instance = new AnnotationParser();
         }
 
@@ -39,7 +46,8 @@ class AnnotationParser
      *
      * @return \phpDocumentor\Reflection\DocBlock
      */
-    public function getClassAnnotation(ReflectionClass $reflection) {
+    public function getClassAnnotation(ReflectionClass $reflection)
+    {
         return $this->factory->create($reflection->getDocComment());
     }
 
@@ -48,7 +56,8 @@ class AnnotationParser
      *
      * @return \phpDocumentor\Reflection\DocBlock
      */
-    public function getPropertyAnnotation(\ReflectionProperty $property) {
+    public function getPropertyAnnotation(\ReflectionProperty $property)
+    {
         return $this->factory->create($property->getDocComment());
     }
 }

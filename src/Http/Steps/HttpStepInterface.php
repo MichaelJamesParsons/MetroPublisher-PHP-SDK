@@ -1,4 +1,5 @@
 <?php
+
 namespace MetroPublisher\Http\Steps;
 
 use Psr\Http\Message\ResponseInterface;
