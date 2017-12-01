@@ -1,4 +1,5 @@
 <?php
+
 namespace MetroPublisher\Api\Models;
 
 use MetroPublisher\MetroPublisher;
@@ -49,14 +50,16 @@ class AlbumReviewTest extends TestCase
         $this->assertEquals($expected, AlbumReview::getMetaFields());
     }
 
-    public function testContentType() {
+    public function testContentType()
+    {
         /** @var MetroPublisher $mp */
-        $mp = $this->createMock(MetroPublisher::class);
+        $mp     = $this->createMock(MetroPublisher::class);
         $review = new AlbumReview($mp);
         $this->assertEquals(Content::CONTENT_TYPE_REVIEW_ALBUM, $review->getContentType());
     }
 
-    public function testAddBuyUrl() {
+    public function testAddBuyUrl()
+    {
         /** @var MetroPublisher $mp */
         $mp = $this->createMock(MetroPublisher::class);
 

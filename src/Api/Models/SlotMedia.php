@@ -1,4 +1,5 @@
 <?php
+
 namespace MetroPublisher\Api\Models;
 
 use MetroPublisher\Api\AbstractResourceModel;
@@ -66,7 +67,7 @@ abstract class SlotMedia extends AbstractResourceModel
     public function __construct(MetroPublisher $metroPublisher, Slot $slot)
     {
         parent::__construct($metroPublisher);
-        $this->slot_uuid = $slot->getUuid();
+        $this->slot_uuid    = $slot->getUuid();
         $this->content_uuid = $slot->getContentUuid();
     }
 

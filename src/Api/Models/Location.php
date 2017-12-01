@@ -1,4 +1,5 @@
 <?php
+
 namespace MetroPublisher\Api\Models;
 
 use MetroPublisher\Api\AbstractResourceModel;
@@ -60,7 +61,7 @@ class Location extends AbstractResourceModel
     /** @var  string */
     protected $content;
 
-    /** @var boolean **/
+    /** @var boolean * */
     protected $closed;
 
     /** @var  string */
@@ -117,7 +118,7 @@ class Location extends AbstractResourceModel
     /** @var  \DateTime */
     protected $listing_expires;
 
-    const STATE_DRAFT     = 'draft';
+    const STATE_DRAFT = 'draft';
     const STATE_PUBLISHED = 'published';
 
     const PRICE_INDEX_FREE = 'free';
@@ -137,7 +138,8 @@ class Location extends AbstractResourceModel
     /**
      * @inheritdoc
      */
-    public function delete() {
+    public function delete()
+    {
         return $this->doDelete("/locations/{$this->uuid}");
     }
 
@@ -774,6 +776,7 @@ class Location extends AbstractResourceModel
 
     /**
      * @param string $coupon_description
+     *
      * @return $this
      */
     public function setCouponDescription($coupon_description)
@@ -793,6 +796,7 @@ class Location extends AbstractResourceModel
 
     /**
      * @param \DateTime $coupon_start
+     *
      * @return $this
      */
     public function setCouponStart($coupon_start)
@@ -812,6 +816,7 @@ class Location extends AbstractResourceModel
 
     /**
      * @param \DateTime $coupon_expires
+     *
      * @return $this
      */
     public function setCouponExpires($coupon_expires)
@@ -831,6 +836,7 @@ class Location extends AbstractResourceModel
 
     /**
      * @param string $sponsored
+     *
      * @return $this
      */
     public function setSponsored($sponsored)
@@ -850,6 +856,7 @@ class Location extends AbstractResourceModel
 
     /**
      * @param string $contact_person
+     *
      * @return $this
      */
     public function setContactPerson($contact_person)
@@ -869,6 +876,7 @@ class Location extends AbstractResourceModel
 
     /**
      * @param string $contact_email
+     *
      * @return $this
      */
     public function setContactEmail($contact_email)
@@ -888,6 +896,7 @@ class Location extends AbstractResourceModel
 
     /**
      * @param \DateTime $listing_start
+     *
      * @return $this
      */
     public function setListingStart($listing_start)
@@ -907,6 +916,7 @@ class Location extends AbstractResourceModel
 
     /**
      * @param \DateTime $listing_expires
+     *
      * @return $this
      */
     public function setListingExpires($listing_expires)

@@ -1,4 +1,5 @@
 <?php
+
 namespace MetroPublisher\Api\Models\Resolvers;
 
 use MetroPublisher\Api\Models\EmbedSlotMedia;
@@ -17,6 +18,7 @@ class SlotMediaResolver implements ModelTypeResolverInterface
     public function resolve(array $serializedModel)
     {
         $type = (isset($serializedModel['type'])) ? $serializedModel['type'] : null;
+
         return $this->getFromType($type);
     }
 
@@ -25,7 +27,8 @@ class SlotMediaResolver implements ModelTypeResolverInterface
      *
      * @return string
      */
-    protected function getFromType($type) {
+    protected function getFromType($type)
+    {
         switch ($type) {
             case SlotMedia::TYPE_EMBED_CODE:
                 return EmbedSlotMedia::class;

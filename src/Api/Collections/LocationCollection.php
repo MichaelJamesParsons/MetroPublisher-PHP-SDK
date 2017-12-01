@@ -1,4 +1,5 @@
 <?php
+
 namespace MetroPublisher\Api\Collections;
 
 use MetroPublisher\Api\AbstractResourceCollection;

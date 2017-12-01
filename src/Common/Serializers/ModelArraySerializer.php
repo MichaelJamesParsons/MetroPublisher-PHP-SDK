@@ -1,4 +1,5 @@
 <?php
+
 namespace MetroPublisher\Common\Serializers;
 
 use MetroPublisher\Api\AbstractResourceModel;
@@ -19,15 +20,16 @@ class ModelArraySerializer implements ModelSerializerInterface
         return $this->getObjectPropertyValuesAsArray($model, $model::getFieldNames());
     }
 
-    protected function getObjectPropertyValuesAsArray($model, array $properties = array()) {
-        $array = [];
+    protected function getObjectPropertyValuesAsArray($model, array $properties = array())
+    {
+        $array      = [];
         $reflection = ReflectionUtils::getReflectionObject($model);
 
-        if(count($properties) === 0) {
+        if (count($properties) === 0) {
             $properties = $reflection->getProperties();
         }
 
-        foreach($properties as $field) {
+        foreach ($properties as $field) {
             if (is_string($field)) {
                 $propertyReflection = $reflection->getProperty($field);
             } else {
@@ -37,7 +39,7 @@ class ModelArraySerializer implements ModelSerializerInterface
             $propertyReflection->setAccessible(true);
             $value = $propertyReflection->getValue($model);
 
-            if(!is_null($value)) {
+            if (!is_null($value)) {
                 $array[$propertyReflection->getName()] = $this->convertValueToSerializable($value);
             }
         }
@@ -50,16 +52,17 @@ class ModelArraySerializer implements ModelSerializerInterface
      *
      * @return mixed
      */
-    protected function convertValueToSerializable($value) {
-        if($value instanceof \DateTime) {
+    protected function convertValueToSerializable($value)
+    {
+        if ($value instanceof \DateTime) {
             return $value->format('Y-m-d');
-        } else if(is_array($value) && count($value) > 0 && $value[0] instanceof \DateTime) {
+        } elseif (is_array($value) && count($value) > 0 && $value[0] instanceof \DateTime) {
             return $this->convertDateTimeArray($value);
-        } else if($value instanceof AbstractResourceModel) {
+        } elseif ($value instanceof AbstractResourceModel) {
             return $value->getUuid();
-        } else if(is_array($value) && count($value) > 0 && $value[0] instanceof AbstractResourceModel) {
+        } elseif (is_array($value) && count($value) > 0 && $value[0] instanceof AbstractResourceModel) {
             return $this->convertResourceModelArray($value);
-        } else if(is_object($value)) {
+        } elseif (is_object($value)) {
             return $this->getObjectPropertyValuesAsArray($value);
         } else {
             return $value;
@@ -71,9 +74,10 @@ class ModelArraySerializer implements ModelSerializerInterface
      *
      * @return array
      */
-    protected function convertResourceModelArray(array $models) {
+    protected function convertResourceModelArray(array $models)
+    {
         $uuids = [];
-        foreach($models as $model) {
+        foreach ($models as $model) {
             $uuids[] = $model->getUuid();
         }
 
@@ -85,9 +89,10 @@ class ModelArraySerializer implements ModelSerializerInterface
      *
      * @return array
      */
-    protected function convertDateTimeArray(array $dateTimeList) {
+    protected function convertDateTimeArray(array $dateTimeList)
+    {
         $convertedDates = [];
-        foreach($dateTimeList as $dateTime) {
+        foreach ($dateTimeList as $dateTime) {
             $convertedDates[] = $dateTime->format('Y-m-d');
         }
 

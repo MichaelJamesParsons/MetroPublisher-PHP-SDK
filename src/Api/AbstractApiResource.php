@@ -1,4 +1,5 @@
 <?php
+
 namespace MetroPublisher\Api;
 
 use MetroPublisher\Common\Serializers\ModelArraySerializer;
@@ -22,8 +23,9 @@ abstract class AbstractApiResource
      *
      * @param MetroPublisher $metroPublisher
      */
-    public function __construct(MetroPublisher $metroPublisher) {
-        $this->context = $metroPublisher;
+    public function __construct(MetroPublisher $metroPublisher)
+    {
+        $this->context    = $metroPublisher;
         $this->serializer = new ModelArraySerializer();
     }
 }

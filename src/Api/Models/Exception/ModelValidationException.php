@@ -1,4 +1,5 @@
 <?php
+
 namespace MetroPublisher\Api\Models\Exception;
 
 use MetroPublisher\Exception\MetroPublisherException;

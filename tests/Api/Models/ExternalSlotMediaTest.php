@@ -1,4 +1,5 @@
 <?php
+
 namespace MetroPublisher\Api\Models;
 
 use MetroPublisher\MetroPublisher;
@@ -10,7 +11,8 @@ use PHPUnit\Framework\TestCase;
  */
 class ExternalSlotMediaTest extends TestCase
 {
-    public function testSlotMediaType() {
+    public function testSlotMediaType()
+    {
         /** @var MetroPublisher $mockMetroPublisher */
         $mockMetroPublisher = $this->createMock(MetroPublisher::class);
         /** @var Slot $mockSlot */
@@ -20,7 +22,8 @@ class ExternalSlotMediaTest extends TestCase
         $this->assertEquals(SlotMedia::TYPE_EXTERNAL_URL, $externalMedia->getType());
     }
 
-    public function testMediaFields() {
+    public function testMediaFields()
+    {
         $expected = [
             'url_type',
             'url',

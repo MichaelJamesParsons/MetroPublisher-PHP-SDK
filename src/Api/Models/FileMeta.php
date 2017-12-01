@@ -1,4 +1,5 @@
 <?php
+
 namespace MetroPublisher\Api\Models;
 
 use MetroPublisher\Api\AbstractResourceModel;
@@ -55,11 +56,13 @@ class FileMeta extends AbstractResourceModel
 
     /**
      * @param string $title
+     *
      * @return $this
      */
     public function setTitle($title)
     {
         $this->title = $title;
+
         return $this;
     }
 
@@ -73,11 +76,13 @@ class FileMeta extends AbstractResourceModel
 
     /**
      * @param string $description
+     *
      * @return $this
      */
     public function setDescription($description)
     {
         $this->description = $description;
+
         return $this;
     }
 
@@ -91,11 +96,13 @@ class FileMeta extends AbstractResourceModel
 
     /**
      * @param string $filename
+     *
      * @return $this
      */
     public function setFilename($filename)
     {
         $this->filename = $filename;
+
         return $this;
     }
 
@@ -109,11 +116,13 @@ class FileMeta extends AbstractResourceModel
 
     /**
      * @param string $fileType
+     *
      * @return $this
      */
     public function setFileType($fileType)
     {
         $this->fileType = $fileType;
+
         return $this;
     }
 
@@ -127,11 +136,13 @@ class FileMeta extends AbstractResourceModel
 
     /**
      * @param \DateTime $created
+     *
      * @return $this
      */
     public function setCreated($created)
     {
         $this->created = $created;
+
         return $this;
     }
 
@@ -145,11 +156,13 @@ class FileMeta extends AbstractResourceModel
 
     /**
      * @param \DateTime $modified
+     *
      * @return $this
      */
     public function setModified($modified)
     {
         $this->modified = $modified;
+
         return $this;
     }
 
@@ -163,11 +176,13 @@ class FileMeta extends AbstractResourceModel
 
     /**
      * @param string $credits
+     *
      * @return $this
      */
     public function setCredits($credits)
     {
         $this->credits = $credits;
+
         return $this;
     }
 
@@ -181,11 +196,13 @@ class FileMeta extends AbstractResourceModel
 
     /**
      * @param File $file
+     *
      * @return $this
      */
     public function setFile($file)
     {
         $this->file = $file;
+
         return $this;
     }
 
@@ -215,10 +232,10 @@ class FileMeta extends AbstractResourceModel
             "headers" => [
                 'Content-Type' => $fileType
             ],
-            'body' => file_get_contents($this->file->getStoredPath())
+            'body'    => file_get_contents($this->file->getStoredPath())
         ]);
 
-        if($response['error']) {
+        if ($response['error']) {
             throw new \Exception($response['error_description']);
         }
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace MetroPublisher\Api;
 
 use DateTime;
@@ -38,55 +39,42 @@ abstract class AbstractResourceModel extends AbstractModel
         parent::__construct($metroPublisher);
 
         $this->isMetaDataLoaded = false;
-        $this->changedFields = [];
+        $this->changedFields    = [];
     }
 
     /**
-     * @return boolean
+     * @inheritdoc
      */
-    public function isMetaDataLoaded()
+    public static function getDefaultFields()
     {
-        return $this->isMetaDataLoaded;
+        return [
+            'uuid',
+            'created',
+            'modified'
+        ];
     }
 
     /**
-     * @param boolean $isMetaDataLoaded
+     * @param $property
+     *
+     * @return mixed
      */
-    public function setMetaDataLoaded($isMetaDataLoaded)
+    public function __get($property)
     {
-        $this->isMetaDataLoaded = $isMetaDataLoaded;
+        if (!empty($this->uuid) && in_array($property, static::getMetaFields()) && !$this->isMetaDataLoaded) {
+            $this->syncFields();
+        }
+
+        return parent::__get($property);
     }
 
-    /**
-     * @param $endpoint
-     *
-     * @return array
-     * @throws ModelValidationException
-     */
-    protected function doSave($endpoint) {
-        if(empty($this->uuid)) {
-            throw new ModelValidationException('Cannot save model of type ' . gettype($this) . '. No UUID is set.');
+    public function __set($property, $value)
+    {
+        if (!$this->isMetaDataLoaded() && in_array($property, static::getMetaFields())) {
+            $this->changedFields[] = $property;
         }
 
-        if(empty($this->created)) {
-            return $this->context->put($endpoint, $this->serialize());
-        }
-
-        return $this->context->post($endpoint, $this->serialize());
-    }
-
-    /**
-     * @param $endpoint
-     *
-     * @return array
-     * @throws ModelValidationException
-     */
-    protected function doDelete($endpoint) {
-        if (empty($this->uuid)) {
-            throw new ModelValidationException('Cannot delete model of type ' . gettype($this) . '. No UUID is set.');
-        }
-
-        return $this->context->delete($endpoint, $this->serialize());
+        parent::__set($property, $value);
     }
 
     /**
@@ -95,12 +83,18 @@ abstract class AbstractResourceModel extends AbstractModel
      * This information will include meta fields, such as the
      * public URL of this content.
      */
-    public function syncFields() {
+    public function syncFields()
+    {
         /** @var array $values */
         $values = $this->loadMetaData();
         ModelDeserializer::mergeValuesWithInstance($this, $this->unsetChangedFields($values));
         $this->setMetaDataLoaded(true);
     }
+
+    /**
+     * @return array
+     */
+    protected abstract function loadMetaData();
 
     /**
      * Unset fields that are marked as changed.
@@ -112,8 +106,9 @@ abstract class AbstractResourceModel extends AbstractModel
      *
      * @return array        - The results with specific keys unset.
      */
-    protected function unsetChangedFields(array $values) {
-        foreach($this->changedFields as $changedField => $value) {
+    protected function unsetChangedFields(array $values)
+    {
+        foreach ($this->changedFields as $changedField => $value) {
             unset($values[$changedField]);
         }
 
@@ -121,24 +116,19 @@ abstract class AbstractResourceModel extends AbstractModel
     }
 
     /**
-     * @param $property
-     * @return mixed
+     * @param boolean $isMetaDataLoaded
      */
-    public function __get($property)
+    public function setMetaDataLoaded($isMetaDataLoaded)
     {
-        if(!empty($this->uuid) && in_array($property, static::getMetaFields()) && !$this->isMetaDataLoaded) {
-            $this->syncFields();
-        }
-
-        return parent::__get($property);
+        $this->isMetaDataLoaded = $isMetaDataLoaded;
     }
 
-    public function __set($property, $value) {
-        if(!$this->isMetaDataLoaded() && in_array($property, static::getMetaFields())) {
-            $this->changedFields[] = $property;
-        }
-
-        parent::__set($property, $value);
+    /**
+     * @return boolean
+     */
+    public function isMetaDataLoaded()
+    {
+        return $this->isMetaDataLoaded;
     }
 
     /**
@@ -178,25 +168,45 @@ abstract class AbstractResourceModel extends AbstractModel
     }
 
     /**
-     * @inheritdoc
+     * @param $endpoint
+     *
+     * @return array
+     * @throws ModelValidationException
      */
-    public static function getDefaultFields() {
-        return [
-            'uuid',
-            'created',
-            'modified'
-        ];
+    protected function doSave($endpoint)
+    {
+        if (empty($this->uuid)) {
+            throw new ModelValidationException('Cannot save model of type ' . gettype($this) . '. No UUID is set.');
+        }
+
+        if (empty($this->created)) {
+            return $this->context->put($endpoint, $this->serialize());
+        }
+
+        return $this->context->post($endpoint, $this->serialize());
     }
 
-    protected function serialize() {
+    protected function serialize()
+    {
         return $this->serializer->serialize($this);
     }
 
     /**
+     * @param $endpoint
+     *
      * @return array
+     * @throws ModelValidationException
      */
-    protected abstract function loadMetaData();
+    protected function doDelete($endpoint)
+    {
+        if (empty($this->uuid)) {
+            throw new ModelValidationException('Cannot delete model of type ' . gettype($this) . '. No UUID is set.');
+        }
+
+        return $this->context->delete($endpoint, $this->serialize());
+    }
 
     protected abstract function save();
+
     protected abstract function delete();
 }

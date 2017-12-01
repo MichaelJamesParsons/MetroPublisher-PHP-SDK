@@ -1,4 +1,5 @@
 <?php
+
 namespace MetroPublisher\Http\Guzzle;
 
 use GuzzleHttp\Client;
@@ -19,7 +20,7 @@ class GuzzleAdapter implements HttpClientInterface
 
     public function __construct(Client $guzzle)
     {
-        $this->guzzle = $guzzle;
+        $this->guzzle  = $guzzle;
         $this->options = [];
     }
 
@@ -140,6 +141,7 @@ class GuzzleAdapter implements HttpClientInterface
 
     /**
      * @param $contentType
+     *
      * @return HttpClientInterface
      */
     public function setDefaultContentType($contentType)
@@ -147,7 +149,7 @@ class GuzzleAdapter implements HttpClientInterface
         if (!is_array($this->options['headers'])) {
             $this->options['headers'] = array();
         }
-        
+
         if (!isset($this->options['headers']['content-type']) || $this->options['headers']['content-type'] != $contentType) {
             $this->options['headers']['content-type'] = $contentType;
             $this->refreshGuzzleClient();
@@ -162,7 +164,8 @@ class GuzzleAdapter implements HttpClientInterface
      * Guzzle does not allow for certain options to be changed after client instantiation.
      * A new instance of the client must be created to replace the current.
      */
-    private function refreshGuzzleClient() {
+    private function refreshGuzzleClient()
+    {
         $this->guzzle = new Client($this->options);
     }
 }

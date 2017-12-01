@@ -1,4 +1,5 @@
 <?php
+
 namespace MetroPublisher\Http;
 
 use Psr\Http\Message\ResponseInterface;
@@ -16,24 +17,28 @@ interface HttpClientInterface
 
     /**
      * @param array $options
+     *
      * @return HttpClientInterface
      */
     public function setOptions(array $options);
 
     /**
      * @param boolean $isEnabled
+     *
      * @return HttpClientInterface
      */
     public function setSslVerification($isEnabled);
 
     /**
      * @param string $baseUri
+     *
      * @return HttpClientInterface
      */
     public function setBaseUri($baseUri);
 
     /**
      * @param $contentType
+     *
      * @return HttpClientInterface
      */
     public function setDefaultContentType($contentType);

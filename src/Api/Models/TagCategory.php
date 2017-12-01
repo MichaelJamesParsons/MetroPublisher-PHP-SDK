@@ -1,4 +1,5 @@
 <?php
+
 namespace MetroPublisher\Api\Models;
 
 use MetroPublisher\Api\AbstractResourceModel;
@@ -32,7 +33,7 @@ class TagCategory extends AbstractResourceModel
      */
     public static function getDefaultFields()
     {
-        return array_merge(['title','urlname'], parent::getDefaultFields());
+        return array_merge(['title', 'urlname'], parent::getDefaultFields());
     }
 
     /**

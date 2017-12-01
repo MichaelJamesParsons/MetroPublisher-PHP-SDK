@@ -1,4 +1,5 @@
 <?php
+
 namespace Http;
 
 use MetroPublisher\Http\HttpClientInterface;
@@ -9,7 +10,8 @@ use Psr\Http\Message\StreamInterface;
 
 class ClientTest extends TestCase
 {
-    public function testValidHttpMethodsAccepted() {
+    public function testValidHttpMethodsAccepted()
+    {
         $mockHttpClient = $this->createMock(HttpClientInterface::class);
         $mockHttpClient->expects($this->once())
                        ->method('get')
@@ -43,7 +45,8 @@ class ClientTest extends TestCase
         $mockMetroPublisher->delete('/', [], [], true);
     }
 
-    public function testInvalidHttpMethodsRejected() {
+    public function testInvalidHttpMethodsRejected()
+    {
         $client = new MetroPublisher(null, null);
         $this->expectException(\BadMethodCallException::class);
 
@@ -51,12 +54,13 @@ class ClientTest extends TestCase
         $client->notValidHttpMethod('/', []);
     }
 
-    public function testGetRequestsSendFieldsAsQueryParams() {
+    public function testGetRequestsSendFieldsAsQueryParams()
+    {
         $mockHttpClient = $this->createMock(HttpClientInterface::class);
         $mockHttpClient->expects($this->once())
-            ->method('get')
-            ->with($this->equalTo('/'), ['query' => ['name' => 'john doe']])
-            ->willReturn($this->getMockHttpResponse());
+                       ->method('get')
+                       ->with($this->equalTo('/'), ['query' => ['name' => 'john doe']])
+                       ->willReturn($this->getMockHttpResponse());
 
         $mockHttpClient->expects($this->exactly(1))
                        ->method('getOptions')
@@ -66,7 +70,8 @@ class ClientTest extends TestCase
         $metroPublisher->get('/', ['name' => 'john doe'], [], true);
     }
 
-    public function testPatchRequestsSendFieldsAsJsonData()  {
+    public function testPatchRequestsSendFieldsAsJsonData()
+    {
         $mockHttpClient = $this->createMock(HttpClientInterface::class);
         $mockHttpClient->expects($this->once())
                        ->method('patch')
@@ -82,7 +87,8 @@ class ClientTest extends TestCase
         $mockMetroPublisher->patch('/', ['name' => 'john doe'], [], true);
     }
 
-    public function testPostRequestsSendFieldsAsFormParams() {
+    public function testPostRequestsSendFieldsAsFormParams()
+    {
         $mockHttpClient = $this->createMock(HttpClientInterface::class);
         $mockHttpClient->expects($this->exactly(1))
                        ->method('post')
@@ -100,7 +106,8 @@ class ClientTest extends TestCase
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
-    private function getMockHttpResponse() {
+    private function getMockHttpResponse()
+    {
         $mockStream = $this->createMock(StreamInterface::class);
         $mockStream->expects($this->once())
                    ->method('getContents')
@@ -130,14 +137,15 @@ class ClientTest extends TestCase
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|HttpClientInterface
      */
-    private function getMockMetroPublisher($mockHttpClient) {
+    private function getMockMetroPublisher($mockHttpClient)
+    {
         $mockMetroPublisher = $this->getMockBuilder(MetroPublisher::class)
-                              ->setConstructorArgs([null, null, $mockHttpClient])
-                              ->setMethods(['parseResponseContent'])
-                              ->getMock();
+                                   ->setConstructorArgs([null, null, $mockHttpClient])
+                                   ->setMethods(['parseResponseContent'])
+                                   ->getMock();
 
         $mockMetroPublisher->method('parseResponseContent')
-                      ->willReturn(null);
+                           ->willReturn(null);
 
         return $mockMetroPublisher;
     }

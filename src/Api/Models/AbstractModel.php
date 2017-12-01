@@ -1,10 +1,11 @@
 <?php
+
 namespace MetroPublisher\Api\Models;
 
-use MetroPublisher\MetroPublisher;
 use MetroPublisher\Api\AbstractApiResource;
 use MetroPublisher\Api\ResourceModelInterface;
 use MetroPublisher\Exception\MetroPublisherException;
+use MetroPublisher\MetroPublisher;
 
 /**
  * Class AbstractModel
@@ -34,7 +35,8 @@ abstract class AbstractModel extends AbstractApiResource implements ResourceMode
      *
      * @return array
      */
-    public static function getFieldNames() {
+    public static function getFieldNames()
+    {
         return array_merge(static::getDefaultFields(), static::getMetaFields());
     }
 
@@ -53,7 +55,8 @@ abstract class AbstractModel extends AbstractApiResource implements ResourceMode
      *
      * @return array
      */
-    public static function getDefaultFields() {
+    public static function getDefaultFields()
+    {
         return [];
     }
 
@@ -71,7 +74,8 @@ abstract class AbstractModel extends AbstractApiResource implements ResourceMode
      *
      * @return array
      */
-    public static function getMetaFields() {
+    public static function getMetaFields()
+    {
         return [];
     }
 
@@ -101,7 +105,8 @@ abstract class AbstractModel extends AbstractApiResource implements ResourceMode
         $this->fields[$property] = $value;
     }
 
-    private function hasField($property) {
+    private function hasField($property)
+    {
         return in_array($property, $this::getMetaFields()) || in_array($property, $this::getDefaultFields());
     }
 }

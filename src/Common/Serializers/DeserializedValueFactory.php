@@ -1,4 +1,5 @@
 <?php
+
 namespace MetroPublisher\Common\Serializers;
 
 /**
@@ -7,7 +8,8 @@ namespace MetroPublisher\Common\Serializers;
  */
 class DeserializedValueFactory
 {
-    public static function getValue($value, $type) {
+    public static function getValue($value, $type)
+    {
         switch ($type) {
             case "int":
                 return intval($value);

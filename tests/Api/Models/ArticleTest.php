@@ -1,4 +1,5 @@
 <?php
+
 namespace MetroPublisher\Api\Models;
 
 use MetroPublisher\MetroPublisher;
@@ -10,10 +11,11 @@ use PHPUnit\Framework\TestCase;
  */
 class ArticleTest extends TestCase
 {
-    public function testContentType() {
+    public function testContentType()
+    {
         /** @var MetroPublisher $metroPublisher */
         $metroPublisher = $this->createMock(MetroPublisher::class);
-        $article = new Article($metroPublisher);
+        $article        = new Article($metroPublisher);
         $this->assertEquals(Content::CONTENT_TYPE_ARTICLE, $article->getContentType());
     }
 }

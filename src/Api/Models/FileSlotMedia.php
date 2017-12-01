@@ -1,4 +1,5 @@
 <?php
+
 namespace MetroPublisher\Api\Models;
 
 use MetroPublisher\MetroPublisher;
@@ -23,7 +24,7 @@ class FileSlotMedia extends SlotMedia
      * FileSlotMedia constructor.
      *
      * @param MetroPublisher $metroPublisher
-     * @param Slot $slot
+     * @param Slot           $slot
      */
     public function __construct(MetroPublisher $metroPublisher, Slot $slot)
     {
@@ -67,12 +68,13 @@ class FileSlotMedia extends SlotMedia
 
     /**
      * @param string $image_uuid
+     *
      * @return $this
      */
     public function setImageUuid($image_uuid)
     {
         $this->image_uuid = $image_uuid;
-    
+
         return $this;
     }
 
@@ -86,12 +88,13 @@ class FileSlotMedia extends SlotMedia
 
     /**
      * @param string $file_uuid
+     *
      * @return $this
      */
     public function setFileUuid($file_uuid)
     {
         $this->file_uuid = $file_uuid;
-    
+
         return $this;
     }
 }

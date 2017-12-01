@@ -1,4 +1,5 @@
 <?php
+
 namespace MetroPublisher\Api\Models;
 
 use PHPUnit\Framework\TestCase;
@@ -9,7 +10,8 @@ use PHPUnit\Framework\TestCase;
  */
 class LocationTest extends TestCase
 {
-    public function testMetaFields() {
+    public function testMetaFields()
+    {
         $expected = [
             'title',
             'description',
@@ -52,12 +54,13 @@ class LocationTest extends TestCase
         $this->assertEquals($expected, Location::getMetaFields());
     }
 
-    public function testSave() {
+    public function testSave()
+    {
         /** @var \PHPUnit_Framework_MockObject_MockObject|Location $mockLocation */
         $mockLocation = $this->getMockBuilder(Location::class)
-            ->setMethods(['doSave'])
-            ->disableOriginalConstructor()
-            ->getMock();
+                             ->setMethods(['doSave'])
+                             ->disableOriginalConstructor()
+                             ->getMock();
 
         $mockLocation->expects($this->once())
                      ->method('doSave')
@@ -68,7 +71,8 @@ class LocationTest extends TestCase
         $mockLocation->save();
     }
 
-    public function testDelete() {
+    public function testDelete()
+    {
         /** @var \PHPUnit_Framework_MockObject_MockObject|Location $mockLocation */
         $mockLocation = $this->getMockBuilder(Location::class)
                              ->setMethods(['doDelete'])

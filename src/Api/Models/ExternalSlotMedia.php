@@ -1,4 +1,5 @@
 <?php
+
 namespace MetroPublisher\Api\Models;
 
 use MetroPublisher\MetroPublisher;
@@ -11,7 +12,7 @@ use MetroPublisher\MetroPublisher;
  *                              of embed (e.g. YouTube), or file (audio/video file).
  * @property string $url      - A url to the external media. Required if the url_type is 'vimeo', 'youtube',
  *                              or 'soundcloud'.
- * @property array $urls     - A list of URLs. Required if the url_type is 'audio' or 'video'. Every element of the
+ * @property array  $urls     - A list of URLs. Required if the url_type is 'audio' or 'video'. Every element of the
  *                              list is a dictionary, each consisting of the following fields:
  *                                  'url', 'mimetype' (optional)
  */

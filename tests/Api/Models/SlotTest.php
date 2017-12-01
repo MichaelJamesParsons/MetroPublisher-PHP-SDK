@@ -1,4 +1,5 @@
 <?php
+
 namespace MetroPublisher\Api\Models;
 
 use MetroPublisher\Api\Models\Exception\ModelValidationException;
@@ -11,26 +12,28 @@ use PHPUnit\Framework\TestCase;
  */
 class SlotTest extends TestCase
 {
-    public function testSave() {
+    public function testSave()
+    {
         $mockMetroPublisher = $this->createMock(MetroPublisher::class);
 
         /** @var \PHPUnit_Framework_MockObject_MockObject|Slot $mockSlot */
         $mockSlot = $this->getMockBuilder(Slot::class)
-            ->setMethods(['doSave'])
-            ->setConstructorArgs([$mockMetroPublisher])
-            ->getMock();
+                         ->setMethods(['doSave'])
+                         ->setConstructorArgs([$mockMetroPublisher])
+                         ->getMock();
 
         $mockSlot->expects($this->once())
-            ->method('doSave')
-            ->willReturn(null)
-            ->with('/content/2/slots/1');
+                 ->method('doSave')
+                 ->willReturn(null)
+                 ->with('/content/2/slots/1');
 
         $mockSlot->setUuid('1')
                  ->setContentUuid('2')
                  ->save();
     }
 
-    public function testSaveWithoutContentUuid() {
+    public function testSaveWithoutContentUuid()
+    {
         $this->expectException(ModelValidationException::class);
 
         /** @var \PHPUnit_Framework_MockObject_MockObject|Slot $mockSlot */
@@ -48,7 +51,8 @@ class SlotTest extends TestCase
                  ->save();
     }
 
-    public function testDelete() {
+    public function testDelete()
+    {
         /** @var \PHPUnit_Framework_MockObject_MockObject|Slot $mockSlot */
         $mockSlot = $this->getMockBuilder(Slot::class)
                          ->setMethods(['doDelete'])
@@ -65,7 +69,8 @@ class SlotTest extends TestCase
                  ->delete();
     }
 
-    public function testDeleteWithoutContentUuid() {
+    public function testDeleteWithoutContentUuid()
+    {
         $this->expectException(ModelValidationException::class);
 
         /** @var \PHPUnit_Framework_MockObject_MockObject|Slot $mockSlot */
@@ -83,12 +88,13 @@ class SlotTest extends TestCase
                  ->delete();
     }
 
-    public function testGetMedia() {
+    public function testGetMedia()
+    {
         /** @var \PHPUnit_Framework_MockObject_MockObject|MetroPublisher $mockMetroPublisher */
         $mockMetroPublisher = $this->getMockBuilder(MetroPublisher::class)
-            ->setConstructorArgs([null, null])
-            ->setMethods(['get'])
-            ->getMock();
+                                   ->setConstructorArgs([null, null])
+                                   ->setMethods(['get'])
+                                   ->getMock();
 
         $mockMetroPublisher->expects($this->once())
                            ->method('get')
@@ -101,7 +107,8 @@ class SlotTest extends TestCase
         $slot->getMedia();
     }
 
-    public function testDefaultFields() {
+    public function testDefaultFields()
+    {
         $expects = [
             'url',
             'content_uuid',

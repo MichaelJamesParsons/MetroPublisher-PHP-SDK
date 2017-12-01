@@ -1,4 +1,5 @@
 <?php
+
 namespace MetroPublisher\Api\Models;
 
 use MetroPublisher\Exception\MetroPublisherException;
@@ -23,7 +24,8 @@ abstract class AbstractReview extends Content
     /**
      * @return float
      */
-    public function getRating() {
+    public function getRating()
+    {
         return floatval($this->rating);
     }
 

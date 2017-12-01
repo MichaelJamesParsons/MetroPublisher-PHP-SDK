@@ -1,7 +1,7 @@
 <?php
+
 namespace MetroPublisher\Api\Models;
 
-use MetroPublisher\Api\Collections\ArticleCollection;
 use MetroPublisher\MetroPublisher;
 
 /**

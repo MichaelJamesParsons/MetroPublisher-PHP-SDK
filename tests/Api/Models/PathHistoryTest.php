@@ -1,4 +1,5 @@
 <?php
+
 namespace MetroPublisher\Api\Models;
 
 use PHPUnit\Framework\TestCase;
@@ -9,7 +10,8 @@ use PHPUnit\Framework\TestCase;
  */
 class PathHistoryTest extends TestCase
 {
-    public function testFieldNames() {
+    public function testFieldNames()
+    {
         $expected = ['path'];
         $this->assertEquals($expected, PathHistory::getFieldNames());
     }
