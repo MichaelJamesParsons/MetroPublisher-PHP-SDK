@@ -10,7 +10,7 @@ use MetroPublisher\MetroPublisher;
  * Class AbstractApiResource
  * @package MetroPublisher\Api
  */
-abstract class AbstractApiResource
+abstract class AbstractApiResource implements ApiResourceInterface
 {
     /** @var  MetroPublisher */
     protected $context;
@@ -27,5 +27,10 @@ abstract class AbstractApiResource
     {
         $this->context    = $metroPublisher;
         $this->serializer = new ModelArraySerializer();
+    }
+
+    public function getContext()
+    {
+        return $this->context;
     }
 }

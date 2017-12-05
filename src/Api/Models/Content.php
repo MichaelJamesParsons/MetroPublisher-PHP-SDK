@@ -6,6 +6,7 @@ use DateTime;
 use MetroPublisher\Api\AbstractResourceModel;
 use MetroPublisher\Api\Collections\SlotCollection;
 use MetroPublisher\Api\Collections\TagCollection;
+use MetroPublisher\Api\DeletableResourceModelTrait;
 use MetroPublisher\Api\Models\Resolvers\ModelResolver;
 use MetroPublisher\Api\TaggableInterface;
 use MetroPublisher\Common\Serializers\ModelDeserializer;
@@ -17,6 +18,8 @@ use MetroPublisher\MetroPublisher;
  */
 class Content extends AbstractResourceModel implements TaggableInterface
 {
+    use DeletableResourceModelTrait;
+
     /** @var  string */
     protected $content_type;
 

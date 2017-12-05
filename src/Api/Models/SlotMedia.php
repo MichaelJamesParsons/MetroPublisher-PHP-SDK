@@ -3,6 +3,7 @@
 namespace MetroPublisher\Api\Models;
 
 use MetroPublisher\Api\AbstractResourceModel;
+use MetroPublisher\Api\DeletableResourceModelTrait;
 use MetroPublisher\Api\Models\Exception\ModelValidationException;
 use MetroPublisher\MetroPublisher;
 
@@ -12,6 +13,8 @@ use MetroPublisher\MetroPublisher;
  */
 abstract class SlotMedia extends AbstractResourceModel
 {
+    use DeletableResourceModelTrait;
+
     /**
      * The type of media. Describes the source of the media. Whether it be an
      * external embed or file (image, audio file, video file).

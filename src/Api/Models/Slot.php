@@ -3,6 +3,7 @@
 namespace MetroPublisher\Api\Models;
 
 use MetroPublisher\Api\AbstractResourceModel;
+use MetroPublisher\Api\DeletableResourceModelTrait;
 use MetroPublisher\Api\Models\Exception\ModelValidationException;
 use MetroPublisher\Api\Models\Resolvers\SlotMediaResolver;
 use MetroPublisher\Common\Serializers\ModelDeserializer;
@@ -14,6 +15,8 @@ use MetroPublisher\MetroPublisher;
  */
 class Slot extends AbstractResourceModel
 {
+    use DeletableResourceModelTrait;
+
     /**
      * Relevance of the slot, i.e. how prominently it should be displayed within the content.
      *

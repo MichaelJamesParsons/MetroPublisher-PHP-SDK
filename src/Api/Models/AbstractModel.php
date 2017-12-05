@@ -79,6 +79,12 @@ abstract class AbstractModel extends AbstractApiResource implements ResourceMode
         return [];
     }
 
+    /**
+     * @param $property
+     *
+     * @return mixed|null
+     * @throws MetroPublisherException
+     */
     public function __get($property)
     {
         if (!$this->hasField($property)) {
@@ -92,6 +98,12 @@ abstract class AbstractModel extends AbstractApiResource implements ResourceMode
         return array_key_exists($property, $this->fields) ? $this->fields[$property] : null;
     }
 
+    /**
+     * @param $property
+     * @param $value
+     *
+     * @throws MetroPublisherException
+     */
     public function __set($property, $value)
     {
         if (!$this->hasField($property)) {

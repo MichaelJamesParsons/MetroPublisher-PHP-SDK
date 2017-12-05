@@ -3,6 +3,7 @@
 namespace MetroPublisher\Api\Models;
 
 use MetroPublisher\Api\AbstractResourceModel;
+use MetroPublisher\Api\DeletableResourceModelTrait;
 
 /**
  * Class File
@@ -10,6 +11,8 @@ use MetroPublisher\Api\AbstractResourceModel;
  */
 class File extends AbstractResourceModel
 {
+    use DeletableResourceModelTrait;
+
     /** @var  string */
     protected $title;
 
@@ -76,7 +79,7 @@ class File extends AbstractResourceModel
      */
     public function delete()
     {
-        return parent::doDelete("/files/{$this->uuid}");
+        return $this->doDelete("/files/{$this->uuid}");
     }
 
     /**

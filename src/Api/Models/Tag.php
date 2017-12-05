@@ -3,6 +3,7 @@
 namespace MetroPublisher\Api\Models;
 
 use MetroPublisher\Api\AbstractResourceModel;
+use MetroPublisher\Api\DeletableResourceModelTrait;
 use MetroPublisher\Api\Models\Exception\ModelValidationException;
 use MetroPublisher\Api\Models\Resolvers\ModelResolver;
 use MetroPublisher\Common\Serializers\ModelDeserializer;
@@ -13,6 +14,8 @@ use MetroPublisher\Common\Serializers\ModelDeserializer;
  */
 class Tag extends AbstractResourceModel
 {
+    use DeletableResourceModelTrait;
+
     /** @var  string */
     protected $last_name_or_title;
 

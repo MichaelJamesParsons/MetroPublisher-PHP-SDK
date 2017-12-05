@@ -198,22 +198,5 @@ abstract class AbstractResourceModel extends AbstractModel
         return $this->serializer->serialize($this);
     }
 
-    /**
-     * @param $endpoint
-     *
-     * @return array
-     * @throws ModelValidationException
-     */
-    protected function doDelete($endpoint)
-    {
-        if (empty($this->uuid)) {
-            throw new ModelValidationException('Cannot delete model of type ' . gettype($this) . '. No UUID is set.');
-        }
-
-        return $this->context->delete($endpoint, $this->serialize());
-    }
-
     protected abstract function save();
-
-    protected abstract function delete();
 }

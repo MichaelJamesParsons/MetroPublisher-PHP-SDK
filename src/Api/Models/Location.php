@@ -3,6 +3,7 @@
 namespace MetroPublisher\Api\Models;
 
 use MetroPublisher\Api\AbstractResourceModel;
+use MetroPublisher\Api\DeletableResourceModelTrait;
 
 /**
  * Class Location
@@ -10,6 +11,8 @@ use MetroPublisher\Api\AbstractResourceModel;
  */
 class Location extends AbstractResourceModel
 {
+    use DeletableResourceModelTrait;
+
     /** @var  string */
     protected $title;
 
