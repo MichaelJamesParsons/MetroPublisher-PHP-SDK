@@ -9,9 +9,8 @@ $metroPublisher = new MetroPublisher(MP_API_KEY, MP_API_SECRET);
 $metroPublisher->getHttpClient()->setSslVerification(false);
 
 // Create
-$albumReview = new AlbumReview($metroPublisher);
-$albumReview->setUuid('55547ff8-3355-4f69-a867-7232165e6d29')
-    ->setUrlname('album-review')
+$albumReview = new AlbumReview($metroPublisher, '55547ff8-3355-4f69-a867-7232165e6d29');
+$albumReview->setUrlname('album-review')
     ->setTitle('Album Review')
     ->setMetaTitle('Lorem Ipsum')
     ->setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit.')

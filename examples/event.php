@@ -32,9 +32,8 @@ $rrule->setByHour(null)
     ->setWeekStart(RRule::DAY_SUNDAY);
 
 // Create
-$event = new Event($metroPublisher);
-$event->setUuid('55547ff8-3355-4f69-a867-7232165e6d29')
-      ->setUrlname('lorem-ipsum-event')
+$event = new Event($metroPublisher, '55547ff8-3355-4f69-a867-7232165e6d29');
+$event->setUrlname('lorem-ipsum-event')
       ->setTitle('Lorem Ipsum Event')
       ->setMetaTitle('Lorem Ipsum')
       ->setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit.')

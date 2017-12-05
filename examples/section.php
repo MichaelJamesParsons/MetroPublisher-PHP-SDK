@@ -8,9 +8,8 @@ $metroPublisher = new MetroPublisher(MP_API_KEY, MP_API_SECRET);
 $metroPublisher->getHttpClient()->setSslVerification(false);
 
 // Create
-$section = new Section($metroPublisher);
-$section->setUuid('41b47ff8-3355-4f69-a867-7232165e6d29')
-        ->setTitle('Lorem Ipsum')
+$section = new Section($metroPublisher, '41b47ff8-3355-4f69-a867-7232165e6d29');
+$section->setTitle('Lorem Ipsum')
         ->setUrlname('lorem-ipsum')
         ->setParentUuid(null)
         ->setAutoFeaturedStories(true)

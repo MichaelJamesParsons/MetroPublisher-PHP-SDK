@@ -8,9 +8,8 @@ $metroPublisher = new MetroPublisher(MP_API_KEY, MP_API_SECRET);
 $metroPublisher->getHttpClient()->setSslVerification(false);
 
 // Create
-$bookReview = new BookReview($metroPublisher);
-$bookReview->setUuid('55547ff8-3355-4f69-a867-7232165e6d29')
-            ->setUrlname('book-review')
+$bookReview = new BookReview($metroPublisher, '55547ff8-3355-4f69-a867-7232165e6d29');
+$bookReview->setUrlname('book-review')
             ->setTitle('Book Review')
             ->setMetaTitle('Lorem Ipsum')
             ->setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit.')

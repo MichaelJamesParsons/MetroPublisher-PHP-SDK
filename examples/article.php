@@ -8,9 +8,8 @@ $metroPublisher = new MetroPublisher(MP_API_KEY, MP_API_SECRET);
 $metroPublisher->getHttpClient()->setSslVerification(false);
 
 // Create
-$article = new Article($metroPublisher);
-$article->setUuid('41b47ff8-3355-4f69-a867-7232165e6d29')
-    ->setUrlname('lorem-ipsum')
+$article = new Article($metroPublisher, '41b47ff8-3355-4f69-a867-7232165e6d29');
+$article->setUrlname('lorem-ipsum')
     ->setTitle('Lorem Ipsum')
     ->setMetaTitle('Lorem Ipsum')
     ->setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit.')

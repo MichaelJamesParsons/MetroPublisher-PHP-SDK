@@ -8,7 +8,7 @@ require "./config.php";
 $metroPublisher = new MetroPublisher(MP_API_KEY, MP_API_SECRET);
 $metroPublisher->getHttpClient()->setSslVerification(false);
 
-$file = new File($metroPublisher);
+$file = new File($metroPublisher, '55547ff8-3355-4f69-a867-7232165e6d29');
 $file->setTitle('Lorem Ipsum')
     ->setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit.')
     ->setFilename('lorem_ipsum.jpg')

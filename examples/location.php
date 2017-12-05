@@ -8,9 +8,8 @@ $metroPublisher = new MetroPublisher(MP_API_KEY, MP_API_SECRET);
 $metroPublisher->getHttpClient()->setSslVerification(false);
 
 // Create
-$location = new Location($metroPublisher);
-$location->setUuid('55547ff8-3355-4f69-a867-7232165e6d29')
-    ->setTitle('Lorem Ipsum')
+$location = new Location($metroPublisher, '55547ff8-3355-4f69-a867-7232165e6d29');
+$location->setTitle('Lorem Ipsum')
     ->setUrlname('lorem-ipsum')
     ->setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit.')
     ->setCoords([40.1965, -74.16848])
