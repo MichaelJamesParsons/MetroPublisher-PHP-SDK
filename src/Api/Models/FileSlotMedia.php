@@ -25,10 +25,11 @@ class FileSlotMedia extends SlotMedia
      *
      * @param MetroPublisher $metroPublisher
      * @param Slot           $slot
+     * @param string         $uuid
      */
-    public function __construct(MetroPublisher $metroPublisher, Slot $slot)
+    public function __construct(MetroPublisher $metroPublisher, Slot $slot, $uuid)
     {
-        parent::__construct($metroPublisher, $slot);
+        parent::__construct($metroPublisher, $slot, $uuid);
         $this->type = SlotMedia::TYPE_FILE;
     }
 

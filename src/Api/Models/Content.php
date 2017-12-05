@@ -85,10 +85,11 @@ class Content extends AbstractResourceModel implements TaggableInterface
      * Content constructor.
      *
      * @param MetroPublisher $metroPublisher
+     * @param string         $uuid
      */
-    public function __construct(MetroPublisher $metroPublisher)
+    public function __construct(MetroPublisher $metroPublisher, $uuid)
     {
-        parent::__construct($metroPublisher);
+        parent::__construct($metroPublisher, $uuid);
 
         $this->slotCollection = new SlotCollection($metroPublisher, $this);
         $this->tagCollection  = new TagCollection($metroPublisher);

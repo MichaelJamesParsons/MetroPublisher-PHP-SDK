@@ -43,9 +43,16 @@ class ExternalSlotMedia extends SlotMedia
      */
     const URL_TYPE_YOUTUBE = 'youtube';
 
-    public function __construct(MetroPublisher $metroPublisher, Slot $slot)
+    /**
+     * ExternalSlotMedia constructor.
+     *
+     * @param MetroPublisher $metroPublisher
+     * @param Slot           $slot
+     * @param string         $uuid
+     */
+    public function __construct(MetroPublisher $metroPublisher, Slot $slot, $uuid)
     {
-        parent::__construct($metroPublisher, $slot);
+        parent::__construct($metroPublisher, $slot, $uuid);
         $this->type = SlotMedia::TYPE_EXTERNAL_URL;
     }
 

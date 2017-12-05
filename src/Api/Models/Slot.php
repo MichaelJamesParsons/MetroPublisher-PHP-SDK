@@ -63,9 +63,15 @@ class Slot extends AbstractResourceModel
     /** @var  SlotMedia[] */
     protected $items;
 
-    public function __construct(MetroPublisher $metroPublisher)
+    /**
+     * Slot constructor.
+     *
+     * @param MetroPublisher $metroPublisher
+     * @param string         $uuid
+     */
+    public function __construct(MetroPublisher $metroPublisher, $uuid)
     {
-        parent::__construct($metroPublisher);
+        parent::__construct($metroPublisher, $uuid);
         $this->display   = self::DISPLAY_GALLERY;
         $this->relevance = self::RELEVANCE_INLINE;
         $this->items     = [];

@@ -66,10 +66,11 @@ abstract class SlotMedia extends AbstractResourceModel
      *
      * @param MetroPublisher $metroPublisher
      * @param Slot           $slot
+     * @param int            $uuid
      */
-    public function __construct(MetroPublisher $metroPublisher, Slot $slot)
+    public function __construct(MetroPublisher $metroPublisher, Slot $slot, $uuid)
     {
-        parent::__construct($metroPublisher);
+        parent::__construct($metroPublisher, $uuid);
         $this->slot_uuid    = $slot->getUuid();
         $this->content_uuid = $slot->getContentUuid();
     }

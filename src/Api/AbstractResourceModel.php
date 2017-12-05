@@ -33,11 +33,13 @@ abstract class AbstractResourceModel extends AbstractModel
      * AbstractResourceModel constructor.
      *
      * @param MetroPublisher $metroPublisher
+     * @param string         $uuid
      */
-    public function __construct(MetroPublisher $metroPublisher)
+    public function __construct(MetroPublisher $metroPublisher, $uuid)
     {
         parent::__construct($metroPublisher);
 
+        $this->uuid = $uuid;
         $this->isMetaDataLoaded = false;
         $this->changedFields    = [];
     }
@@ -147,18 +149,6 @@ abstract class AbstractResourceModel extends AbstractModel
     }
 
     /**
-     * @param string $uuid
-     *
-     * @return $this
-     */
-    public function setUuid($uuid)
-    {
-        $this->uuid = $uuid;
-
-        return $this;
-    }
-
-    /**
      * @return DateTime
      */
     public function getModified()
@@ -178,14 +168,9 @@ abstract class AbstractResourceModel extends AbstractModel
      * @param $endpoint
      *
      * @return array
-     * @throws ModelValidationException
      */
     protected function doSave($endpoint)
     {
-        if (empty($this->uuid)) {
-            throw new ModelValidationException('Cannot save model of type ' . gettype($this) . '. No UUID is set.');
-        }
-
         if (empty($this->created)) {
             return $this->context->put($endpoint, $this->serialize());
         }

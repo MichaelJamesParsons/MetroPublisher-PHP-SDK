@@ -33,10 +33,11 @@ class BookReview extends AbstractReview
      * BookReview constructor.
      *
      * @param MetroPublisher $metroPublisher
+     * @param string         $uuid
      */
-    public function __construct(MetroPublisher $metroPublisher)
+    public function __construct(MetroPublisher $metroPublisher, $uuid)
     {
-        parent::__construct($metroPublisher);
+        parent::__construct($metroPublisher, $uuid);
         $this->content_type       = Content::CONTENT_TYPE_REVIEW_BOOK;
         $this->book_buy_urls      = [];
         $this->book_provider_urls = [];
