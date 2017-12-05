@@ -19,7 +19,7 @@ trait DeletableResourceModelTrait
             throw new ModelValidationException('Cannot delete model of type ' . gettype($this) . '. No UUID is set.');
         }
 
-        return $this->context->delete($endpoint, $this->serialize());
+        return $this->getContext()->delete($endpoint, $this->serialize());
     }
 
     /**
