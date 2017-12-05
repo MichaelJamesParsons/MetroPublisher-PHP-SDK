@@ -21,7 +21,8 @@ $locationReview->setUuid('55547ff8-3355-4f69-a867-7232165e6d29')
                ->setTeaserImageUuid(null)
                ->setIssued(new DateTime('now'))
                ->setEvergreen(true)
-               ->setRating(4.5);
+               ->setRating(4.5)
+               ->setLocationUuid(null);
 
 // Save
 $locationReview->save();

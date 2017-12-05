@@ -20,34 +20,43 @@ class Slot extends AbstractResourceModel
      * @link https://api.metropublisher.com/resources/content.html#resource-put-content-slot-put-parameters
      */
     const RELEVANCE_INLINE = 'inline';
+
     /**
      * Relevance of the slot, i.e. how prominently it should be displayed within the content.
      *
      * @link https://api.metropublisher.com/resources/content.html#resource-put-content-slot-put-parameters
      */
     const RELEVANCE_ASIDE = 'aside';
+
     /**
      * Display the slot as a gallery.
      *
      * @link https://api.metropublisher.com/resources/content.html#resource-put-content-slot-put-parameters
      */
     const DISPLAY_GALLERY = 'gallery';
+
     /**
      * Display the gallery as a carousel.
      *
      * @link https://api.metropublisher.com/resources/content.html#resource-put-content-slot-put-parameters
      */
     const DISPLAY_CAROUSEL = 'carousel';
+
     /** @var string */
     protected $content_uuid;
+
     /** @var string */
     protected $relevance;
+
     /** @var string */
     protected $display;
+
     /** @var string */
     protected $url;
+
     /** @var string */
     protected $content_url;
+
     /** @var  SlotMedia[] */
     protected $items;
 

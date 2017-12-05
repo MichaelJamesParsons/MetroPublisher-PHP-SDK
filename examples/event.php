@@ -8,8 +8,13 @@ require "./config.php";
 $metroPublisher = new MetroPublisher(MP_API_KEY, MP_API_SECRET);
 $metroPublisher->getHttpClient()->setSslVerification(false);
 
-// Define recurrence rule (if event is recurring)
-// FREQ=WEEKLY;BYDAY=MO,TU;INTERVAL=1;UNTIL=20171025T040000Z
+/**
+ * Recurrence rules are optionally available for events that
+ * repeat at some constant interval. The rule below translates
+ * to the following RRule:
+ *
+ * FREQ=WEEKLY;BYDAY=MO,TU;INTERVAL=1;UNTIL=20171025T040000Z
+ */
 $rrule = new RRule();
 $rrule->setFreq(RRule::FREQ_WEEKLY)
     ->setInterval(2)

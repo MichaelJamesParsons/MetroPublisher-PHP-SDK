@@ -74,6 +74,7 @@ class MetroPublisher
      * @param $arguments
      *
      * @return array
+     * @throws ConnectionException
      */
     public function __call($method, $arguments)
     {
