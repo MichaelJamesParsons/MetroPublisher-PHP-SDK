@@ -15,7 +15,7 @@ class ArticleTest extends TestCase
     {
         /** @var MetroPublisher $metroPublisher */
         $metroPublisher = $this->createMock(MetroPublisher::class);
-        $article        = new Article($metroPublisher);
+        $article        = new Article($metroPublisher, '1');
         $this->assertEquals(Content::CONTENT_TYPE_ARTICLE, $article->getContentType());
     }
 }

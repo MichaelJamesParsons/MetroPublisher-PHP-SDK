@@ -18,7 +18,7 @@ class ExternalSlotMediaTest extends TestCase
         /** @var Slot $mockSlot */
         $mockSlot = $this->createMock(Slot::class);
 
-        $externalMedia = new ExternalSlotMedia($mockMetroPublisher, $mockSlot);
+        $externalMedia = new ExternalSlotMedia($mockMetroPublisher, $mockSlot, '1');
         $this->assertEquals(SlotMedia::TYPE_EXTERNAL_URL, $externalMedia->getType());
     }
 

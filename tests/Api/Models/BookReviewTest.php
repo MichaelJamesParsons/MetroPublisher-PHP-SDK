@@ -15,7 +15,7 @@ class BookReviewTest extends TestCase
     {
         /** @var MetroPublisher $metroPublisher */
         $metroPublisher = $this->createMock(MetroPublisher::class);
-        $bookReview     = new BookReview($metroPublisher);
+        $bookReview     = new BookReview($metroPublisher, '1');
         $this->assertEquals(Content::CONTENT_TYPE_REVIEW_BOOK, $bookReview->getContentType());
     }
 
@@ -46,7 +46,7 @@ class BookReviewTest extends TestCase
     {
         /** @var MetroPublisher $metroPublisher */
         $metroPublisher = $this->createMock(MetroPublisher::class);
-        $bookReview     = new BookReview($metroPublisher);
+        $bookReview     = new BookReview($metroPublisher, '1');
 
         // Test default value
         $this->assertEquals([], $bookReview->getBookBuyUrls());

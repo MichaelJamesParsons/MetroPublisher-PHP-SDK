@@ -18,7 +18,7 @@ class FileSlotMediaTest extends TestCase
         /** @var Slot $mockSlot */
         $mockSlot = $this->createMock(Slot::class);
 
-        $fileMedia = new FileSlotMedia($mockMetroPublisher, $mockSlot);
+        $fileMedia = new FileSlotMedia($mockMetroPublisher, $mockSlot, '1');
         $this->assertEquals(SlotMedia::TYPE_FILE, $fileMedia->getType());
     }
 

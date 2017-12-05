@@ -2,6 +2,7 @@
 
 namespace MetroPublisher\Api\Models;
 
+use MetroPublisher\MetroPublisher;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -15,7 +16,7 @@ class TagCategoryTest extends TestCase
         /** @var \PHPUnit_Framework_MockObject_MockObject|TagCategory $mockCategory */
         $mockCategory = $this->getMockBuilder(TagCategory::class)
                              ->setMethods(['doSave'])
-                             ->disableOriginalConstructor()
+                             ->setConstructorArgs([new MetroPublisher(null, null), '1'])
                              ->getMock();
 
         $mockCategory->expects($this->once())
@@ -23,8 +24,7 @@ class TagCategoryTest extends TestCase
                      ->willReturn(null)
                      ->with('/tags/categories/1');
 
-        $mockCategory->setUuid('1')
-                     ->save();
+        $mockCategory->save();
     }
 
     public function testDelete()
@@ -32,7 +32,7 @@ class TagCategoryTest extends TestCase
         /** @var \PHPUnit_Framework_MockObject_MockObject|TagCategory $mockCategory */
         $mockCategory = $this->getMockBuilder(TagCategory::class)
                              ->setMethods(['doDelete'])
-                             ->disableOriginalConstructor()
+                             ->setConstructorArgs([new MetroPublisher(null, null), '1'])
                              ->getMock();
 
         $mockCategory->expects($this->once())
@@ -40,8 +40,7 @@ class TagCategoryTest extends TestCase
                      ->willReturn(null)
                      ->with('/tags/categories/1');
 
-        $mockCategory->setUuid('1')
-                     ->delete();
+        $mockCategory->delete();
     }
 
     public function testDefaultFields()

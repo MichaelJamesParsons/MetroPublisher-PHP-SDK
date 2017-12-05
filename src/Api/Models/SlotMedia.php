@@ -76,7 +76,8 @@ abstract class SlotMedia extends AbstractResourceModel
     }
 
     /**
-     * @inheritdoc
+     * @return array
+     * @throws ModelValidationException
      */
     public function save()
     {

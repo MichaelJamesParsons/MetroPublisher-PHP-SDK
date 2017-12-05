@@ -18,7 +18,7 @@ class EmbedSlotMediaTest extends TestCase
         /** @var Slot $mockSlot */
         $mockSlot = $this->createMock(Slot::class);
 
-        $embed = new EmbedSlotMedia($mockMetroPublisher, $mockSlot);
+        $embed = new EmbedSlotMedia($mockMetroPublisher, $mockSlot, '1');
         $this->assertEquals(SlotMedia::TYPE_EMBED_CODE, $embed->getType());
     }
 

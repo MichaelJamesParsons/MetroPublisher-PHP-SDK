@@ -19,7 +19,7 @@ class SlotTest extends TestCase
         /** @var \PHPUnit_Framework_MockObject_MockObject|Slot $mockSlot */
         $mockSlot = $this->getMockBuilder(Slot::class)
                          ->setMethods(['doSave'])
-                         ->setConstructorArgs([$mockMetroPublisher])
+                         ->setConstructorArgs([$mockMetroPublisher, '1'])
                          ->getMock();
 
         $mockSlot->expects($this->once())
@@ -27,8 +27,7 @@ class SlotTest extends TestCase
                  ->willReturn(null)
                  ->with('/content/2/slots/1');
 
-        $mockSlot->setUuid('1')
-                 ->setContentUuid('2')
+        $mockSlot->setContentUuid('2')
                  ->save();
     }
 
@@ -39,7 +38,7 @@ class SlotTest extends TestCase
         /** @var \PHPUnit_Framework_MockObject_MockObject|Slot $mockSlot */
         $mockSlot = $this->getMockBuilder(Slot::class)
                          ->setMethods(['doSave'])
-                         ->disableOriginalConstructor()
+                         ->setConstructorArgs([new MetroPublisher(null, null), null])
                          ->getMock();
 
         $mockSlot->expects($this->never())
@@ -47,8 +46,7 @@ class SlotTest extends TestCase
                  ->willReturn(null)
                  ->with('/content/2/slots/1');
 
-        $mockSlot->setUuid('1')
-                 ->save();
+        $mockSlot->save();
     }
 
     public function testDelete()
@@ -56,7 +54,7 @@ class SlotTest extends TestCase
         /** @var \PHPUnit_Framework_MockObject_MockObject|Slot $mockSlot */
         $mockSlot = $this->getMockBuilder(Slot::class)
                          ->setMethods(['doDelete'])
-                         ->disableOriginalConstructor()
+                         ->setConstructorArgs([new MetroPublisher(null, null), '1'])
                          ->getMock();
 
         $mockSlot->expects($this->once())
@@ -64,8 +62,7 @@ class SlotTest extends TestCase
                  ->willReturn(null)
                  ->with('/content/2/slots/1');
 
-        $mockSlot->setUuid('1')
-                 ->setContentUuid('2')
+        $mockSlot->setContentUuid('2')
                  ->delete();
     }
 
@@ -76,7 +73,7 @@ class SlotTest extends TestCase
         /** @var \PHPUnit_Framework_MockObject_MockObject|Slot $mockSlot */
         $mockSlot = $this->getMockBuilder(Slot::class)
                          ->setMethods(['doDelete'])
-                         ->disableOriginalConstructor()
+                         ->setConstructorArgs([new MetroPublisher(null, null), '1'])
                          ->getMock();
 
         $mockSlot->expects($this->never())
@@ -84,8 +81,7 @@ class SlotTest extends TestCase
                  ->willReturn(null)
                  ->with('/content/2/slots/1');
 
-        $mockSlot->setUuid('1')
-                 ->delete();
+        $mockSlot->delete();
     }
 
     public function testGetMedia()
@@ -101,8 +97,7 @@ class SlotTest extends TestCase
                            ->with('/content/2/slots/1/media')
                            ->willReturn([]);
 
-        $slot = new Slot($mockMetroPublisher);
-        $slot->setUuid(1);
+        $slot = new Slot($mockMetroPublisher, '1');
         $slot->setContentUuid(2);
         $slot->getMedia();
     }

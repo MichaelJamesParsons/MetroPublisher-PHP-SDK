@@ -2,6 +2,7 @@
 
 namespace MetroPublisher\Api\Models;
 
+use MetroPublisher\MetroPublisher;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -59,7 +60,7 @@ class LocationTest extends TestCase
         /** @var \PHPUnit_Framework_MockObject_MockObject|Location $mockLocation */
         $mockLocation = $this->getMockBuilder(Location::class)
                              ->setMethods(['doSave'])
-                             ->disableOriginalConstructor()
+                             ->setConstructorArgs([new MetroPublisher(null, null), '1'])
                              ->getMock();
 
         $mockLocation->expects($this->once())
@@ -67,7 +68,6 @@ class LocationTest extends TestCase
                      ->willReturn(null)
                      ->with('/locations/1');
 
-        $mockLocation->setUuid('1');
         $mockLocation->save();
     }
 
@@ -76,7 +76,7 @@ class LocationTest extends TestCase
         /** @var \PHPUnit_Framework_MockObject_MockObject|Location $mockLocation */
         $mockLocation = $this->getMockBuilder(Location::class)
                              ->setMethods(['doDelete'])
-                             ->disableOriginalConstructor()
+                             ->setConstructorArgs([new MetroPublisher(null, null), '1'])
                              ->getMock();
 
         $mockLocation->expects($this->once())
@@ -84,7 +84,6 @@ class LocationTest extends TestCase
                      ->willReturn(null)
                      ->with('/locations/1');
 
-        $mockLocation->setUuid('1');
         $mockLocation->delete();
     }
 }

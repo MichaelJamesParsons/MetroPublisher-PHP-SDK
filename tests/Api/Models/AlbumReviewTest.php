@@ -54,7 +54,7 @@ class AlbumReviewTest extends TestCase
     {
         /** @var MetroPublisher $mp */
         $mp     = $this->createMock(MetroPublisher::class);
-        $review = new AlbumReview($mp);
+        $review = new AlbumReview($mp, '1');
         $this->assertEquals(Content::CONTENT_TYPE_REVIEW_ALBUM, $review->getContentType());
     }
 
@@ -63,7 +63,7 @@ class AlbumReviewTest extends TestCase
         /** @var MetroPublisher $mp */
         $mp = $this->createMock(MetroPublisher::class);
 
-        $review = new AlbumReview($mp);
+        $review = new AlbumReview($mp, '1');
         $review->addAlbumBuyUrl('http://example.com', 'Example');
 
         $urls = $review->getAlbumBuyUrls();

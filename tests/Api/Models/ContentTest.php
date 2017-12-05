@@ -2,6 +2,7 @@
 
 namespace MetroPublisher\Api\Models;
 
+use MetroPublisher\MetroPublisher;
 use PHPUnit\Framework\TestCase;
 
 class ContentTest extends TestCase
@@ -43,7 +44,7 @@ class ContentTest extends TestCase
         /** @var \PHPUnit_Framework_MockObject_MockObject|Content $content */
         $content = $this->getMockBuilder(Content::class)
                         ->setMethods(['doSave'])
-                        ->disableOriginalConstructor()
+                        ->setConstructorArgs([new MetroPublisher(null, null), '1'])
                         ->getMock();
 
         $content->expects($this->once())
@@ -51,7 +52,6 @@ class ContentTest extends TestCase
                 ->with($this->equalTo('/content/1'))
                 ->willReturn(null);
 
-        $content->setUuid('1');
         $content->save();
     }
 
@@ -60,7 +60,7 @@ class ContentTest extends TestCase
         /** @var \PHPUnit_Framework_MockObject_MockObject|Content $content */
         $content = $this->getMockBuilder(Content::class)
                         ->setMethods(['doDelete'])
-                        ->disableOriginalConstructor()
+                        ->setConstructorArgs([new MetroPublisher(null, null), 1])
                         ->getMock();
 
         $content->expects($this->once())
@@ -68,7 +68,6 @@ class ContentTest extends TestCase
                 ->with($this->equalTo('/content/1'))
                 ->willReturn(null);
 
-        $content->setUuid('1');
         $content->delete();
     }
 }

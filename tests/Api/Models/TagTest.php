@@ -16,7 +16,7 @@ class TagTest extends TestCase
         /** @var \PHPUnit_Framework_MockObject_MockObject|Tag $mockSlot */
         $mockSlot = $this->getMockBuilder(Tag::class)
                          ->setMethods(['doSave'])
-                         ->disableOriginalConstructor()
+                         ->setConstructorArgs([new MetroPublisher(null, null), '1'])
                          ->getMock();
 
         $mockSlot->expects($this->once())
@@ -24,8 +24,7 @@ class TagTest extends TestCase
                  ->willReturn(null)
                  ->with('/tags/1');
 
-        $mockSlot->setUuid('1')
-                 ->save();
+        $mockSlot->save();
     }
 
     public function testDelete()
@@ -33,7 +32,7 @@ class TagTest extends TestCase
         /** @var \PHPUnit_Framework_MockObject_MockObject|Tag $mockSlot */
         $mockSlot = $this->getMockBuilder(Tag::class)
                          ->setMethods(['doDelete'])
-                         ->disableOriginalConstructor()
+                         ->setConstructorArgs([new MetroPublisher(null, null), '1'])
                          ->getMock();
 
         $mockSlot->expects($this->once())
@@ -41,8 +40,7 @@ class TagTest extends TestCase
                  ->willReturn(null)
                  ->with('/tags/1');
 
-        $mockSlot->setUuid('1')
-                 ->delete();
+        $mockSlot->delete();
     }
 
     public function testGetCategories()
@@ -58,9 +56,8 @@ class TagTest extends TestCase
                            ->with('/tags/1/categories')
                            ->willReturn([]);
 
-        $tag = new Tag($mockMetroPublisher);
-        $tag->setUuid('1')
-            ->getCategories();
+        $tag = new Tag($mockMetroPublisher, '1');
+        $tag->getCategories();
     }
 
     public function testGetPathHistory()
@@ -76,9 +73,8 @@ class TagTest extends TestCase
                            ->with('/tags/1/path_history')
                            ->willReturn([]);
 
-        $tag = new Tag($mockMetroPublisher);
-        $tag->setUuid('1')
-            ->getPathHistory();
+        $tag = new Tag($mockMetroPublisher, '1');
+        $tag->getPathHistory();
     }
 
     public function testSetPathHistory()
@@ -94,9 +90,8 @@ class TagTest extends TestCase
                            ->with('/tags/1/path_history', ['items' => []])
                            ->willReturn([]);
 
-        $tag = new Tag($mockMetroPublisher);
-        $tag->setUuid('1')
-            ->setPathHistory([]);
+        $tag = new Tag($mockMetroPublisher, '1');
+        $tag->setPathHistory([]);
     }
 
     public function testAddPathHistory()
@@ -112,9 +107,8 @@ class TagTest extends TestCase
                            ->with('/tags/1/path_history', ['path' => 'http://example.com'])
                            ->willReturn([]);
 
-        $tag = new Tag($mockMetroPublisher);
-        $tag->setUuid('1')
-            ->addPathHistory(new PathHistory($mockMetroPublisher, 'http://example.com'));
+        $tag = new Tag($mockMetroPublisher, '1');
+        $tag->addPathHistory(new PathHistory($mockMetroPublisher, 'http://example.com'));
     }
 
     public function testDefaultFields()
