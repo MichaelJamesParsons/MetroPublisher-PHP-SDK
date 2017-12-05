@@ -58,6 +58,7 @@ abstract class AbstractResourceModel extends AbstractModel
      * @param $property
      *
      * @return mixed
+     * @throws \MetroPublisher\Exception\MetroPublisherException
      */
     public function __get($property)
     {
@@ -68,6 +69,12 @@ abstract class AbstractResourceModel extends AbstractModel
         return parent::__get($property);
     }
 
+    /**
+     * @param $property
+     * @param $value
+     *
+     * @throws \MetroPublisher\Exception\MetroPublisherException
+     */
     public function __set($property, $value)
     {
         if (!$this->isMetaDataLoaded() && in_array($property, static::getMetaFields())) {
