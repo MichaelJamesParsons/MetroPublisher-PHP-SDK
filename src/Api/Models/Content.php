@@ -7,6 +7,7 @@ use MetroPublisher\Api\AbstractResourceModel;
 use MetroPublisher\Api\Collections\SlotCollection;
 use MetroPublisher\Api\Collections\TagCollection;
 use MetroPublisher\Api\Models\Resolvers\ModelResolver;
+use MetroPublisher\Api\SlotContentInterface;
 use MetroPublisher\Api\TaggableInterface;
 use MetroPublisher\Common\Serializers\ModelDeserializer;
 use MetroPublisher\MetroPublisher;
@@ -15,7 +16,7 @@ use MetroPublisher\MetroPublisher;
  * Class Content
  * @package MetroPublisher\Api\Content
  */
-class Content extends AbstractResourceModel implements TaggableInterface
+class Content extends AbstractResourceModel implements TaggableInterface, SlotContentInterface
 {
     /** @var  string */
     protected $content_type;

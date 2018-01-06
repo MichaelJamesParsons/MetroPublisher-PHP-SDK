@@ -5,6 +5,7 @@ namespace MetroPublisher\Api\Models;
 use MetroPublisher\Api\AbstractResourceModel;
 use MetroPublisher\Api\Models\Exception\ModelValidationException;
 use MetroPublisher\Api\Models\Resolvers\SlotMediaResolver;
+use MetroPublisher\Api\SlotContentInterface;
 use MetroPublisher\Common\Serializers\ModelDeserializer;
 use MetroPublisher\MetroPublisher;
 
@@ -60,9 +61,10 @@ class Slot extends AbstractResourceModel
     /** @var  SlotMedia[] */
     protected $items;
 
-    public function __construct(MetroPublisher $metroPublisher)
+    public function __construct(MetroPublisher $metroPublisher, SlotContentInterface $content)
     {
         parent::__construct($metroPublisher);
+        $this->content_uuid = $content->getUuid();
         $this->display   = self::DISPLAY_GALLERY;
         $this->relevance = self::RELEVANCE_INLINE;
         $this->items     = [];
@@ -88,10 +90,6 @@ class Slot extends AbstractResourceModel
      */
     public function save()
     {
-        if (empty($this->content_uuid)) {
-            throw new ModelValidationException("Cannot save slot with no content UUID set.");
-        }
-
         $endpoint = "/content/{$this->content_uuid}/slots/{$this->uuid}";
         $this->doSave("/content/{$this->content_uuid}/slots/{$this->uuid}");
 
@@ -110,10 +108,6 @@ class Slot extends AbstractResourceModel
      */
     public function delete()
     {
-        if (empty($this->content_uuid)) {
-            throw new ModelValidationException("Cannot save slot with no content UUID set.");
-        }
-
         return $this->doDelete("/content/{$this->content_uuid}/slots/{$this->uuid}");
     }
 
@@ -144,6 +138,7 @@ class Slot extends AbstractResourceModel
 
     /**
      * @param string $content_uuid
+     * @deprecated Use constructor.
      *
      * @return $this
      */

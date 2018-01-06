@@ -5,6 +5,7 @@ namespace MetroPublisher\Api\Models;
 use MetroPublisher\Api\AbstractResourceModel;
 use MetroPublisher\Api\Models\Exception\ModelValidationException;
 use MetroPublisher\Api\Models\Resolvers\ModelResolver;
+use MetroPublisher\Api\TaggableInterface;
 use MetroPublisher\Common\Serializers\ModelDeserializer;
 
 /**
@@ -164,6 +165,33 @@ class Tag extends AbstractResourceModel
     public function delete()
     {
         return $this->doDelete("/tags/{$this->uuid}");
+    }
+
+    /**
+     * Creates/updates a tag connection.
+     *
+     * @Link https://api.metropublisher.com/resources/tag.html#resource-put-tagged-object
+     *
+     * @param TaggableInterface $content
+     * @param string $predicate
+     * @return array
+     */
+    public function saveTagConnection(TaggableInterface $content, $predicate = self::PREDICATE_DESCRIBES)
+    {
+        return $this->context->put("/tags/{$this->uuid}/{$predicate}/{$content->getUuid()}");
+    }
+
+    /**
+     * Removes a tag connection.
+     *
+     * @Link https://api.metropublisher.com/resources/tag.html#resource-delete-tagged-object
+     *
+     * @param TaggableInterface $content
+     * @param string $predicate
+     * @return array
+     */
+    public function removeTagConnection(TaggableInterface $content, $predicate = self::PREDICATE_DESCRIBES) {
+        return $this->context->delete("/tags/{$this->uuid}/{$predicate}/{$content->getUuid()}");
     }
 
     /**

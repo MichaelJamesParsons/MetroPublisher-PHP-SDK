@@ -37,4 +37,11 @@ interface TaggableInterface
      * @return array
      */
     public function getTags($state = 'approved');
+
+    /**
+     * Returns content's uuid.
+     *
+     * @return string
+     */
+    public function getUuid();
 }
