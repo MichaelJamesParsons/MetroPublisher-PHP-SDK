@@ -1,5 +1,8 @@
 <?php
+
 namespace MetroPublisher\Api;
+
+use MetroPublisher\Api\Models\Slot;
 
 /**
  * Interface SlotContentInterface
@@ -12,7 +15,7 @@ interface SlotContentInterface
      *
      * @link https://api.metropublisher.com/resources/content.html#content_slots
      *
-     * @return AbstractModel[]|Slot[]
+     * @return Slot[]
      */
     public function getSlots();
 
