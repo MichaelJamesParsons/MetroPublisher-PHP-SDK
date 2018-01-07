@@ -15,12 +15,12 @@ class ModelArraySerializer implements ModelSerializerInterface
     /**
      * @inheritdoc
      */
-    public function serialize(AbstractModel $model)
+    public function serialize(AbstractModel $model, $includeEmptyValues = true)
     {
-        return $this->getObjectPropertyValuesAsArray($model, $model::getFieldNames());
+        return $this->getObjectPropertyValuesAsArray($model, $model::getFieldNames(), $includeEmptyValues);
     }
 
-    protected function getObjectPropertyValuesAsArray($model, array $properties = array())
+    protected function getObjectPropertyValuesAsArray($model, array $properties = array(), $includeEmptyValues)
     {
         $array      = [];
         $reflection = ReflectionUtils::getReflectionObject($model);
@@ -38,9 +38,10 @@ class ModelArraySerializer implements ModelSerializerInterface
 
             $propertyReflection->setAccessible(true);
             $value = $propertyReflection->getValue($model);
+            $serializedValue = $this->convertValueToSerializable($value);
 
-            if (!is_null($value)) {
-                $array[$propertyReflection->getName()] = $this->convertValueToSerializable($value);
+            if ($includeEmptyValues || !empty($serializedValue)) {
+                $array[$propertyReflection->getName()] = $this->convertValueToSerializable($value, $includeEmptyValues);
             }
         }
 
@@ -50,9 +51,10 @@ class ModelArraySerializer implements ModelSerializerInterface
     /**
      * @param $value
      *
+     * @param bool $includeEmptyValues
      * @return mixed
      */
-    protected function convertValueToSerializable($value)
+    protected function convertValueToSerializable($value, $includeEmptyValues = true)
     {
         if ($value instanceof \DateTime) {
             return $value->format('Y-m-d');
@@ -63,7 +65,11 @@ class ModelArraySerializer implements ModelSerializerInterface
         } elseif (is_array($value) && count($value) > 0 && $value[0] instanceof AbstractResourceModel) {
             return $this->convertResourceModelArray($value);
         } elseif (is_object($value)) {
-            return $this->getObjectPropertyValuesAsArray($value);
+            return $this->getObjectPropertyValuesAsArray($value, $includeEmptyValues);
+        }else if ($value === "1" || $value === "0") {
+            return boolval($value);
+        } elseif (empty($value)) {
+            return null;
         } else {
             return $value;
         }

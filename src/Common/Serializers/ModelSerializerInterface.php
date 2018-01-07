@@ -12,8 +12,9 @@ interface ModelSerializerInterface
 {
     /**
      * @param AbstractModel $object
+     * @param bool          $includeEmptyValues
      *
      * @return string
      */
-    public function serialize(AbstractModel $object);
+    public function serialize(AbstractModel $object, $includeEmptyValues);
 }
