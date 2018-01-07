@@ -95,7 +95,7 @@ class Slot extends AbstractResourceModel
 
         $serializedMedia = [];
         foreach ($this->items as $media) {
-            $tmp = $this->serializer->serialize($media);
+            $tmp = $this->serializer->serialize($media, false);
             unset($tmp['file_uuid']);
             $serializedMedia[] = $tmp;
         }

@@ -106,6 +106,14 @@ abstract class SlotMedia extends AbstractResourceModel
     /**
      * @inheritdoc
      */
+    public function serialize()
+    {
+        return $this->serializer->serialize($this, false);
+    }
+
+    /**
+     * @inheritdoc
+     */
     public static function getDefaultFields()
     {
         return array_merge([

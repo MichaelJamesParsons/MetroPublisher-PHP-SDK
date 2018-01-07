@@ -106,6 +106,14 @@ class Section extends AbstractResourceModel
     }
 
     /**
+     * @inheritdoc
+     */
+    protected function serialize()
+    {
+        return $this->serializer->serialize($this, false);
+    }
+
+    /**
      * @return array
      */
     protected function loadMetaData()
