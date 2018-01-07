@@ -298,7 +298,8 @@ class Tag extends AbstractResourceModel
             'synonyms',
             'content',
             'urlname',
-            'feature_image_uuid'
+            'feature_image_uuid',
+            'type'
         ], parent::getDefaultFields());
     }
 
