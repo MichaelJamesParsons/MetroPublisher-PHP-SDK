@@ -195,7 +195,7 @@ abstract class AbstractResourceModel extends AbstractModel
 
     protected function serialize()
     {
-        return $this->serializer->serialize($this, false);
+        return $this->serializer->serialize($this);
     }
 
     /**

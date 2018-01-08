@@ -1,5 +1,4 @@
 <?php
-
 namespace MetroPublisher\Api;
 
 use MetroPublisher\Api\Models\Slot;

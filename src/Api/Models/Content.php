@@ -88,6 +88,7 @@ class Content extends AbstractResourceModel implements TaggableInterface, SlotCo
     {
         parent::__construct($metroPublisher);
 
+        $this->evergreen = false;
         $this->slotCollection = new SlotCollection($metroPublisher, $this);
         $this->tagCollection  = new TagCollection($metroPublisher);
     }
@@ -169,7 +170,7 @@ class Content extends AbstractResourceModel implements TaggableInterface, SlotCo
         $response = $this->context->get("/content/{$this->uuid}/slots");
 
         return ModelDeserializer::convertCollection(new ModelResolver(Slot::class), $response['items'],
-            [$this->context]);
+            [$this->context, $this]);
     }
 
     /**

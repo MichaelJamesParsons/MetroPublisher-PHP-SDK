@@ -68,7 +68,7 @@ class ModelArraySerializer implements ModelSerializerInterface
             return $this->getObjectPropertyValuesAsArray($value, $includeEmptyValues);
         }else if ($value === "1" || $value === "0") {
             return boolval($value);
-        } elseif (empty($value)) {
+        } elseif (!is_bool($value) && empty($value)) {
             return null;
         } else {
             return $value;
