@@ -128,6 +128,7 @@ class TagTest extends TestCase
             'content',
             'urlname',
             'feature_image_uuid',
+            'type',
             'uuid',
             'created',
             'modified'
